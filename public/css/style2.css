@@ -1,0 +1,45 @@
+.black-text-shadow{
+    text-shadow:2px 2px 10px #000!important
+}
+.fullpage-wrapper .section .subtitle{
+    font-size:.9em!important
+}
+.fullpage-wrapper .section.dark-section .subtitle{
+    color:#fff!important
+}
+.social-media-links .social-link{
+    color:#fff!important;
+    margin-left:10px!important;
+    margin-right:10px!important;
+    font-size:18px!important
+}
+.home-page .sharing.badges{
+    text-align:inherit!important;
+    float:none!important
+}
+.home-page .sharing.badges a{
+    color:#000!important;
+    opacity:1!important;
+    border-color:#000!important
+}
+.home-page .dark-section .sharing.badges a{
+    color:#fff!important;
+    opacity:1!important;
+    border-color:#fff!important
+}
+.single-location .title-container .subtitle a{
+    color:rgba(255,255,255,.75)!important
+}
+.location-info-container .social-link{
+    display:block!important;
+    color:#777!important;
+    letter-spacing:.3px!important;
+    margin-bottom:5px!important
+}
+.location-info-container .social-link:hover{
+    letter-spacing:2px!important;
+    color:#000!important
+}
+.location-info-container .social-link i{
+    margin-right:15px!important
+}
