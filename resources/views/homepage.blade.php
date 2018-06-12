@@ -240,9 +240,7 @@
                                    <i class="fa fa-share"></i>
                                    <span class="sharetitle">Share</span>
                                    </a>
-                                   <a href="/location/ouyoun-al-samak/" class="location-actions post-like love">
-                                   <i class="fa fa-heart"></i>
-                                   <span class="sharetitle">Like</span></a>
+                                   
                                 </div>
                              </div>
                              <div class="clear"></div>
@@ -284,9 +282,7 @@
                                    <i class="fa fa-share"></i>
                                    <span class="sharetitle">Share</span>
                                    </a>
-                                   <a href="/location/our-lady-of-nourieh-monastery/" class="location-actions post-like love">
-                                   <i class="fa fa-heart"></i>
-                                   <span class="sharetitle">Like</span></a>
+                                  
                                 </div>
                              </div>
                              <div class="clear"></div>
@@ -328,9 +324,7 @@
                                    <i class="fa fa-share"></i>
                                    <span class="sharetitle">Share</span>
                                    </a>
-                                   <a href="/location/chouwen-lake/" class="location-actions post-like love">
-                                   <i class="fa fa-heart"></i>
-                                   <span class="sharetitle">Like</span></a>
+                                
                                 </div>
                              </div>
                              <div class="clear"></div>
@@ -372,9 +366,7 @@
                                    <i class="fa fa-share"></i>
                                    <span class="sharetitle">Share</span>
                                    </a>
-                                   <a href="/location/baatara-gorge-waterfall/" class="location-actions post-like love">
-                                   <i class="fa fa-heart"></i>
-                                   <span class="sharetitle">Like</span></a>
+                                  
                                 </div>
                              </div>
                              <div class="clear"></div>
@@ -416,9 +408,7 @@
                                    <i class="fa fa-share"></i>
                                    <span class="sharetitle">Share</span>
                                    </a>
-                                   <a href="/location/jeita-grotto/" class="location-actions post-like love">
-                                   <i class="fa fa-heart"></i>
-                                   <span class="sharetitle">Like</span></a>
+                                 
                                 </div>
                              </div>
                              <div class="clear"></div>
@@ -467,9 +457,7 @@
                                    <i class="fa fa-share"></i>
                                    <span class="sharetitle">Share</span>
                                    </a>
-                                   <a href="/location/raouche/" class="location-actions post-like love">
-                                   <i class="fa fa-heart"></i>
-                                   <span class="sharetitle">Like</span></a>
+                               
                                 </div>
                              </div>
                              <div class="clear"></div>
@@ -518,9 +506,7 @@
                                    <i class="fa fa-share"></i>
                                    <span class="sharetitle">Share</span>
                                    </a>
-                                   <a href="/location/temples-of-baalbek/" class="location-actions post-like love">
-                                   <i class="fa fa-heart"></i>
-                                   <span class="sharetitle">Like</span></a>
+                                
                                 </div>
                              </div>
                              <div class="clear"></div>
