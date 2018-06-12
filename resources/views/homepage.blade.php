@@ -114,9 +114,7 @@
                                    <i class="fa fa-share"></i>
                                    <span class="sharetitle">Share</span>
                                    </a>
-                                   <a href="/location/phoenician-wall/" class="location-actions post-like love">
-                                   <i class="fa fa-heart"></i>
-                                   <span class="sharetitle">Like</span></a>
+                                   
                                 </div>
                              </div>
                              <div class="clear"></div>
@@ -200,9 +198,7 @@
                                    <i class="fa fa-share"></i>
                                    <span class="sharetitle">Share</span>
                                    </a>
-                                   <a href="/location/sidon-sea-castle/" class="location-actions post-like love">
-                                   <i class="fa fa-heart"></i>
-                                   <span class="sharetitle">Like</span></a>
+                                   
                                 </div>
                              </div>
                              <div class="clear"></div>
