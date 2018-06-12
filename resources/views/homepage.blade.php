@@ -161,9 +161,7 @@
                                    <i class="fa fa-share"></i>
                                    <span class="sharetitle">Share</span>
                                    </a>
-                                   <a href="/location/kadisha-valley/" class="location-actions post-like love">
-                                   <i class="fa fa-heart"></i>
-                                   <span class="sharetitle">Like</span></a>
+                                   
                                 </div>
                              </div>
                              <div class="clear"></div>
