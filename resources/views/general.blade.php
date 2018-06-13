@@ -21,15 +21,23 @@
       <style type="text/css">
          img.wp-smiley,
          img.emoji {
-         display: inline !important;
-         border: none !important;
-         box-shadow: none !important;
-         height: 1em !important;
-         width: 1em !important;
-         margin: 0 .07em !important;
-         vertical-align: -0.1em !important;
-         background: none !important;
-         padding: 0 !important;
+            display: inline !important;
+            border: none !important;
+            box-shadow: none !important;
+            height: 1em !important;
+            width: 1em !important;
+            margin: 0 .07em !important;
+            vertical-align: -0.1em !important;
+            background: none !important;
+            padding: 0 !important;
+         }
+         .logout {
+            background: white;
+            text-align: center;
+            border-radius: 5px;
+         }
+         .logout a {
+            color: #090909 !important;
          }
       </style>
       <link rel='stylesheet'  href='/css/bootstrap.min.css?ver=3.2.0' type='text/css' media='all' />
@@ -39,13 +47,20 @@
       <link rel='stylesheet'  href='/css/style.css' type='text/css' media='all' />
       <link rel='stylesheet'  href='https://fonts.googleapis.com/css?family=Lato%3A300%2C400%7CMontserrat%3A700%7COpen+Sans%3A400&#038;ver=1523131310' type='text/css' media='all' />
       <link rel='stylesheet'  href='/css/themewich-shortcodes.css?ver=4.9.6' type='text/css' media='all' />
+      <!-- CSS -->
+      <link rel="stylesheet" href="/css/sweetalert2.css">
+      <link rel="stylesheet" href="/css/toastr.css">
       
+     
       <script type='text/javascript' src='/js/jquery/jquery.js?ver=1.12.4'></script>
       <script type='text/javascript' src='/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
       <script type='text/javascript' src='/js/modernizr.min.js?ver=2.8.2'></script>
       <script type='text/javascript' src='/js/pace-options.js?ver=1.0'></script>
       <script type='text/javascript' src='/js/pace.min.js?ver=0.5.3'></script>
-      
+      <!-- JS -->
+      <script src="/js/sweetalert2.js"></script>
+      <script src="/js/toastr.js"></script>
+
       <style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>
       <style type="text/css" title="dynamic-css" class="options-output">.top-nav, .altnav .top-nav-inner{padding-top:20px;padding-bottom:20px;}#logo h1, #logo h2, .section h2, .section .title h1, .title-container h1, .minimal-content h2, #share-box h2{font-family:Lato;text-transform:none;line-height:1em;font-weight:300;font-style:normal;font-size:3.5em;}.intro h2{font-family:Lato;text-transform:none;line-height:1.3em;font-weight:300;font-style:normal;font-size:1.75em;}.sf-menu li > a{font-family:Montserrat;text-transform:uppercase;line-height:1em;letter-spacing:0.15em;font-weight:700;font-style:normal;font-size:0.75em;}#nb-popoutmenu a, .nb-back{font-family:Montserrat;text-transform:uppercase;line-height:1em;letter-spacing:0.15em;font-weight:700;font-style:normal;font-size:0.75em;}.tiny-details, .tiny-details p, .badges a, a.button, a.more-link, input[type="submit"], input[type="button"], label, .sidepostcontainer .date, cite, .tw-postshortcode a.more-link, a.tw-button, thead th{font-family:Montserrat;text-transform:uppercase;line-height:1.4em;letter-spacing:0.15em;font-weight:700;font-style:normal;font-size:0.75em;}h1{font-family:Lato;text-transform:none;line-height:1.4em;font-weight:400;font-style:normal;font-size:2.5em;}h2{font-family:Lato;text-transform:none;line-height:1.4em;font-weight:400;font-style:normal;font-size:2em;}h3, blockquote, blockquote p, .grid h2{font-family:Lato;text-transform:none;line-height:1.4em;font-weight:400;font-style:normal;font-size:1.5em;}h4{font-family:Lato;text-transform:none;line-height:1.4em;font-weight:400;font-style:normal;font-size:1.25em;}h5, .subtitle > h1, .subtitle > h2{font-family:Lato;text-transform:none;line-height:1.4em;font-weight:400;font-style:normal;font-size:1.15em;}h6{font-family:Lato;text-transform:none;line-height:1.4em;font-weight:400;font-style:normal;font-size:1.15em;}.articleinner, .tw-post-break .tw-column, .content, p, ul, ol, sf-menu li li a, input, textarea, .sidebar, dd, dt, table{font-family:"Open Sans";line-height:1.8em;font-weight:400;font-style:normal;font-size:1em;}aside{font-family:"Open Sans";line-height:1.8em;font-weight:normal;font-style:400italic;font-size:0.8em;}</style>
    </head>
@@ -70,13 +85,20 @@
                            <div class="tw-slide-panel dark">
                               <div class="above-nav"></div>
                               <nav id="slide-menu">
+                                 
                                  <ul class="nb-menu-items-container">
+                                    @if(Auth::user())
+                                       <h3>Hi {{Auth::user()->name}} !</h3>
+                                    @endif
                                     <ul>
                                        <li class="page_item page-item-5 current_page_item"><a href="/">Our Lebanon</a></li>
                                        <li class="page_item page-item-33"><a href="/test/">test</a></li>
                                        <li class="page_item page-item-72"><a href="/t/">t</a></li>
                                        @if(Auth::user())
-                                          <li class="page_item page-item-72"><a href="/t/">Logout</a></li>
+                                          <form action="" method="POST" id="logout_form">
+                                             {{ csrf_field() }}
+                                          </form>
+                                          <li class="page_item page-item-72 logout"><a onclick="logout(); return false;" href="#">Logout</a></li>
                                        @else
                                           <li class="page_item page-item-72"><a href="/login">Login / Register</a></li>
                                        @endif
@@ -131,6 +153,21 @@
          </script>
          <script type='text/javascript' src='/js/custom.js?ver=4.9.6'></script>
          <script type='text/javascript' src='/js/wp-embed.min.js?ver=4.9.6'></script>
+         <script src="/loginpage/js/login.js"></script>
+         <script type="text/javascript">
+            @if (Session::has('message'))
+               @if (Session::get('message')=="logged") 
+                  swal({   
+                        title: "",   
+                        text: "Hello {{Auth::user()->name}}", 
+                        type: "success",   
+                        confirmButtonColor: "#3f927e",   
+                        confirmButtonText: "Ok"
+                     });
+               @endif
+            @endif
+         </script>
+            
       </div>
    </body>
 </html>

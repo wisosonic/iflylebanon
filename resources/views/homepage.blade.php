@@ -1,6 +1,14 @@
 @extends("general")
 
 @section("content")
+  <!-- Font Awesome Icon Library -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/rating.css">
+  <style>
+    .checked {
+        color: orange;
+    }
+  </style>
 
 	<div id="sitecontainer">
         <script>
@@ -66,13 +74,29 @@
                                 <hr class="v-item title-divider" data-width="100px" />
                                 <div class="v-item content black-text-shadow">Distinguished for its colossal grotto. Afqa is a rectangular-prism-shaped from a distance the cave appears like a mouth opening and bursts forth with a gushing waterfall that feeds into Nahr Ibrahim. </div>
                                 <div class="sharing badges section-buttons v-item">
-                                   <a href="/location/afqa-waterfall/" class="location-actions popup-with-move-anim">
-                                   <i class="fas fa-info"></i>
-                                   <span class="sharetitle">More</span></a>
+                                    <a href="/location/afqa-waterfall/" class="location-actions popup-with-move-anim">
+                                      <i class="fas fa-info"></i>
+                                      <span class="sharetitle">More</span>
+                                    </a>
                                    <a href="#share-box" onclick="updateShareBoxLinks(this);" data-title="Afqa Waterfall" data-link="./location/afqa-waterfall/" class="location-actions open-popup-link post-share share popup-with-move-anim">
-                                   <i class="fa fa-share"></i>
-                                   <span class="sharetitle">Share</span>
+                                     <i class="fa fa-share"></i>
+                                     <span class="sharetitle">Share</span>
                                    </a>
+                                   <div style="margin-top: 20px" class="sharing badges section-buttons v-item">
+                                      <h3 style="float:left; color:white">Rate this place : </h3>
+                                      <fieldset style="margin-top: 6px" class="rating">
+                                        <input type="radio" id="1_5" name="rating" value="5" /><label class = "full" for="1_5" title="Awesome - 5 stars"></label>
+                                        <input type="radio" id="1_4.5" name="rating" value="4.5" /><label class="half" for="1_4.5" title="Pretty good - 4.5 stars"></label>
+                                        <input type="radio" id="1_4" name="rating" value="4" /><label class = "full" for="1_4" title="Pretty good - 4 stars"></label>
+                                        <input type="radio" id="1_3.5" name="rating" value="3.5" /><label class="half" for="1_3.5" title="Meh - 3.5 stars"></label>
+                                        <input type="radio" id="1_3" name="rating" value="3" /><label class = "full" for="1_3" title="Meh - 3 stars"></label>
+                                        <input type="radio" id="1_2.5" name="rating" value="2.5" /><label class="half" for="1_2.5" title="Kinda bad - 2.5 stars"></label>
+                                        <input type="radio" id="1_2" name="rating" value="2" /><label class = "full" for="1_2" title="Kinda bad - 2 stars"></label>
+                                        <input type="radio" id="1_1.5" name="rating" value="1.5" /><label class="half" for="1_1.5" title="Meh - 1.5 stars"></label>
+                                        <input type="radio" id="1_1" name="rating" value="1" /><label class = "full" for="1_1" title="Sucks big time - 1 star"></label>
+                                        <input type="radio" id="1_0.5" name="rating" value="0.5" /><label class="half" for="1_0.5" title="Sucks big time - 0.5 stars"></label>
+                                      </fieldset>
+                                    </div>
                                 </div>
                              </div>
                              <div class="clear"></div>
@@ -114,7 +138,6 @@
                                    <i class="fa fa-share"></i>
                                    <span class="sharetitle">Share</span>
                                    </a>
-                                   
                                 </div>
                              </div>
                              <div class="clear"></div>
@@ -533,5 +556,29 @@
            <div class="clear"></div>
         </div>
     </div>
+
+    <script type="text/javascript">
+
+      // jQuery('.vote').colorPicker({
+      //   onColorChange : function() {
+      //       var element = jQuery( this ) ;
+      //       var index = jQuery( ".vote" ).index( element );
+      //       console.log(index);
+      //   }
+      // });
+
+      // jQuery( ".vote" ).mouseover(function() {
+      //   var element = jQuery( this ) ;
+      //   var index = jQuery( ".vote" ).index( element );
+      //   for (var i = 0 ; i < 10; i++) {
+      //     if (i<= index) {
+      //       document.getElementsByClassName("vote")[i].style.color= "orange";
+      //     } else {
+      //       document.getElementsByClassName("vote")[i].style.color= "white";
+      //     }
+      //   }
+      // });
+
+    </script>
 
 @endsection
