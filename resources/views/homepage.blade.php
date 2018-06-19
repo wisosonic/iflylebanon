@@ -52,46 +52,46 @@
                    <a name="section-{{$key+1}}"></a>
                    <div class="overlay" style="background:#000000; opacity:0.15; filter:alpha(opacity=15); "></div>
                    <div class="container">
-                      <div class="section-entry">
+                      <div class="section-entry" >
                          <div class="text-image-wrapper">
-                            <div class="col-md-6 text-cell">
+                            <div class="col-md-6 text-cell" style="background-color: rgb(255,255,255,0.5); padding: 20px">
                                <div class="text-layout-inner">
                                   <a href="https://maps.google.com/maps?&z=12&q=34.0691667+35.8882998&ll=34.0691667+35.8882998" target="_blank" class="fa-icon-link themewich-lightbox no-ajaxy" title="Location On Map">
-                                     <div class="v-item subtitle tiny-details black-text-shadow">
-                                        <i class="fas fa-map-marker-alt" style="font-size: 1.3em !important;"></i> {{$place->department}} 
+                                     <div class="v-item subtitle tiny-details " style="color:#333333 !important ">
+                                        <i class="fas fa-map-marker-alt" style="font-size: 1.3em !important; color:red"></i> {{$place->department}} 
                                      </div>
                                   </a>
                                   <div class="v-item title">
-                                      <h2 class="black-text-shadow">{{$key+1}} - {{$place->title}}</h2>
+                                      <h2 style="color: #333333; font-weight: 600">{{$key+1}} - {{$place->title}}</h2>
                                       <fieldset class="rating">
-                                        <span id="stars-{{$key+1}}">{{number_format($place->rating,1)}} ({{$place->ratings()->count()}})</span> <label style="padding: 2.5px" class="full" ></label>
+                                        <span style="color:#333333; font-weight: 700" id="stars-{{$key+1}}">{{number_format($place->rating,1)}} ({{$place->ratings()->count()}})</span> <label style="padding: 2.5px ; color: yellow" class="full"  ></label>
                                       <fieldset>
                                   </div>
                                   <br>
-                                  <div class="section-buttons v-item social-media-links hidden-xs">
+                                <!--   <div class="section-buttons v-item social-media-links hidden-xs">
                                      <a target="_blank" href="#" class="social-link" title="Facebook">
                                      <i class="fab fa-facebook-f"></i></a> <a target="_blank" href="#" class="social-link" title="Twitter">
                                      <i class="fab fa-twitter"></i></a> <a target="_blank" href="#" class="social-link" title="Instagram">
                                      <i class="fab fa-instagram"></i></a> <a target="_blank" href="#" class="social-link" title="Google">
                                      <i class="fab fa-google-plus-g"></i></a> <a target="_blank" href="#" class="social-link" title="Pinterest">
                                      <i class="fab fa-pinterest-p"></i></a> 
-                                  </div>
-                                  <hr class="v-item title-divider" data-width="100px" />
-                                  <div class="v-item content black-text-shadow">
+                                  </div> -->
+                                 <!--  <hr class="v-item title-divider" data-width="100px" /> -->
+                                  <div class="v-item content " style="color:#333333 !important; font-weight:700">
                                        {{$place->description}}
                                   </div>
                                   <div class="sharing badges section-buttons v-item">
-                                      <a href="/location/{{$place->slag}}/" class="location-actions popup-with-move-anim">
+                                      <a href="/location/{{$place->slag}}/" style="background-color: #333333" class="location-actions popup-with-move-anim">
                                         <i class="fas fa-info"></i>
                                         <span class="sharetitle">More</span>
                                       </a>
-                                      <a href="#share-box" onclick="updateShareBoxLinks(this);" data-title="{{$place->title}}" data-link="./location/{{$place->slag}}/" class="location-actions open-popup-link post-share share popup-with-move-anim">
+                                      <a  href="#share-box" onclick="updateShareBoxLinks(this);" data-title="{{$place->title}}" data-link="./location/{{$place->slag}}/" style="background-color: #333333" class="location-actions open-popup-link post-share share popup-with-move-anim">
                                        <i class="fa fa-share"></i>
                                        <span class="sharetitle">Share</span>
                                       </a>
                                       @if (Auth::user())
                                         <div style="margin-top: 20px" class="sharing badges section-buttons v-item">
-                                          <h3 style="float:left; color:white">Rate this place : </h3>
+                                          <h3 style="float:left; color:#333333 ; font-weight: 600">Rate this place : </h3>
                                           <fieldset style="margin-top: 6px" class="rating">
                                             <input type="radio" id="{{$place->id}}_5" name="rating_{{$place->id}}" value="5" /><label onclick="ratePlace('{{$place->id}}','5');" class = "full" for="{{$place->id}}_5" title="Awesome - 5 stars"></label>
                                             <input type="radio" id="{{$place->id}}_4-5" name="rating_{{$place->id}}" value="4.5" /><label onclick="ratePlace('{{$place->id}}','4.5');" class="half" for="{{$place->id}}_4-5" title="Pretty good - 4.5 stars"></label>
@@ -107,9 +107,9 @@
                                         </div>
                                       @else
                                         <div style="margin-top: 20px" class="sharing badges section-buttons v-item">
-                                          <h3 style="float:left; color:white">(Log in to rate this place)</h3>
+                                          <h3 style="float:left; color:#333333 ; font-weight: 600">(Log in to rate this place)</h3>
                                         </div>
-                                      @endif
+                                      @endif 
                                   </div>
                                </div>
                                <div class="clear"></div>

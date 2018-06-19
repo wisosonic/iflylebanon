@@ -34,18 +34,31 @@
 	<div class="limiter">
 		<div class="container-login100" style="background-image: url('/loginpage/images/bg-02.jpg');">
 			<div style="background-image: url('/loginpage/images/bg-03.jpg'); background-position: center; " class="wrap-login100">
-				<form class="login100-form validate-form" id="login_form" method="POST" action="">
-					{{ csrf_field() }}
-					<span class="login100-form-logo">
-						<i class="zmdi zmdi-account"></i>
-					</span>
+				<span class="login100-form-logo">
+					<i class="zmdi zmdi-account"></i>
+				</span>
 
-					<span class="login100-form-title p-b-34 p-t-27">
-						Log in
-					</span>
+				<span class="login100-form-title p-b-34 p-t-27">
+					Register
+				</span>
+				<form class="login100-form validate-form" id="register_form" method="POST" action="">
+					{{ csrf_field() }}
+					
 
 					<div class="wrap-input100 validate-input" data-validate="Enter email address">
 						<input onkeydown="changeBorderColor('email');" class="input100" type="email" name="email" id="email" placeholder="Email address">
+						<span class="focus-input100" data-placeholder="&#xf207;"></span>
+					</div>
+
+					<div id="availability"></div>
+
+					<div class="wrap-input100 validate-input" data-validate="First name">
+						<input onkeydown="changeBorderColor('fname');" class="input100" type="fname" name="fname" id="fname" placeholder="First name">
+						<span class="focus-input100" data-placeholder="&#xf207;"></span>
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate="Last name">
+						<input onkeydown="changeBorderColor('lname');" class="input100" type="lname" name="lname" id="lname" placeholder="Last name">
 						<span class="focus-input100" data-placeholder="&#xf207;"></span>
 					</div>
 
@@ -53,31 +66,15 @@
 						<input onkeydown="changeBorderColor('password');" class="input100" type="password" name="password" id="password" placeholder="Password">
 						<span class="focus-input100" data-placeholder="&#xf191;"></span>
 					</div>
-
-					<div class="contact100-form-checkbox">
-						<input class="input-checkbox100" id="ckb1" type="checkbox" name="remember">
-						<label class="label-checkbox100" for="ckb1">
-							Remember me
-						</label>
-					</div>
-					<div class="wrap-input100 validate-input" data-validate="">
-						@if ($errors->has('email'))
-	                        <span class="invalid-feedback">
-	                            <strong>{{ $errors->first('email') }}</strong>
-	                        </span>
-	                    @endif
+					<div class="wrap-input100 validate-input" data-validate="Confirm your password">
+						<input onkeydown="changeBorderColor('password');" class="input100" type="password" name="password_confirmation" id="password_confirmation" placeholder="Password confirmation">
+						<span class="focus-input100" data-placeholder="&#xf191;"></span>
 					</div>
 
 					<div class="container-login100-form-btn">
-						<button onclick="sendlogin(); return false;" style="margin-right: 10px" class="login100-form-btn">Login</button>
-						<button onclick="CreateNewAccount(); return false;"  class="login100-form-btn">Create an account</button>
+						<button onclick="sendForm(); return false;"  class="login100-form-btn">Create account</button>
 					</div>
 
-					<div class="text-center p-t-90">
-						<a class="txt1" href="#">
-							Forgot Password?
-						</a>
-					</div>
 				</form>
 			</div>
 		</div>
@@ -101,11 +98,5 @@
 	<script src="/loginpage/vendor/countdowntime/countdowntime.js"></script>
 <!--===============================================================================================-->
 	<script src="/loginpage/js/main.js"></script>
-
-	<script type="text/javascript">
-		function CreateNewAccount() {
-			window.location.href = "/register";
-		}
-	</script>
 
 @endSection

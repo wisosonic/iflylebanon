@@ -67,34 +67,15 @@ function validatePasswordConfirmation() {
 function validateForm() {
 	var errors = 0;
 	var email = document.getElementById("email");
-	var email_confirmation = document.getElementById("email_confirmation");
 	var password = document.getElementById("password");
 	var password_confirmation = document.getElementById("password_confirmation");
-	var gender_p = document.getElementById("gender_p");
-	//var status_p = document.getElementById("status_p");
-	var man = document.getElementById("gender_man").checked;
-	var women = document.getElementById("gender_woman").checked;
 	var fname =  document.getElementById("fname");
 	var lname =  document.getElementById("lname");
-	//var amateur = document.getElementById("amateur").checked;
-	//var professional = document.getElementById("professional").checked;
-	var address =  document.getElementById("address");
-	var city =  document.getElementById("city");
-	var postal =  document.getElementById("postal");
-	var country =  document.getElementById("country");
-	var phone =  document.getElementById("phone");
-	
 	if (email.value == "") {
 		email.style.border = "1px solid red";
 		errors = errors + 1 ;
 	} else {
 		email.style.border = "none";
-	}
-	if (email_confirmation.value == "") {
-		email_confirmation.style.border = "1px solid red";
-		errors = errors + 1 ;
-	} else {
-		email_confirmation.style.border = "none";
 	}
 	if (password.value == "") {
 		password.style.border = "1px solid red";
@@ -108,13 +89,6 @@ function validateForm() {
 	} else {
 		password_confirmation.style.border = "none";
 	}
-
-	if(! man && ! women) {
-		gender_p.style.border = "1px solid red";
-		errors = errors + 1 ;
-        } else {
-		gender_p.style.border = "none";
-	}
 	if (fname.value == "") {
 		fname.style.border = "1px solid red";
 		errors = errors + 1 ;
@@ -127,42 +101,7 @@ function validateForm() {
 	} else {
 		lname.style.border = "none";
 	}
-	//if(! amateur && ! professional) {
-		//status_p.style.border = "1px solid red";
-		//errors = errors + 1 ;
-        //} else {
-		//status_p.style.border = "none";
-	//}
-	if (address.value == "") {
-		address.style.border = "1px solid red";
-		errors = errors +  1 ;
-	} else {
-		address.style.border = "none";
-	}
-	if (city.value == "") {
-		city.style.border = "1px solid red";
-		errors = errors + 1 ;
-	} else {
-		city.style.border = "none";
-	}
-	if (postal.value == "") {
-		postal.style.border = "1px solid red";
-		errors = errors + 1 ;
-	} else {
-		postal.style.border = "none";
-	}
-	if (phone.value == "") {
-		phone.style.border = "1px solid red";
-		errors = errors + 1 ;
-	} else {
-		phone.style.border = "none";
-	}
-	if (country.value == "") {
-		country.style.border = "1px solid red";
-		errors = errors + 1 ;
-	} else {
-		country.style.border = "none";
-	}
+	
 	return errors;
 }
 
