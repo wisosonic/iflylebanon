@@ -9,7 +9,9 @@ class HomeController extends Controller {
 
 	public function homepage()
 	{
-		$places = Place::all();
+		$places = Place::all()->sortByDesc('rating')->values();
+		// $places = array_values($places);
+		// dd($places);
 		return view("homepage", ["places"=>$places]);
 	}
 

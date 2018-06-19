@@ -15,7 +15,7 @@ class CreatePlacesTable extends Migration
     {
         Schema::create('places', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('tite');
+            $table->string('title');
             $table->string('department');
             $table->string('coordinates');
             $table->longtext('description');

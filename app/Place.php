@@ -26,20 +26,18 @@ class Place extends Model  {
 		return $this->hasMany("App\Rating");
 	}
 
-	public function placeInsert(Request $request)
+	public function updateRating()
 	{
-		$user = Auth::user(); 
-
-		$data = $request->all;
-		$newPlace = new Place();
-		$newPlace->title=$data['title'];
-		$newPlace->department=$data['department'];
-		$newPlace->title=$data['coordinates'];
-		$newPlace->description=$data['description'];
-		$newPlace->rating=$data['rating'];
-		$newPlace->user_id=$user->id;
-		$newPlace->save();
-		
+		$average = 0;
+		$ratings = $this->ratings()->get();
+		if ($ratings->count() > 0) {
+			foreach ($ratings as $key => $rating) {
+				$average = $average + $rating->rating;
+			}
+			$average = round($average / $ratings->count(), 2, PHP_ROUND_HALF_UP);
+		}
+		$this->rating = $average;
+		$this->save();
 	}
 
 }

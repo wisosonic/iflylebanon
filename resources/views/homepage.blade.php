@@ -48,8 +48,8 @@
         <div id="fullpage-wrapper">
            <div id="fullpage" class="scrolling-auto animations-on fullpage-show home-page">
               @foreach ($places as $key => $place)
-                <section id="section-{{$key}}" class="section text-image-section section-{{$key}} no-image nav-overlayimage-background layout-left dark-section" data-section="{{$key}}" data-title="{{$place->title}}" style="background-image:url({{$place->image}});">
-                   <a name="section-{{$key}}"></a>
+                <section id="section-{{$key+1}}" class="section text-image-section section-{{$key+1}} no-image nav-overlayimage-background layout-left dark-section" data-section="{{$key+1}}" data-title="{{$place->title}}" style="background-image:url({{$place->image}});">
+                   <a name="section-{{$key+1}}"></a>
                    <div class="overlay" style="background:#000000; opacity:0.15; filter:alpha(opacity=15); "></div>
                    <div class="container">
                       <div class="section-entry">
@@ -62,8 +62,12 @@
                                      </div>
                                   </a>
                                   <div class="v-item title">
-                                     <h2 class="black-text-shadow">{{$key}} - {{$place->title}}</h2>
+                                      <h2 class="black-text-shadow">{{$key+1}} - {{$place->title}}</h2>
+                                      <fieldset class="rating">
+                                        <span id="stars-{{$key+1}}">{{number_format($place->rating,1)}} ({{$place->ratings()->count()}})</span> <label style="padding: 2.5px" class="full" ></label>
+                                      <fieldset>
                                   </div>
+                                  <br>
                                   <div class="section-buttons v-item social-media-links hidden-xs">
                                      <a target="_blank" href="#" class="social-link" title="Facebook">
                                      <i class="fab fa-facebook-f"></i></a> <a target="_blank" href="#" class="social-link" title="Twitter">
@@ -74,32 +78,38 @@
                                   </div>
                                   <hr class="v-item title-divider" data-width="100px" />
                                   <div class="v-item content black-text-shadow">
-                                       
+                                       {{$place->description}}
                                   </div>
                                   <div class="sharing badges section-buttons v-item">
-                                      <a href="/location/afqa-waterfall/" class="location-actions popup-with-move-anim">
+                                      <a href="/location/{{$place->slag}}/" class="location-actions popup-with-move-anim">
                                         <i class="fas fa-info"></i>
                                         <span class="sharetitle">More</span>
                                       </a>
-                                     <a href="#share-box" onclick="updateShareBoxLinks(this);" data-title="Afqa Waterfall" data-link="./location/afqa-waterfall/" class="location-actions open-popup-link post-share share popup-with-move-anim">
+                                      <a href="#share-box" onclick="updateShareBoxLinks(this);" data-title="{{$place->title}}" data-link="./location/{{$place->slag}}/" class="location-actions open-popup-link post-share share popup-with-move-anim">
                                        <i class="fa fa-share"></i>
                                        <span class="sharetitle">Share</span>
-                                     </a>
-                                     <div style="margin-top: 20px" class="sharing badges section-buttons v-item">
-                                        <h3 style="float:left; color:white">Rate this place : </h3>
-                                        <fieldset style="margin-top: 6px" class="rating">
-                                          <input type="radio" id="1_5" name="rating" value="5" /><label class = "full" for="1_5" title="Awesome - 5 stars"></label>
-                                          <input type="radio" id="1_4.5" name="rating" value="4.5" /><label class="half" for="1_4.5" title="Pretty good - 4.5 stars"></label>
-                                          <input type="radio" id="1_4" name="rating" value="4" /><label class = "full" for="1_4" title="Pretty good - 4 stars"></label>
-                                          <input type="radio" id="1_3.5" name="rating" value="3.5" /><label class="half" for="1_3.5" title="Meh - 3.5 stars"></label>
-                                          <input type="radio" id="1_3" name="rating" value="3" /><label class = "full" for="1_3" title="Meh - 3 stars"></label>
-                                          <input type="radio" id="1_2.5" name="rating" value="2.5" /><label class="half" for="1_2.5" title="Kinda bad - 2.5 stars"></label>
-                                          <input type="radio" id="1_2" name="rating" value="2" /><label class = "full" for="1_2" title="Kinda bad - 2 stars"></label>
-                                          <input type="radio" id="1_1.5" name="rating" value="1.5" /><label class="half" for="1_1.5" title="Meh - 1.5 stars"></label>
-                                          <input type="radio" id="1_1" name="rating" value="1" /><label class = "full" for="1_1" title="Sucks big time - 1 star"></label>
-                                          <input type="radio" id="1_0.5" name="rating" value="0.5" /><label class="half" for="1_0.5" title="Sucks big time - 0.5 stars"></label>
-                                        </fieldset>
-                                      </div>
+                                      </a>
+                                      @if (Auth::user())
+                                        <div style="margin-top: 20px" class="sharing badges section-buttons v-item">
+                                          <h3 style="float:left; color:white">Rate this place : </h3>
+                                          <fieldset style="margin-top: 6px" class="rating">
+                                            <input type="radio" id="{{$place->id}}_5" name="rating_{{$place->id}}" value="5" /><label onclick="ratePlace('{{$place->id}}','5');" class = "full" for="{{$place->id}}_5" title="Awesome - 5 stars"></label>
+                                            <input type="radio" id="{{$place->id}}_4-5" name="rating_{{$place->id}}" value="4.5" /><label onclick="ratePlace('{{$place->id}}','4.5');" class="half" for="{{$place->id}}_4-5" title="Pretty good - 4.5 stars"></label>
+                                            <input type="radio" id="{{$place->id}}_4" name="rating_{{$place->id}}" value="4" /><label onclick="ratePlace('{{$place->id}}','4');" class = "full" for="{{$place->id}}_4" title="Pretty good - 4 stars"></label>
+                                            <input type="radio" id="{{$place->id}}_3-5" name="rating_{{$place->id}}" value="3.5" /><label onclick="ratePlace('{{$place->id}}','3.5');" class="half" for="{{$place->id}}_3-5" title="Meh - 3.5 stars"></label>
+                                            <input type="radio" id="{{$place->id}}_3" name="rating_{{$place->id}}" value="3" /><label onclick="ratePlace('{{$place->id}}','3');" class = "full" for="{{$place->id}}_3" title="Meh - 3 stars"></label>
+                                            <input type="radio" id="{{$place->id}}_2-5" name="rating_{{$place->id}}" value="2.5" /><label onclick="ratePlace('{{$place->id}}','2.5');" class="half" for="{{$place->id}}_2-5" title="Kinda bad - 2.5 stars"></label>
+                                            <input type="radio" id="{{$place->id}}_2" name="rating_{{$place->id}}" value="2" /><label onclick="ratePlace('{{$place->id}}','2');" class = "full" for="{{$place->id}}_2" title="Kinda bad - 2 stars"></label>
+                                            <input type="radio" id="{{$place->id}}_1-5" name="rating_{{$place->id}}" value="1.5" /><label onclick="ratePlace('{{$place->id}}','1.5');" class="half" for="{{$place->id}}_1-5" title="Meh - 1.5 stars"></label>
+                                            <input type="radio" id="{{$place->id}}_1" name="rating_{{$place->id}}" value="1" /><label onclick="ratePlace('{{$place->id}}','1');" class = "full" for="{{$place->id}}_1" title="Sucks big time - 1 star"></label>
+                                            <input type="radio" id="{{$place->id}}_0-5" name="rating_{{$place->id}}" value="0.5" /><label onclick="ratePlace('{{$place->id}}','0.5');" class="half" for="{{$place->id}}_0-5" title="Sucks big time - 0.5 stars"></label>
+                                          </fieldset>
+                                        </div>
+                                      @else
+                                        <div style="margin-top: 20px" class="sharing badges section-buttons v-item">
+                                          <h3 style="float:left; color:white">(Log in to rate this place)</h3>
+                                        </div>
+                                      @endif
                                   </div>
                                </div>
                                <div class="clear"></div>
@@ -109,447 +119,12 @@
                       </div>
                    </div>
                    <a href="#section-2" class="nextbutton nobg scroll-animate next-section-link">
-                   <span>Next Section </span> </a>
+                   <span>Next place </span> </a>
                    <div class="credits tiny-details black-text-shadow">
                       Image by john
                    </div>
                 </section>
               @endforeach
-
-                <!-- <section id="section-2" class="section text-image-section section-2 no-image nav-overlayimage-background layout-left dark-section" data-section="2" data-title="Phoenician wall" style="background-image:url(/images/places/sour_12-1.jpg);">
-                   <a name="section-2"></a>
-                   <div class="overlay" style="background:#000000; opacity:0; filter:alpha(opacity=); "></div>
-                   <div class="container">
-                      <div class="section-entry">
-                         <div class="text-image-wrapper">
-                            <div class="col-md-6 text-cell">
-                               <div class="text-layout-inner">
-                                  <a href="https://maps.google.com/maps?&z=12&q=34.2550159+35.6535118&ll=34.2550159+35.6535118" target="_blank" class="fa-icon-link themewich-lightbox no-ajaxy" title="Location On Map">
-                                     <div class="v-item subtitle tiny-details black-text-shadow">
-                                        <i class="fas fa-map-marker-alt" style="font-size: 1.3em !important;"></i> Batroun 
-                                     </div>
-                                  </a>
-                                  <div class="v-item title">
-                                     <h2 class="black-text-shadow">2 - Phoenician wall</h2>
-                                  </div>
-                                  <div class="section-buttons v-item social-media-links hidden-xs"></div>
-                                  <hr class="v-item title-divider" data-width="100px" />
-                                  <div class="v-item content black-text-shadow">Ancient 225 meter long Phoenician wall a natural structure composed of petrified sand dunes,the Phoenicians reinforced it with rocks and used it as protection from sea storms and invaders. </div>
-                                  <div class="sharing badges section-buttons v-item">
-                                     <a href="/location/phoenician-wall/" class="location-actions popup-with-move-anim">
-                                     <i class="fas fa-info"></i>
-                                     <span class="sharetitle">More</span></a>
-                                     <a href="#share-box" onclick="updateShareBoxLinks(this);" data-title="Phoenician wall" data-link="./location/phoenician-wall/" class="location-actions open-popup-link post-share share popup-with-move-anim">
-                                     <i class="fa fa-share"></i>
-                                     <span class="sharetitle">Share</span>
-                                     </a>
-                                  </div>
-                               </div>
-                               <div class="clear"></div>
-                            </div>
-                            <div class="clear"></div>
-                         </div>
-                      </div>
-                   </div>
-                   <a href="#section-3" class="nextbutton nobg scroll-animate next-section-link">
-                   <span>Next Section </span> </a>
-                   <div class="credits tiny-details black-text-shadow">
-                      Image by john
-                   </div>
-                </section>
-                <section id="section-3" class="section text-image-section section-3 no-image nav-overlayimage-background layout-left dark-section" data-section="3" data-title="Kadisha Valley" style="background-image:url(/images/places/a-side-walk-on-the-side-of-the-mountain-qannoubine-mona66804138-l.jpg);">
-                   <a name="section-3"></a>
-                   <div class="overlay" style="background:#000000; opacity:0.2; filter:alpha(opacity=20); "></div>
-                   <div class="container">
-                      <div class="section-entry">
-                         <div class="text-image-wrapper">
-                            <div class="col-md-6 text-cell">
-                               <div class="text-layout-inner">
-                                  <a href="https://maps.google.com/maps?&z=12&q=34.1083546+35.6484006&ll=34.1083546+35.6484006" target="_blank" class="fa-icon-link themewich-lightbox no-ajaxy" title="Location On Map">
-                                     <div class="v-item subtitle tiny-details black-text-shadow">
-                                        <i class="fas fa-map-marker-alt" style="font-size: 1.3em !important;"></i> Becharre 
-                                     </div>
-                                  </a>
-                                  <div class="v-item title">
-                                     <h2 class="black-text-shadow">3 - Kadisha Valley</h2>
-                                  </div>
-                                  <div class="section-buttons v-item social-media-links hidden-xs"></div>
-                                  <hr class="v-item title-divider" data-width="100px" />
-                                  <div class="v-item content black-text-shadow">Holy valley hike with adventures in Lebanon, a side walk on the side of the Mountain. Hikers will explore in details the monuments and nature. </div>
-                                  <div class="sharing badges section-buttons v-item">
-                                     <a href="/location/kadisha-valley/" class="location-actions popup-with-move-anim">
-                                     <i class="fas fa-info"></i>
-                                     <span class="sharetitle">More</span></a>
-                                     <a href="#share-box" onclick="updateShareBoxLinks(this);" data-title="Kadisha Valley" data-link="./location/kadisha-valley/" class="location-actions open-popup-link post-share share popup-with-move-anim">
-                                     <i class="fa fa-share"></i>
-                                     <span class="sharetitle">Share</span>
-                                     </a>
-                                     
-                                  </div>
-                               </div>
-                               <div class="clear"></div>
-                            </div>
-                            <div class="clear"></div>
-                         </div>
-                      </div>
-                   </div>
-                   <a href="#section-4" class="nextbutton nobg scroll-animate next-section-link">
-                   <span>Next Section </span> </a>
-                   <div class="credits tiny-details black-text-shadow">
-                      Image by john
-                   </div>
-                </section>
-                <section id="section-4" class="section text-image-section section-4 no-image nav-overlayimage-background layout-left dark-section" data-section="4" data-title="Sidon Sea Castle" style="background-image:url(/images/places/10-worlds-oldest-cities9.jpg);">
-                   <a name="section-4"></a>
-                   <div class="overlay" style="background:#000000; opacity:0.1; filter:alpha(opacity=10); "></div>
-                   <div class="container">
-                      <div class="section-entry">
-                         <div class="text-image-wrapper">
-                            <div class="col-md-6 text-cell">
-                               <div class="text-layout-inner">
-                                  <a href="https://maps.google.com/maps?&z=12&q=33.5671578+35.3687628&ll=33.5671578+35.3687628" target="_blank" class="fa-icon-link themewich-lightbox no-ajaxy" title="Location On Map">
-                                     <div class="v-item subtitle tiny-details black-text-shadow">
-                                        <i class="fas fa-map-marker-alt" style="font-size: 1.3em !important;"></i> Sidon 
-                                     </div>
-                                  </a>
-                                  <div class="v-item title">
-                                     <h2 class="black-text-shadow">4 - Sidon Sea Castle</h2>
-                                  </div>
-                                  <div class="section-buttons v-item social-media-links hidden-xs"></div>
-                                  <hr class="v-item title-divider" data-width="100px" />
-                                  <div class="v-item content black-text-shadow">Take a tour of the Crusaders Sea Castle, Lebanon to visit historic site in Sidon. </div>
-                                  <div class="sharing badges section-buttons v-item">
-                                     <a href="/location/sidon-sea-castle/" class="location-actions popup-with-move-anim">
-                                     <i class="fas fa-info"></i>
-                                     <span class="sharetitle">More</span></a>
-                                     <a href="#share-box" onclick="updateShareBoxLinks(this);" data-title="Sidon Sea Castle" data-link="./location/sidon-sea-castle/" class="location-actions open-popup-link post-share share popup-with-move-anim">
-                                     <i class="fa fa-share"></i>
-                                     <span class="sharetitle">Share</span>
-                                     </a>
-                                     
-                                  </div>
-                               </div>
-                               <div class="clear"></div>
-                            </div>
-                            <div class="clear"></div>
-                         </div>
-                      </div>
-                   </div>
-                   <a href="#section-5" class="nextbutton nobg scroll-animate next-section-link">
-                   <span>Next Section </span> </a>
-                   <div class="credits tiny-details black-text-shadow">
-                      Image by john
-                   </div>
-                </section>
-                <section id="section-5" class="section text-image-section section-5 no-image nav-overlayimage-background layout-left dark-section" data-section="5" data-title="Ouyoun al-Samak" style="background-image:url(/images/places/FB_IMG_1527505805286.jpg);">
-                   <a name="section-5"></a>
-                   <div class="overlay" style="background:#000000; opacity:0.1; filter:alpha(opacity=10); "></div>
-                   <div class="container">
-                      <div class="section-entry">
-                         <div class="text-image-wrapper">
-                            <div class="col-md-6 text-cell">
-                               <div class="text-layout-inner">
-                                  <a href="https://maps.google.com/maps?&z=12&q=34.4395027+36.0194264&ll=34.4395027+36.0194264" target="_blank" class="fa-icon-link themewich-lightbox no-ajaxy" title="Location On Map">
-                                     <div class="v-item subtitle tiny-details black-text-shadow">
-                                        <i class="fas fa-map-marker-alt" style="font-size: 1.3em !important;"></i> tripoli 
-                                     </div>
-                                  </a>
-                                  <div class="v-item title">
-                                     <h2 class="black-text-shadow">5 - Ouyoun al-Samak</h2>
-                                  </div>
-                                  <div class="section-buttons v-item social-media-links hidden-xs"></div>
-                                  <hr class="v-item title-divider" data-width="100px" />
-                                  <div class="v-item content black-text-shadow">Also known as “springs of fish” the springs here feed the Cold River, the mountain area of Oyoun es-Samak is home to a beautiful lake and waterfalls. The green area is ideal for hiking or a picnic. </div>
-                                  <div class="sharing badges section-buttons v-item">
-                                     <a href="/location/ouyoun-al-samak/" class="location-actions popup-with-move-anim">
-                                     <i class="fas fa-info"></i>
-                                     <span class="sharetitle">More</span></a>
-                                     <a href="#share-box" onclick="updateShareBoxLinks(this);" data-title="Ouyoun al-Samak" data-link="./location/ouyoun-al-samak/" class="location-actions open-popup-link post-share share popup-with-move-anim">
-                                     <i class="fa fa-share"></i>
-                                     <span class="sharetitle">Share</span>
-                                     </a>
-                                     
-                                  </div>
-                               </div>
-                               <div class="clear"></div>
-                            </div>
-                            <div class="clear"></div>
-                         </div>
-                      </div>
-                   </div>
-                   <a href="#section-6" class="nextbutton nobg scroll-animate next-section-link">
-                   <span>Next Section </span> </a>
-                   <div class="credits tiny-details black-text-shadow">
-                      Image by john
-                   </div>
-                </section>
-                <section id="section-6" class="section text-image-section section-6 no-image nav-overlayimage-background layout-left dark-section" data-section="6" data-title="Our Lady Of Nourieh Monastery" style="background-image:url(/images/places/dscn2542_2207.jpg);">
-                   <a name="section-6"></a>
-                   <div class="overlay" style="background:#000000; opacity:0.05; filter:alpha(opacity=5); "></div>
-                   <div class="container">
-                      <div class="section-entry">
-                         <div class="text-image-wrapper">
-                            <div class="col-md-6 text-cell">
-                               <div class="text-layout-inner">
-                                  <a href="https://maps.google.com/maps?&z=12&q=34.3106601+35.6970356&ll=34.3106601+35.6970356" target="_blank" class="fa-icon-link themewich-lightbox no-ajaxy" title="Location On Map">
-                                     <div class="v-item subtitle tiny-details black-text-shadow">
-                                        <i class="fas fa-map-marker-alt" style="font-size: 1.3em !important;"></i> Chekka 
-                                     </div>
-                                  </a>
-                                  <div class="v-item title">
-                                     <h2 class="black-text-shadow">6 - Our Lady Of Nourieh Monastery</h2>
-                                  </div>
-                                  <div class="section-buttons v-item social-media-links hidden-xs"></div>
-                                  <hr class="v-item title-divider" data-width="100px" />
-                                  <div class="v-item content black-text-shadow">When it comes to my favorite places in Lebanon, the Saydet el Nourieh (Our Lady of the Light) Orthodox ranks high. </div>
-                                  <div class="sharing badges section-buttons v-item">
-                                     <a href="/location/our-lady-of-nourieh-monastery/" class="location-actions popup-with-move-anim">
-                                     <i class="fas fa-info"></i>
-                                     <span class="sharetitle">More</span></a>
-                                     <a href="#share-box" onclick="updateShareBoxLinks(this);" data-title="Our Lady Of Nourieh Monastery" data-link="./location/our-lady-of-nourieh-monastery/" class="location-actions open-popup-link post-share share popup-with-move-anim">
-                                     <i class="fa fa-share"></i>
-                                     <span class="sharetitle">Share</span>
-                                     </a>
-                                    
-                                  </div>
-                               </div>
-                               <div class="clear"></div>
-                            </div>
-                            <div class="clear"></div>
-                         </div>
-                      </div>
-                   </div>
-                   <a href="#section-7" class="nextbutton nobg scroll-animate next-section-link">
-                   <span>Next Section </span> </a>
-                   <div class="credits tiny-details black-text-shadow">
-                      Image by john
-                   </div>
-                </section>
-                <section id="section-7" class="section text-image-section section-7 no-image nav-overlayimage-background layout-left dark-section" data-section="7" data-title="Chouwen Lake" style="background-image:url(/images/places/the-view-lake-forest-lebanon-green-nature-snaps-4-10-2017-9-50-24-am-l.jpg);">
-                   <a name="section-7"></a>
-                   <div class="overlay" style="background:#000000; opacity:0.2; filter:alpha(opacity=20); "></div>
-                   <div class="container">
-                      <div class="section-entry">
-                         <div class="text-image-wrapper">
-                            <div class="col-md-6 text-cell">
-                               <div class="text-layout-inner">
-                                  <a href="https://maps.google.com/maps?&z=12&q=34.0815735+35.7794242&ll=34.0815735+35.7794242" target="_blank" class="fa-icon-link themewich-lightbox no-ajaxy" title="Location On Map">
-                                     <div class="v-item subtitle tiny-details black-text-shadow">
-                                        <i class="fas fa-map-marker-alt" style="font-size: 1.3em !important;"></i> Keserwan 
-                                     </div>
-                                  </a>
-                                  <div class="v-item title">
-                                     <h2 class="black-text-shadow">7 - Chouwen Lake</h2>
-                                  </div>
-                                  <div class="section-buttons v-item social-media-links hidden-xs"></div>
-                                  <hr class="v-item title-divider" data-width="100px" />
-                                  <div class="v-item content black-text-shadow">Adventures in Lebanon will take you to hike & swim in the splendid wild nature of Jannet Chouwenvalley and river, located in Ftouh Keserwan </div>
-                                  <div class="sharing badges section-buttons v-item">
-                                     <a href="/location/chouwen-lake/" class="location-actions popup-with-move-anim">
-                                     <i class="fas fa-info"></i>
-                                     <span class="sharetitle">More</span></a>
-                                     <a href="#share-box" onclick="updateShareBoxLinks(this);" data-title="Chouwen Lake" data-link="./location/chouwen-lake/" class="location-actions open-popup-link post-share share popup-with-move-anim">
-                                     <i class="fa fa-share"></i>
-                                     <span class="sharetitle">Share</span>
-                                     </a>
-                                  
-                                  </div>
-                               </div>
-                               <div class="clear"></div>
-                            </div>
-                            <div class="clear"></div>
-                         </div>
-                      </div>
-                   </div>
-                   <a href="#section-8" class="nextbutton nobg scroll-animate next-section-link">
-                   <span>Next Section </span> </a>
-                   <div class="credits tiny-details black-text-shadow">
-                      Image by john
-                   </div>
-                </section>
-                <section id="section-8" class="section text-image-section section-8 no-image nav-overlayimage-background layout-left dark-section" data-section="8" data-title="Baatara Gorge Waterfall" style="background-image:url(/images/places/DSC03161.jpg);">
-                   <a name="section-8"></a>
-                   <div class="overlay" style="background:#000000; opacity:0; filter:alpha(opacity=0); "></div>
-                   <div class="container">
-                      <div class="section-entry">
-                         <div class="text-image-wrapper">
-                            <div class="col-md-6 text-cell">
-                               <div class="text-layout-inner">
-                                  <a href="https://maps.google.com/maps?&z=12&q=34.1752966+35.8668956&ll=34.1752966+35.8668956" target="_blank" class="fa-icon-link themewich-lightbox no-ajaxy" title="Location On Map">
-                                     <div class="v-item subtitle tiny-details black-text-shadow">
-                                        <i class="fas fa-map-marker-alt" style="font-size: 1.3em !important;"></i> Tannourine 
-                                     </div>
-                                  </a>
-                                  <div class="v-item title">
-                                     <h2 class="black-text-shadow">8 - Baatara Gorge Waterfall</h2>
-                                  </div>
-                                  <div class="section-buttons v-item social-media-links hidden-xs"></div>
-                                  <hr class="v-item title-divider" data-width="100px" />
-                                  <div class="v-item content black-text-shadow"> </div>
-                                  <div class="sharing badges section-buttons v-item">
-                                     <a href="/location/baatara-gorge-waterfall/" class="location-actions popup-with-move-anim">
-                                     <i class="fas fa-info"></i>
-                                     <span class="sharetitle">More</span></a>
-                                     <a href="#share-box" onclick="updateShareBoxLinks(this);" data-title="Baatara Gorge Waterfall" data-link="./location/baatara-gorge-waterfall/" class="location-actions open-popup-link post-share share popup-with-move-anim">
-                                     <i class="fa fa-share"></i>
-                                     <span class="sharetitle">Share</span>
-                                     </a>
-                                    
-                                  </div>
-                               </div>
-                               <div class="clear"></div>
-                            </div>
-                            <div class="clear"></div>
-                         </div>
-                      </div>
-                   </div>
-                   <a href="#section-9" class="nextbutton nobg scroll-animate next-section-link">
-                   <span>Next Section </span> </a>
-                   <div class="credits tiny-details black-text-shadow">
-                      Image by john
-                   </div>
-                </section>
-                <section id="section-9" class="section text-image-section section-9 no-image nav-overlayimage-background layout-left dark-section" data-section="9" data-title="Jeita Grotto" style="background-image:url(/images/places/jeita-grotto_2.jpg);">
-                   <a name="section-9"></a>
-                   <div class="overlay" style="background:#000000; opacity:0.4; filter:alpha(opacity=40); "></div>
-                   <div class="container">
-                      <div class="section-entry">
-                         <div class="text-image-wrapper">
-                            <div class="col-md-6 text-cell">
-                               <div class="text-layout-inner">
-                                  <a href="https://maps.google.com/maps?&z=12&q=33.9435839+35.6386393&ll=33.9435839+35.6386393" target="_blank" class="fa-icon-link themewich-lightbox no-ajaxy" title="Location On Map">
-                                     <div class="v-item subtitle tiny-details black-text-shadow">
-                                        <i class="fas fa-map-marker-alt" style="font-size: 1.3em !important;"></i> Jeita 
-                                     </div>
-                                  </a>
-                                  <div class="v-item title">
-                                     <h2 class="black-text-shadow">9 - Jeita Grotto</h2>
-                                  </div>
-                                  <div class="section-buttons v-item social-media-links hidden-xs"></div>
-                                  <hr class="v-item title-divider" data-width="100px" />
-                                  <div class="v-item content black-text-shadow">A system of two separate, but interconnected, karstic limestone caves spanning an overall length of nearly 9 kilometres. </div>
-                                  <div class="sharing badges section-buttons v-item">
-                                     <a href="/location/jeita-grotto/" class="location-actions popup-with-move-anim">
-                                     <i class="fas fa-info"></i>
-                                     <span class="sharetitle">More</span></a>
-                                     <a href="#share-box" onclick="updateShareBoxLinks(this);" data-title="Jeita Grotto" data-link="./location/jeita-grotto/" class="location-actions open-popup-link post-share share popup-with-move-anim">
-                                     <i class="fa fa-share"></i>
-                                     <span class="sharetitle">Share</span>
-                                     </a>
-                                   
-                                  </div>
-                               </div>
-                               <div class="clear"></div>
-                            </div>
-                            <div class="clear"></div>
-                         </div>
-                      </div>
-                   </div>
-                   <a href="#section-10" class="nextbutton nobg scroll-animate next-section-link">
-                   <span>Next Section </span> </a>
-                   <div class="credits tiny-details black-text-shadow">
-                      Image by john
-                   </div>
-                </section>
-                <section id="section-10" class="section text-image-section section-10 no-image nav-overlayimage-background layout-left dark-section" data-section="10" data-title="Raouché" style="background-image:url(/images/places/rawshe.jpg);">
-                   <a name="section-10"></a>
-                   <div class="overlay" style="background:#000000; opacity:0.1; filter:alpha(opacity=10); "></div>
-                   <div class="container">
-                      <div class="section-entry">
-                         <div class="text-image-wrapper">
-                            <div class="col-md-6 text-cell">
-                               <div class="text-layout-inner">
-                                  <a href="https://maps.google.com/maps?&z=12&q=33.886527+35.4692563&ll=33.886527+35.4692563" target="_blank" class="fa-icon-link themewich-lightbox no-ajaxy" title="Location On Map">
-                                     <div class="v-item subtitle tiny-details black-text-shadow">
-                                        <i class="fas fa-map-marker-alt" style="font-size: 1.3em !important;"></i> Beirut 
-                                     </div>
-                                  </a>
-                                  <div class="v-item title">
-                                     <h2 class="black-text-shadow">10 - Raouché</h2>
-                                  </div>
-                                  <div class="section-buttons v-item social-media-links hidden-xs">
-                                     <a target="_blank" href="#" class="social-link" title="Facebook">
-                                     <i class="fab fa-facebook-f"></i></a> <a target="_blank" href="#" class="social-link" title="Twitter">
-                                     <i class="fab fa-twitter"></i></a> <a target="_blank" href="#" class="social-link" title="Instagram">
-                                     <i class="fab fa-instagram"></i></a> <a target="_blank" href="#" class="social-link" title="Google">
-                                     <i class="fab fa-google-plus-g"></i></a> <a target="_blank" href="#" class="social-link" title="Pinterest">
-                                     <i class="fab fa-pinterest-p"></i></a> 
-                                  </div>
-                                  <hr class="v-item title-divider" data-width="100px" />
-                                  <div class="v-item content black-text-shadow">Natural wonders in Beirut. A stunning set of rocks welcome you to the city of Beirut. </div>
-                                  <div class="sharing badges section-buttons v-item">
-                                     <a href="/location/raouche/" class="location-actions popup-with-move-anim">
-                                     <i class="fas fa-info"></i>
-                                     <span class="sharetitle">More</span></a>
-                                     <a href="#share-box" onclick="updateShareBoxLinks(this);" data-title="Raouché" data-link="./location/raouche/" class="location-actions open-popup-link post-share share popup-with-move-anim">
-                                     <i class="fa fa-share"></i>
-                                     <span class="sharetitle">Share</span>
-                                     </a>
-                                 
-                                  </div>
-                               </div>
-                               <div class="clear"></div>
-                            </div>
-                            <div class="clear"></div>
-                         </div>
-                      </div>
-                   </div>
-                   <a href="#section-11" class="nextbutton nobg scroll-animate next-section-link">
-                   <span>Next Section </span> </a>
-                   <div class="credits tiny-details black-text-shadow">
-                      Image by john
-                   </div>
-                </section>
-                <section id="section-11" class="section text-image-section section-11 no-image nav-overlayimage-background layout-left dark-section" data-section="11" data-title="Temples Of Baalbek" style="background-image:url(./images/places/Baalbek-test.jpg);">
-                   <a name="section-11"></a>
-                   <div class="overlay" style="background:#000000; opacity:0.1; filter:alpha(opacity=10); "></div>
-                   <div class="container">
-                      <div class="section-entry">
-                         <div class="text-image-wrapper">
-                            <div class="col-md-6 text-cell">
-                               <div class="text-layout-inner">
-                                  <a href="https://maps.google.com/maps?&z=12&q=34.0046871+36.1935303&ll=34.0046871+36.1935303" target="_blank" class="fa-icon-link themewich-lightbox no-ajaxy" title="Location On Map">
-                                     <div class="v-item subtitle tiny-details black-text-shadow">
-                                        <i class="fas fa-map-marker-alt" style="font-size: 1.3em !important;"></i> Baalbeck 
-                                     </div>
-                                  </a>
-                                  <div class="v-item title">
-                                     <h2 class="black-text-shadow">11 - Temples Of Baalbek</h2>
-                                  </div>
-                                  <div class="section-buttons v-item social-media-links hidden-xs">
-                                     <a target="_blank" href="#" class="social-link" title="Facebook">
-                                     <i class="fab fa-facebook-f"></i></a> <a target="_blank" href="#" class="social-link" title="Twitter">
-                                     <i class="fab fa-twitter"></i></a> <a target="_blank" href="#" class="social-link" title="Instagram">
-                                     <i class="fab fa-instagram"></i></a> <a target="_blank" href="#" class="social-link" title="Google">
-                                     <i class="fab fa-google-plus-g"></i></a> <a target="_blank" href="#" class="social-link" title="Pinterest">
-                                     <i class="fab fa-pinterest-p"></i></a> 
-                                  </div>
-                                  <hr class="v-item title-divider" data-width="100px" />
-                                  <div class="v-item content black-text-shadow">Baalbek, Lebanon's greatest Roman treasure, can be counted among the wonders of the ancient world. </div>
-                                  <div class="sharing badges section-buttons v-item">
-                                     <a href="/location/temples-of-baalbek/" class="location-actions popup-with-move-anim">
-                                     <i class="fas fa-info"></i>
-                                     <span class="sharetitle">More</span></a>
-                                     <a href="#share-box" onclick="updateShareBoxLinks(this);" data-title="Temples Of Baalbek" data-link="./location/temples-of-baalbek/" class="location-actions open-popup-link post-share share popup-with-move-anim">
-                                     <i class="fa fa-share"></i>
-                                     <span class="sharetitle">Share</span>
-                                     </a>
-                                  
-                                  </div>
-                               </div>
-                               <div class="clear"></div>
-                            </div>
-                            <div class="clear"></div>
-                         </div>
-                      </div>
-                   </div>
-                   <a href="#section-12" class="nextbutton nobg scroll-animate next-section-link">
-                   <span>Next Section </span> </a>
-                   <div class="credits tiny-details black-text-shadow">
-                      Image by john
-                   </div>
-                </section> -->
-              
            </div>
         </div>
         <div class="clear"></div>
@@ -564,6 +139,25 @@
     </div>
 
     <script type="text/javascript">
+      var token = '{{ csrf_token() }}' ;
+      function ratePlace(place_id, value) {
+        jQuery.ajax({
+          type: "POST",
+          url: "/rate-place",
+          data: {
+                  _token : token,
+                  placeid : place_id,
+                  value : value,
+              },
+          success: function(array){
+            var array = JSON.parse(array);
+            console.log(array);
+          },
+          error: function(xhr, status, error) {
+            console.log(xhr.responseText);
+          }
+      });
+      }
 
       // jQuery('.vote').colorPicker({
       //   onColorChange : function() {

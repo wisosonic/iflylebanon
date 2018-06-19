@@ -12,6 +12,6 @@
 */
 
 Route::get('/', "HomeController@homepage");
-
+Route::post('/rate-place', "RatingController@ratePlace");
 Auth::routes();
 
