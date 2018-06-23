@@ -36,19 +36,6 @@ toastr.options = {
 
 var valid = false ;
 
-function validateEmailConfirmation() {
-	var email = $("#email").val();
-	var confirm_email = $("#email_confirmation").val();
-	
-	if (email==confirm_email) {
-		return true;
-	} else {
-	    	toastr["error"]("Votre adresse mail ne correspond pas au champ de confirmation!", "Oops !");
-	    	$("#email").css("border","1px solid red");
-	    	$("#email_confirmation").css("border","1px solid red");
-		return  false ;
-	}
-}
 
 function validatePasswordConfirmation() {
 	var pass = $("#password").val();
@@ -57,7 +44,7 @@ function validatePasswordConfirmation() {
 	if (pass==confirm_pass){
 		return true;
 	} else {
-	    	toastr["error"]("Votre mot de passe ne correspond pas au champ de confirmation!", "Oops !");
+	    	toastr["error"]("Passwords did not match !", "Oops !");
 	    	$("#password").css("border","1px solid red");
 	    	$("#password_confirmation").css("border","1px solid red");
 		return  false ;
@@ -108,13 +95,13 @@ function validateForm() {
 function sendForm() {
 	errors = validateForm() ;
 	if (errors == 0) {
-		if (validateEmailConfirmation() && validatePasswordConfirmation() && valid) {
+		if (validatePasswordConfirmation() && valid) {
 			form=document.getElementById("register_form");
 			form.action = "/register";
 			form.submit();
 		}
 	} else {
-		toastr["error"]("Veuillez remplir tous les champs obligatoires !", "Attention !");	
+		toastr["error"]("Please fill in all the required fields !", "Attention !");	
 	}
 }
 
@@ -136,11 +123,11 @@ $("#email").change(function(){
                   },
             success: function(availability){
                 if (availability=='true') {
-                    $("#availability").html("L'adresse mail est disponible");
+                    $("#availability").html("Email address is available !");
                     $("#availability").css('color', '#3F917E');
                     valid = true ;
                 } else {
-                    $("#availability").html("Cette adresse mail a déjà été enregistrée!");
+                    $("#availability").html("This email address has been already registered !");
                     $("#availability").css('color', 'red');
                     valid = false ;
                 }
@@ -150,7 +137,7 @@ $("#email").change(function(){
             }
         });
     } else {
-        $("#availability").html("Merci de fournir une adresse mail valide!");
+        $("#availability").html("Please choose a valid email address !");
         $("#availability").css('color', 'red');
 	valid = false ;
     }

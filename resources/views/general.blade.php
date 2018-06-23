@@ -163,6 +163,16 @@
                         confirmButtonText: "Ok"
                      });
                @endif
+            @elseif (Session::has('accountcreated'))
+               @if (Session::get('accountcreated')=="accountcreated") 
+                  swal({   
+                        title: "Hello {{Auth::user()->name}}",   
+                        text: "Your account has been created successfully !", 
+                        type: "success",   
+                        confirmButtonColor: "#3f927e",   
+                        confirmButtonText: "Ok"
+                     });
+               @endif
             @endif
          </script>
             

@@ -13,5 +13,8 @@
 
 Route::get('/', "HomeController@homepage");
 Route::post('/rate-place', "RatingController@ratePlace");
+
+Route::post('/checkemailavailability', "UserController@checkemailavailability");
+
 Auth::routes();
 
