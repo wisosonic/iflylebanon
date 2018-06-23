@@ -22,4 +22,12 @@ class PlaceController extends Controller {
 		
 	}
 
+	public function getPlaceInfo($slug)
+	{
+		$place = Place::where("slug",$slug)->first();
+		if ($place) {
+			return view("/Place/placedetails", ["place"=>$place]);
+		}	
+	}
+
 }

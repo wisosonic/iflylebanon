@@ -12,6 +12,7 @@
 */
 
 Route::get('/', "HomeController@homepage");
+Route::get('/location/{slug}', "PlaceController@getPlace");
 Route::post('/rate-place', "RatingController@ratePlace");
 
 Route::post('/checkemailavailability', "UserController@checkemailavailability");
