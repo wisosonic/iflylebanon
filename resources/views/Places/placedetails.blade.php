@@ -51,7 +51,7 @@
                            </div>
                            <div class="title">
                               <h1>
-                                 Afqa Waterfall 
+                                 {{$place->title}}
                               </h1>
                            </div>
                            <div class="subtitle">
@@ -65,14 +65,14 @@
                         <div class="col-md-8 col-md-offset-2 regular-width">
                            <div class="intro">
                               <h2>
-                                 Distinguished for its colossal grotto. Afqa is a rectangular-prism-shaped from a distance the cave appears like a mouth opening and bursts forth with a gushing waterfall that feeds into Nahr Ibrahim. 
+                                 {{$place->description}}
                               </h2>
                            </div>
                            <div class="content">
-                              <aside class="aside-left">Find your way to: <strong>Afqa Waterfall</strong></aside>
+                              <aside class="aside-left">Find your way to: <strong>{{$place->title}}</strong></aside>
                               <div class="col-md-12 full-width">
                                  <div class="tw-column tw-two-third tw-column-first ">
-                                    <a class="themewich-lightbox no-ajaxy" href="https://maps.google.com/maps?&amp;z=12&amp;q=34.0691667+35.8882998&amp;ll=34.0691667+35.8882998">
+                                    <a class="themewich-lightbox no-ajaxy" href="https://maps.google.com/maps?&amp;z=12&amp;q={{$place->long}}+{{$place->lat}}&amp;ll={{$place->long}}+{{$place->lat}}">
                                        <div id="location-map-container" style="width: 100% !important; height: 300px !important; margin-right: 15px !important; position: relative; overflow: hidden;">
                                           <div style="height: 100%; width: 100%; position: absolute; top: 0px; left: 0px; background-color: rgb(229, 227, 223);">
                                              <div class="gm-style" style="position: absolute; z-index: 0; left: 0px; top: 0px; height: 100%; width: 100%; padding: 0px; border-width: 0px; margin: 0px;">
@@ -154,22 +154,14 @@
                                     </a>
                                  </div>
                                  <div class="tw-column tw-one-third tw-column-last location-info-container">
-                                    <h4 class="place-name">Jbeil</h4>
-                                    <a target="_blank" href="tel:71 6432 432" class="social-link" title="Phone">
-                                    <i class="fas fa-phone"></i> 71 6432 432</a> <a target="_blank" href="tel:961 4312 34214" class="social-link" title="Phone">
-                                    <i class="fas fa-phone"></i> 961 4312 34214</a> <a target="_blank" href="https://parposa.com/iflylebanon/location/afqa-waterfall/#" class="social-link" title="Facebook">
-                                    <i class="fab fa-facebook-f"></i> Facebook</a> <a target="_blank" href="https://parposa.com/iflylebanon/location/afqa-waterfall/#" class="social-link" title="Twitter">
-                                    <i class="fab fa-twitter"></i> Twitter</a> <a target="_blank" href="https://parposa.com/iflylebanon/location/afqa-waterfall/#" class="social-link" title="Instagram">
-                                    <i class="fab fa-instagram"></i> Instagram</a> <a target="_blank" href="https://parposa.com/iflylebanon/location/afqa-waterfall/#" class="social-link" title="Google">
-                                    <i class="fab fa-google-plus-g"></i> Google</a> <a target="_blank" href="https://parposa.com/iflylebanon/location/afqa-waterfall/#" class="social-link" title="Pinterest">
-                                    <i class="fab fa-pinterest-p"></i> Pinterest</a> 
+                                    <h4 class="place-name">{{$place->department}}</h4>
+                                    <i class="fab fa-facebook-f"></i> Facebook</a> <a target="_blank" href="https://parposa.com/iflylebanon/location/afqa-waterfall/#" class="social-link" title="Twitter"></a>
+                                    <i class="fab fa-instagram"></i> Instagram</a> <a target="_blank" href="https://parposa.com/iflylebanon/location/afqa-waterfall/#" class="social-link" title="Google"></a>
+                                    <i class="fab fa-google-plus-g"></i> Google</a> <a target="_blank" href="https://parposa.com/iflylebanon/location/afqa-waterfall/#" class="social-link" title="Pinterest"></a>
                                  </div>
                                  <div class="clear"></div>
                               </div>
-                              The impressive Afqa Grotto - located in a large cliff 200 meters up - is the source and spring of Nahr Ibrahim and spits huge amounts of water, which is most impressive in winter. It is said to be the place where Adonis first met and kissed Astarte and where he was killed by a wild boar dispatched by Astarte’s jealous husband.
-                              The adventurer can visit Afqa's grotto well-known for its uncountable mazes and tangles. He can just go through the Rouaiss grotto and do exciting activities. For 10 dollars only, he can try for example the Zip Line to go from one side to the other as if sliding down tied up with a zipper.
-                              Rappel &amp; Escalade are the most know activities, you will benefit and enjoy them whatever level you are. Whether you are a beginner, medium, or advanced level in these activities, Afqa is the perfect place for these activities as there are passages for all these levels also, you can play darts in a challenging circle for two persons. If you control yourself, you will win the game.
-                              From&nbsp;Byblos&nbsp;to the Afqa Grotto by car, head east toward Annaya and Ehmej and then keep straight toward Aqoura. About three and a half kilometers after Aqoura, take the left fork up toward Afka, Lassa and La Reserve. From there, keep straight toward the valley floor until you reach the water spitting cave on your left.&nbsp;Duration: 75 min.
+                              {{$place->text}}
                               <style type="text/css">
                                  #gallery-1 .gallery-item {
                                  float: left;
@@ -212,7 +204,18 @@
                               <i class="fa fa-heart"></i>
                               <span class="sharetitle">Like</span></a>
                            </div>
-                           <div id="disqus_thread"><iframe id="dsq-app6838" name="dsq-app6838" allowtransparency="true" frameborder="0" scrolling="no" tabindex="0" title="Disqus" width="100%" src="./Afqa Waterfall - I Fly Lebanon_files/saved_resource(1).html" style="width: 1px !important; min-width: 100% !important; border: none !important; overflow: hidden !important; height: 387px !important;" horizontalscrolling="no" verticalscrolling="no"></iframe></div>
+                           <div id="disqus_thread">
+                              <div width=730 class="fb-comments" data-href="{{$place->commentsurl}}" data-numposts="5"></div>
+                              <div id="fb-root"></div>
+                                 <script>(function(d, s, id) {
+                                    var js, fjs = d.getElementsByTagName(s)[0];
+                                      if (d.getElementById(id)) return;
+                                      js = d.createElement(s); js.id = id;
+                                      js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0';
+                                      fjs.parentNode.insertBefore(js, fjs);
+                                    }(document, 'script', 'facebook-jssdk'));
+                                 </script>
+                           </div>
                         </div>
                      </div>
                   </div>
@@ -221,7 +224,7 @@
                   // Initialize and add the map
                   function initMap() {
                     // The location of Uluru
-                    var uluru = {lat: 34.0691667, lng: 35.8882998};
+                    var uluru = {lat: {{$place->long}}, lng: {{$place->lat}}};
                     // The map, centered at Uluru
                     var map = new google.maps.Map(
                         document.getElementById('location-map-container'), {zoom: 12, center: uluru});
@@ -229,7 +232,7 @@
                     var marker = new google.maps.Marker({position: uluru, map: map});
                   }
                </script>
-               <script async="" defer="" src="./Afqa Waterfall - I Fly Lebanon_files/js"></script>
+               <script async="" defer="" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD3aGdyqH7NbsyHOm5V5_wEjKya7DG1FwI&callback=initMap"></script>
                <div class="clear"></div>
                <div id="footer">
                   <div class="container clearfix">
