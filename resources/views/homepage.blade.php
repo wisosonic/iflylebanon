@@ -89,6 +89,10 @@
                                        <i class="fa fa-share"></i>
                                        <span class="sharetitle">Share</span>
                                       </a>
+                                      <a  href="#share-box" onclick="updateShareBoxLinks(this);" data-title="{{$place->title}}" data-link="./location/{{$place->slag}}/" style="background-color: #333333" class="location-actions open-popup-link post-share share popup-with-move-anim">
+                                       <i style="color: red" class="fas fa-wifi"></i>
+                                       <span class="sharetitle">Live now</span>
+                                      </a>
                                       @if (Auth::user())
                                         <div style="margin-top: 20px" class="sharing badges section-buttons v-item">
                                           <h3 style="float:left; color:#333333 ; font-weight: 600">Rate this place : </h3>

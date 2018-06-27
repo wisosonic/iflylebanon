@@ -145,9 +145,7 @@
          <script type='text/javascript' src='/js/jquery.infinitescroll.min.js?ver=2.0b2.120519'></script>
          <script type='text/javascript' src='/js/jquery.fullPage.min.js?ver=2.2.5'></script>
          <script type='text/javascript'>
-            /* <![CDATA[ */
             var agAjax = {"ajaxurl":".","get_template_directory_uri":".","loading_class":"ball-triangle","nonce":"2f2f9606e4"};
-            /* ]]> */
          </script>
          <script type='text/javascript' src='/js/custom.js?ver=4.9.6'></script>
          <script type='text/javascript' src='/js/wp-embed.min.js?ver=4.9.6'></script>
