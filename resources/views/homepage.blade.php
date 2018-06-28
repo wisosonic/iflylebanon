@@ -81,7 +81,7 @@
                                        {{$place->description}}
                                   </div>
                                   <div class="sharing badges section-buttons v-item">
-                                      <a href="/location/{{$place->slag}}/" style="background-color: #333333" class="location-actions popup-with-move-anim">
+                                      <a href="/location/{{$place->slug}}/" style="background-color: #333333" class="location-actions popup-with-move-anim">
                                         <i class="fas fa-info"></i>
                                         <span class="sharetitle">More</span>
                                       </a>
