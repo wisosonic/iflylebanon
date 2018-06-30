@@ -92,6 +92,8 @@
                                     @endif
                                     <ul>
                                        <li class="page_item page-item-5 current_page_item"><a href="/">Our Lebanon</a></li>
+                                       <li class="page_item page-item-5 current_page_item"><a href="/all-live-streams">Live streams</a></li>
+                                       
                                        @if(Auth::user())
                                           <form action="" method="POST" id="logout_form">
                                              {{ csrf_field() }}

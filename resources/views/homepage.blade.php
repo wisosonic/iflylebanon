@@ -94,6 +94,10 @@
                                          <i style="color: red" class="fas fa-wifi"></i>
                                          <span class="sharetitle">Live now</span>
                                         </a>
+                                      @else
+                                        <a href="#" style="background-color: #333333" class="">
+                                         <span class="sharetitle">CHANNEL OFFLINE</span>
+                                        </a>
                                       @endif
                                       @if (Auth::user())
                                         <div style="margin-top: 20px" class="sharing badges section-buttons v-item">
