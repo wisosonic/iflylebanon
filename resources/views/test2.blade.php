@@ -10,7 +10,6 @@
  */
 
 
-
 /*
  * You can acquire an OAuth 2.0 client ID and client secret from the
  * {{ Google Cloud Console }} <{{ https://cloud.google.com/console }}>
@@ -19,81 +18,70 @@
  * Please ensure that you have enabled the YouTube Data API for your project.
  */
 $OAUTH2_CLIENT_ID = '232028853670-crrhrei08d5h2v4lea0n5sbiqribd1em.apps.googleusercontent.com';
-$OAUTH2_CLIENT_SECRET = 'SKJMy6HnRSZAAlcZ14UjN8iC';
-$REDIRECT = 'http://iflylebanon.com/oauth2callback';
+$OAUTH2_CLIENT_SECRET = '2z6IXWt-ERnL13c1-3L3FDkC';
+$REDIRECT = 'http://iflylebanon.com/test2';
 
 $client = new Google_Client();
 $client->setClientId($OAUTH2_CLIENT_ID);
 $client->setClientSecret($OAUTH2_CLIENT_SECRET);
-
+$client->setAccessType('offline');
 $client->setScopes('https://www.googleapis.com/auth/youtube');
-$redirect = filter_var('http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'],
-    FILTER_SANITIZE_URL);
+
 // $client->setRedirectUri($redirect);
+// dd($client);
 $client->setRedirectUri($REDIRECT);
+$client->setApprovalPrompt("consent");
+$client->setPrompt("consent");
 
+// $accesstoken = DB::table('youtubeapi')->find(1);
+// $client->refreshToken($accesstoken->token);
+// $client->revokeToken();
+// dd($client->getAccessToken());
 
+// DB::table('youtubeapi')
+//       ->where('id','=',1)
+//       ->update(array("token"=> json_encode($client->getAccessToken())));
+// dd($client->getAccessToken());
 
-
-// Define an object that will be used to make all API requests.
+$htmlBody = "" ;
 $youtube = new Google_Service_YouTube($client);
 
-// Check if an auth token exists for the required scopes
-$tokenSessionKey = 'token-' . $client->prepareScopes();
 if (isset($_GET['code'])) {
-  if (strval($_SESSION['state']) !== strval($_GET['state'])) {
-    die('The session state did not match.');
-  }
-
   $client->authenticate($_GET['code']);
-  $_SESSION[$tokenSessionKey] = $client->getAccessToken();
-  header('Location: ' . $redirect);
+  $client->refreshToken($client->getAccessToken());
+  DB::table('youtubeapi')
+      ->where('id','=',1)
+      ->update(array("token"=> json_encode($client->getAccessToken())));
+  header('Location: ' . $REDIRECT);
 }
 
-if (isset($_SESSION[$tokenSessionKey])) {
-  $client->setAccessToken($_SESSION[$tokenSessionKey]);
+$accesstoken = DB::table('youtubeapi')->find(1);
+
+if ($accesstoken->token != "null") {
+  $client->setAccessToken($accesstoken->token);
+  $client->refreshToken($accesstoken->token);
+  DB::table('youtubeapi')
+      ->where('id','=',1)
+      ->update(array("token"=> json_encode($client->getAccessToken())));
 }
 
-// Check to ensure that the access token was successfully acquired.
 if ($client->getAccessToken()) {
   try {
-    // Execute an API request that lists broadcasts owned by the user who
-    // authorized the request.
     $broadcastsResponse = $youtube->liveBroadcasts->listLiveBroadcasts(
         'id,snippet',
         array(
             'mine' => 'true',
         ));
-
-    $htmlBody .= "<h3>Live Broadcasts</h3><ul>";
-    foreach ($broadcastsResponse['items'] as $broadcastItem) {
-      $htmlBody .= sprintf('<li>%s (%s)</li>', $broadcastItem['snippet']['title'],
-          $broadcastItem['id']);
-    }
-    $htmlBody .= '</ul>';
-
+    dd($broadcastsResponse['items'], $client->getAccessToken());
   } catch (Google_Service_Exception $e) {
-    $htmlBody = sprintf('<p>A service error occurred: <code>%s</code></p>',
-        htmlspecialchars($e->getMessage()));
   } catch (Google_Exception $e) {
-    $htmlBody = sprintf('<p>An client error occurred: <code>%s</code></p>',
-        htmlspecialchars($e->getMessage()));
   }
-
-  $_SESSION[$tokenSessionKey] = $client->getAccessToken();
-} elseif ($OAUTH2_CLIENT_ID == 'REPLACE_ME') {
-  $htmlBody = <<<END
-  <h3>Client Credentials Required</h3>
-  <p>
-    You need to set <code>\$OAUTH2_CLIENT_ID</code> and
-    <code>\$OAUTH2_CLIENT_ID</code> before proceeding.
-  <p>
-END;
 } else {
+
   // If the user hasn't authorized the app, initiate the OAuth flow
   $state = mt_rand();
   $client->setState($state);
-  $_SESSION['state'] = $state;
+  Session::put('state',$state);
 
   $authUrl = $client->createAuthUrl();
   $htmlBody = <<<END

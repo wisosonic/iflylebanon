@@ -10,6 +10,9 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get("/oauth2callback", function(){
+	dd("hi");
+});
 
 Route::get("/test1", function(){
 	$params=array('eventType' => 'live', 'maxResults' => 25, 'q' => 'afqa', 'type' => 'video', 'part'=>"snippet");
@@ -25,6 +28,19 @@ Route::get("/test1", function(){
 Route::get("/test2", function(){
 	return view("test2");
 });
+Route::get("/test3", function(){
+	$exitCode = Artisan::call('config:cache');
+	dd("hi");
+});
+Route::get("/test4", function(){
+	$exitCode = Artisan::call('migrate');
+	dd("hi");
+});
+Route::get("/test5", function(){
+	$videos = App\Youtubeapi::getAllChannelBroadcasts();
+	dd($videos);
+});
+
 
 Route::get('/', "HomeController@homepage");
 Route::get('/location/{slug}', "PlaceController@getPlace");
