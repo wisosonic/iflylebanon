@@ -26,9 +26,10 @@ class HomeController extends Controller {
 
 	public function allLiveStreams()
 	{
+		
 		$broadcasts = Youtubeapi::getAllChannelBroadcasts();
-		dd($broadcasts);
-		return view("homepage", ["places"=>$places, "livestatus"=>$livestatus, "videourl"=>$videourl]);
+		// dd($broadcasts);
+		return view("broadcasts", ["broadcasts"=>$broadcasts]);
 	}
 
 }

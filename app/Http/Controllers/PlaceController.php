@@ -36,5 +36,9 @@ class PlaceController extends Controller {
 			return view("Places/placedetails", ["place"=>$place]);
 		}	
 	}
+	public function getAddNewPlace()
+	{
+		return view("Places/addnewplace");
+	}
 
 }

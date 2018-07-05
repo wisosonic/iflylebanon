@@ -95,6 +95,7 @@
                                        <li class="page_item page-item-5 current_page_item"><a href="/all-live-streams">Live streams</a></li>
                                        
                                        @if(Auth::user())
+                                          <li class="page_item page-item-5 current_page_item"><a href="/add-new-place">Add new place</a></li>
                                           <form action="" method="POST" id="logout_form">
                                              {{ csrf_field() }}
                                           </form>

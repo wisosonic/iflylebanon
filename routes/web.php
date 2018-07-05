@@ -46,6 +46,7 @@ Route::get('/', "HomeController@homepage");
 Route::get('/location/{slug}', "PlaceController@getPlace");
 Route::post('/rate-place', "RatingController@ratePlace");
 Route::get('/all-live-streams', "HomeController@allLiveStreams");
+Route::get('/add-new-place', "PlaceController@addNewPlace");
 Route::post('/checkemailavailability', "UserController@checkemailavailability");
 
 Auth::routes();
