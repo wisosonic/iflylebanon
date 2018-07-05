@@ -115,7 +115,7 @@
                </div>
             </div>
          </div>
-
+         
          @yield("content")
 
          <div id="tw-mobile-indicator"></div>

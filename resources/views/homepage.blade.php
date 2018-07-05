@@ -56,7 +56,7 @@
                          <div class="text-image-wrapper">
                             <div class="col-md-6 text-cell" style="background-color: rgb(255,255,255,0.5); padding: 20px">
                                <div class="text-layout-inner">
-                                  <a href="https://maps.google.com/maps?&z=12&q=34.0691667+35.8882998&ll=34.0691667+35.8882998" target="_blank" class="fa-icon-link themewich-lightbox no-ajaxy" title="Location On Map">
+                                  <a href="https://maps.google.com/maps?&z=12&q={{$place->long}}+{{$place->lat}}&ll={{$place->long}}+{{$place->lat}}" target="_blank" class="fa-icon-link themewich-lightbox no-ajaxy" title="Location On Map">
                                      <div class="v-item subtitle tiny-details " style="color:#333333 !important ">
                                         <i class="fas fa-map-marker-alt" style="font-size: 1.3em !important; color:red"></i> {{$place->department}} 
                                      </div>
