@@ -23,16 +23,7 @@ class HomeController extends Controller {
 			$livestatus = false;
 			$videourl = "#";
 		}
-		// $places = array_values($places);
-		// dd($places);
 		return view("homepage", ["places"=>$places, "livestatus"=>$livestatus, "videourl"=>$videourl]);
-	}
-
-	public function allLiveStreams()
-	{
-		$broadcasts = Youtubeapi::getAllChannelBroadcasts();
-		// dd($broadcasts);
-		return view("broadcasts", ["broadcasts"=>$broadcasts]);
 	}
 
 }

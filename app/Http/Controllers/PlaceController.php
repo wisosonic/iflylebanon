@@ -45,7 +45,6 @@ class PlaceController extends Controller {
 
 	public function postAddNewPlace(Request $request)
 	{
-		
 		$message = Place::addNewPlace($request);
 		return redirect("/")->with(["message"=>$message]);
 	}

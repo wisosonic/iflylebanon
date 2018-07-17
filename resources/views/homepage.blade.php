@@ -64,7 +64,7 @@
                                   <div class="v-item title">
                                       <h2 style="color: #333333; font-weight: 600">{{$key+1}} - {{$place->title}}</h2>
                                       <fieldset class="rating">
-                                        <span style="color:#333333; font-weight: 700" id="stars-{{$key+1}}">{{number_format($place->rating,1)}} ({{$place->ratings()->count()}})</span> <label style="padding: 2.5px ; color: yellow" class="full"  ></label>
+                                        <span style="color:#333333; font-weight: 700" id="stars-{{$key+1}}">{{$place->rating}} ({{$place->ratings()->count()}})</span> <label style="padding: 2.5px ; color: yellow" class="full"  ></label>
                                       <fieldset>
                                   </div>
                                   <br>
@@ -90,29 +90,30 @@
                                        <span class="sharetitle">Share</span>
                                       </a>
                                       @if ($livestatus)
-                                        <a href="{{$videourl}}" target="_blank" style="background-color: #333333" class="">
-                                         <i style="color: red" class="fas fa-wifi"></i>
-                                         <span class="sharetitle">Live now</span>
+                                        <a id="livestreaminglink_{{$place->id}}" href="{{$videourl}}" target="_blank" style="background-color: #333333" class="">
+                                          <i id="livestreamingicon_{{$place->id}}" style="color: green" class="fas fa-wifi"></i>
+                                          <span id="livestreamingbutton_{{$place->id}}" class="sharetitle">Live now</span>
                                         </a>
                                       @else
-                                        <a href="#" style="background-color: #333333" class="">
-                                         <span class="sharetitle">CHANNEL OFFLINE</span>
+                                        <a id="livestreaminglink_{{$place->id}}" href="#" target="" style="background-color: #333333" class="">
+                                          <i id="livestreamingicon_{{$place->id}}" style="color: red" class="fas fa-circle"></i>
+                                          <span id="livestreamingbutton_{{$place->id}}" class="sharetitle">CHANNEL OFFLINE</span>
                                         </a>
                                       @endif
                                       @if (Auth::user())
                                         <div style="margin-top: 20px" class="sharing badges section-buttons v-item">
                                           <h3 style="float:left; color:#333333 ; font-weight: 600">Rate this place : </h3>
                                           <fieldset style="margin-top: 6px" class="rating">
-                                            <input type="radio" id="{{$place->id}}_5" name="rating_{{$place->id}}" value="5" /><label onclick="ratePlace('{{$place->id}}','5');" class = "full" for="{{$place->id}}_5" title="Awesome - 5 stars"></label>
-                                            <input type="radio" id="{{$place->id}}_4-5" name="rating_{{$place->id}}" value="4.5" /><label onclick="ratePlace('{{$place->id}}','4.5');" class="half" for="{{$place->id}}_4-5" title="Pretty good - 4.5 stars"></label>
-                                            <input type="radio" id="{{$place->id}}_4" name="rating_{{$place->id}}" value="4" /><label onclick="ratePlace('{{$place->id}}','4');" class = "full" for="{{$place->id}}_4" title="Pretty good - 4 stars"></label>
-                                            <input type="radio" id="{{$place->id}}_3-5" name="rating_{{$place->id}}" value="3.5" /><label onclick="ratePlace('{{$place->id}}','3.5');" class="half" for="{{$place->id}}_3-5" title="Meh - 3.5 stars"></label>
-                                            <input type="radio" id="{{$place->id}}_3" name="rating_{{$place->id}}" value="3" /><label onclick="ratePlace('{{$place->id}}','3');" class = "full" for="{{$place->id}}_3" title="Meh - 3 stars"></label>
-                                            <input type="radio" id="{{$place->id}}_2-5" name="rating_{{$place->id}}" value="2.5" /><label onclick="ratePlace('{{$place->id}}','2.5');" class="half" for="{{$place->id}}_2-5" title="Kinda bad - 2.5 stars"></label>
-                                            <input type="radio" id="{{$place->id}}_2" name="rating_{{$place->id}}" value="2" /><label onclick="ratePlace('{{$place->id}}','2');" class = "full" for="{{$place->id}}_2" title="Kinda bad - 2 stars"></label>
-                                            <input type="radio" id="{{$place->id}}_1-5" name="rating_{{$place->id}}" value="1.5" /><label onclick="ratePlace('{{$place->id}}','1.5');" class="half" for="{{$place->id}}_1-5" title="Meh - 1.5 stars"></label>
-                                            <input type="radio" id="{{$place->id}}_1" name="rating_{{$place->id}}" value="1" /><label onclick="ratePlace('{{$place->id}}','1');" class = "full" for="{{$place->id}}_1" title="Sucks big time - 1 star"></label>
-                                            <input type="radio" id="{{$place->id}}_0-5" name="rating_{{$place->id}}" value="0.5" /><label onclick="ratePlace('{{$place->id}}','0.5');" class="half" for="{{$place->id}}_0-5" title="Sucks big time - 0.5 stars"></label>
+                                            <input type="radio" id="{{$place->id}}_5" name="rating_{{$place->id}}" value="5" /><label onclick="ratePlace('{{$place->id}}','5', '{{$key+1}}');" class = "full" for="{{$place->id}}_5" title="Awesome - 5 stars"></label>
+                                            <input type="radio" id="{{$place->id}}_4-5" name="rating_{{$place->id}}" value="4.5" /><label onclick="ratePlace('{{$place->id}}','4.5', '{{$key+1}}');" class="half" for="{{$place->id}}_4-5" title="Pretty good - 4.5 stars"></label>
+                                            <input type="radio" id="{{$place->id}}_4" name="rating_{{$place->id}}" value="4" /><label onclick="ratePlace('{{$place->id}}','4', '{{$key+1}}');" class = "full" for="{{$place->id}}_4" title="Pretty good - 4 stars"></label>
+                                            <input type="radio" id="{{$place->id}}_3-5" name="rating_{{$place->id}}" value="3.5" /><label onclick="ratePlace('{{$place->id}}','3.5', '{{$key+1}}');" class="half" for="{{$place->id}}_3-5" title="Meh - 3.5 stars"></label>
+                                            <input type="radio" id="{{$place->id}}_3" name="rating_{{$place->id}}" value="3" /><label onclick="ratePlace('{{$place->id}}','3', '{{$key+1}}');" class = "full" for="{{$place->id}}_3" title="Meh - 3 stars"></label>
+                                            <input type="radio" id="{{$place->id}}_2-5" name="rating_{{$place->id}}" value="2.5" /><label onclick="ratePlace('{{$place->id}}','2.5', '{{$key+1}}');" class="half" for="{{$place->id}}_2-5" title="Kinda bad - 2.5 stars"></label>
+                                            <input type="radio" id="{{$place->id}}_2" name="rating_{{$place->id}}" value="2" /><label onclick="ratePlace('{{$place->id}}','2', '{{$key+1}}');" class = "full" for="{{$place->id}}_2" title="Kinda bad - 2 stars"></label>
+                                            <input type="radio" id="{{$place->id}}_1-5" name="rating_{{$place->id}}" value="1.5" /><label onclick="ratePlace('{{$place->id}}','1.5', '{{$key+1}}');" class="half" for="{{$place->id}}_1-5" title="Meh - 1.5 stars"></label>
+                                            <input type="radio" id="{{$place->id}}_1" name="rating_{{$place->id}}" value="1" /><label onclick="ratePlace('{{$place->id}}','1', '{{$key+1}}');" class = "full" for="{{$place->id}}_1" title="Sucks big time - 1 star"></label>
+                                            <input type="radio" id="{{$place->id}}_0-5" name="rating_{{$place->id}}" value="0.5" /><label onclick="ratePlace('{{$place->id}}','0.5', '{{$key+1}}');" class="half" for="{{$place->id}}_0-5" title="Sucks big time - 0.5 stars"></label>
                                           </fieldset>
                                         </div>
                                       @else
@@ -141,7 +142,7 @@
 
     <script type="text/javascript">
       var token = '{{ csrf_token() }}' ;
-      function ratePlace(place_id, value) {
+      function ratePlace(place_id, value, index) {
         jQuery.ajax({
           type: "POST",
           url: "/rate-place",
@@ -150,9 +151,27 @@
                   placeid : place_id,
                   value : value,
               },
-          success: function(array){
+          success: function(array) {
             var array = JSON.parse(array);
-            console.log(array);
+            if (array[0] == "updated") {
+              document.getElementById("stars-"+index).innerHTML = array[1] + " (" + array[2] + ")";
+              swal({   
+                title: "You have already rated this place",   
+                text: "Your rating have been updated from " + array[3] + " to " + array[4] + " !", 
+                type: "success",   
+                confirmButtonColor: "#3f927e",   
+                confirmButtonText: "Ok"
+              });
+            } else if ( array[0] == "rated" ) {
+              document.getElementById("stars-"+index).innerHTML = array[1] + " (" + array[2] + ")";
+              swal({   
+                title: "Thank you for rating this place !",   
+                text: "", 
+                type: "success",   
+                confirmButtonColor: "#3f927e",   
+                confirmButtonText: "Ok"
+              });
+            }
           },
           error: function(xhr, status, error) {
             console.log(xhr.responseText);

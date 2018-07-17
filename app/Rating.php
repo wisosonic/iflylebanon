@@ -31,10 +31,13 @@ class Rating extends Model  {
 			$place = Place::find($data["placeid"]);
 			$rating = $user->ratings()->where("place_id",$place->id)->first();
 			if ($rating) {
+				$oldrating = $rating->rating;
+				$newrating = $data["value"] ;
 				$rating->rating = $data["value"];
 				$rating->save();
 				$place->updateRating();
-				return ["updated",$place->rating];
+
+				return ["updated",$place->rating, $place->ratings()->count(), $oldrating, $newrating];
 			} else {
 				$rating = new Rating();
 				$rating->user_id = $user->id;
@@ -42,7 +45,7 @@ class Rating extends Model  {
 				$rating->rating = $data["value"];
 				$rating->save();
 				$place->updateRating();
-				return ["rated",$place->rating];
+				return ["rated",$place->rating, $place->ratings()->count()];
 			}
 		} else {
 			return ["nofound",""];
