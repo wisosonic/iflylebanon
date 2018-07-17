@@ -115,8 +115,18 @@
                </div>
             </div>
          </div>
-         
+
          @yield("content")
+
+        <div class="clear"></div>
+        <div id="footer">
+           <div class="container clearfix">
+              <div class="col-md-6 left-footer tiny-details">
+                 &copy; Copyright 2018 
+              </div>
+           </div>
+           <div class="clear"></div>
+        </div>
 
          <div id="tw-mobile-indicator"></div>
          <link rel='stylesheet' id='fontawesome-style-css' href='https://use.fontawesome.com/releases/v5.0.10/css/all.css?ver=4.9.6' type='text/css' media='all' />
@@ -160,6 +170,22 @@
                         title: "",   
                         text: "Hello {{Auth::user()->name}}", 
                         type: "success",   
+                        confirmButtonColor: "#3f927e",   
+                        confirmButtonText: "Ok"
+                     });
+               @elseif (Session::get('message')=="placeadded") 
+                  swal({   
+                        title: "",   
+                        text: "Place has been added !", 
+                        type: "success",   
+                        confirmButtonColor: "#3f927e",   
+                        confirmButtonText: "Ok"
+                     });
+               @elseif (Session::get('message')=="placeerror") 
+                  swal({   
+                        title: "",   
+                        text: "Place has not been added !", 
+                        type: "error",   
                         confirmButtonColor: "#3f927e",   
                         confirmButtonText: "Ok"
                      });

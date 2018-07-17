@@ -137,15 +137,6 @@
               @endforeach
            </div>
         </div>
-        <div class="clear"></div>
-        <div id="footer">
-           <div class="container clearfix">
-              <div class="col-md-6 left-footer tiny-details">
-                 &copy; Copyright 2018 
-              </div>
-           </div>
-           <div class="clear"></div>
-        </div>
   </div>
 
     <script type="text/javascript">
@@ -166,7 +157,7 @@
           error: function(xhr, status, error) {
             console.log(xhr.responseText);
           }
-      });
+        });
       }
 
       // jQuery('.vote').colorPicker({

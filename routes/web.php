@@ -30,6 +30,9 @@ Route::get('/location/{slug}', "PlaceController@getPlace");
 Route::post('/rate-place', "RatingController@ratePlace");
 Route::get('/all-live-streams', "HomeController@allLiveStreams");
 Route::get('/add-new-place', "PlaceController@getAddNewPlace");
+Route::post('/add-new-place', "PlaceController@postAddNewPlace");
+
+
 Route::post('/checkemailavailability', "UserController@checkemailavailability");
 
 Auth::routes();

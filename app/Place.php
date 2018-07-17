@@ -8,9 +8,12 @@ class Place extends Model  {
 	protected $table = "places";
 	protected $fillable = [
 							"title",
+							"slug",
 							"department",
 							"coordinates",
 							"description",
+							"text",
+							"image",
 							"rating",
 							"user_id"
 						];
@@ -38,6 +41,33 @@ class Place extends Model  {
 		}
 		$this->rating = $average;
 		$this->save();
+	}
+
+	public static function addNewPlace($request)
+	{
+		try {
+			$data = $request->all();
+			$place = new Place();
+			$place->title = $data["title"];
+			$place->slug = urlencode($data["title"]);
+			$place->department = $data["department"];
+			$place->coordinates = $data["lat"] . " " . $data["long"] ;
+			$place->description = $data["description"];
+			$place->text = $data["text"];
+
+			$image = $request->file("coverphoto");
+			$photoName = time().'.'.$image->getClientOriginalExtension();
+			$data["coverphoto"]->move(public_path('/images/places'), $photoName);
+			
+			$place->image = '/images/places/' . $photoName;
+			$place->rating = 0;
+			$place->user_id=$data["user_id"];
+			$place->save();
+			return "placeadded";
+		} catch (Exception $e) {
+			return "placeerror";
+		}
+			
 	}
 
 }
