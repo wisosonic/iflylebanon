@@ -8,17 +8,17 @@ use Illuminate\Support\Facades\Request;
 
 class StreamingController extends Controller {
 
-	public function checkactive()
+	public function checkLiveStreaming()
 	{
+		$places = array_fill_keys(Place::all()->pluck("id")->toArray(), false);
 		$actives = Youtubeapi::getActiveBroadcasts();
-		if (count($actives)>0) {
-			$livestatus = true;
-			$videourl = Youtubeapi::getVideoURLById($actives[0]->id);
-		} else {
-			$livestatus = false;
-			$videourl = "#";
+		foreach ($actives as $key => $active) {
+			$place = Place::where("title", "=",$active->snippet->title)->first();
+			if ($place) {
+				$places[$place->id] = Youtubeapi::getVideoURLById($active->id);
+			}
 		}
-		return ["livestatus"=>$livestatus, "videourl"=>$videourl];
+		return json_encode($places);
 	}
 
 	public function allLiveStreams()

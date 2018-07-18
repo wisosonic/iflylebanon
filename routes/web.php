@@ -32,6 +32,7 @@ Route::get('/add-new-place', "PlaceController@getAddNewPlace");
 Route::post('/add-new-place', "PlaceController@postAddNewPlace");
 
 Route::post('/checkemailavailability', "UserController@checkemailavailability");
+Route::post('/check-live-streaming', "StreamingController@checkLiveStreaming");
 
 Auth::routes();
 

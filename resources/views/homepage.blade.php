@@ -139,7 +139,7 @@
            </div>
         </div>
   </div>
-
+    <script src="/js/livestreaming.js"></script>
     <script type="text/javascript">
       var token = '{{ csrf_token() }}' ;
       function ratePlace(place_id, value, index) {

@@ -9,6 +9,7 @@ class Place extends Model  {
 	protected $fillable = [
 							"title",
 							"slug",
+							"youtubetag",
 							"department",
 							"coordinates",
 							"description",
