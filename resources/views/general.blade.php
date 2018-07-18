@@ -39,6 +39,12 @@
          .logout a {
             color: #090909 !important;
          }
+         .search {
+             width: 70%  !important;
+             background-color: beige !important;
+             border-radius: 2% !important;
+             height: 33px !important;
+         }
       </style>
       <link rel='stylesheet'  href='/css/bootstrap.min.css?ver=3.2.0' type='text/css' media='all' />
       <link rel='stylesheet'  href='/css/font-awesome/css/font-awesome.min.css?ver=4.3.0' type='text/css' media='all' />
@@ -77,7 +83,13 @@
                         </h2>
                      </div>
                      <div class="td verticalmiddle">
+
                         <div class="navcontainer">
+                           <form style="display: none" action="" method="POST" id="search_form">
+                              {{ csrf_field() }}
+                              <input type="text" name="search" placeholder="search">
+                           </form>
+                           <input onkeypress="return Search(event)" class="search" type="text" id="search" placeholder="search">
                            <a href="#" class="tw-menu-icon nb-menu-link" id="nb-menu-link">
                            <span>
                            Menu </span>
@@ -93,7 +105,6 @@
                                     <ul>
                                        <li class="page_item page-item-5 current_page_item"><a href="/">Our Lebanon</a></li>
                                        <li class="page_item page-item-5 current_page_item"><a href="/all-live-streams">Live streams</a></li>
-                                       
                                        @if(Auth::user())
                                           <li class="page_item page-item-5 current_page_item"><a href="/add-new-place">Add new place</a></li>
                                           <form action="" method="POST" id="logout_form">
@@ -163,6 +174,7 @@
          <script type='text/javascript' src='/js/custom.js?ver=4.9.6'></script>
          <script type='text/javascript' src='/js/wp-embed.min.js?ver=4.9.6'></script>
          <script src="/loginpage/js/login.js"></script>
+         <script src="/js/search.js"></script>
          <script type="text/javascript">
             @if (Session::has('message'))
                @if (Session::get('message')=="logged") 

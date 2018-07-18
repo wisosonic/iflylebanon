@@ -33,6 +33,7 @@ Route::post('/add-new-place', "PlaceController@postAddNewPlace");
 
 Route::post('/checkemailavailability', "UserController@checkemailavailability");
 Route::post('/check-live-streaming', "StreamingController@checkLiveStreaming");
+Route::post('/search', "SearchController@search");
 
 Auth::routes();
 
