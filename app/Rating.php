@@ -52,4 +52,31 @@ class Rating extends Model  {
 		}
 	}
 
+	public static function getStarsCount($place)
+	{
+		$rating = $place->rating;
+		if ($rating >= 0 && $rating <= 0.5) {
+			$stars ="0-5";
+		} else if ($rating > 0.5 && $rating <= 1) {
+			$stars ="1";
+		} else if ($rating > 1 && $rating <= 1.5) {
+			$stars ="1-5";
+		} else if ($rating > 1.5 && $rating <= 2) {
+			$stars ="2";
+		} else if ($rating > 2 && $rating <= 2.5) {
+			$stars ="2-5";
+		} else if ($rating > 2.5 && $rating <= 3) {
+			$stars ="3";
+		} else if ($rating > 3 && $rating <= 2.5) {
+			$stars ="3-5";
+		} else if ($rating > 3.5 && $rating <= 4) {
+			$stars ="4";
+		} else if ($rating > 4 && $rating <= 4.5) {
+			$stars ="4-5";
+		} else if ($rating > 4.5 && $rating <= 5) {
+			$stars ="5";
+		}
+		return $stars;
+	}
+
 }

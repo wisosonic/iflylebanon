@@ -2,6 +2,7 @@
 
 use Auth;
 use App\Place;
+use App\Rating;
 use App\Youtubeapi;
 
 use Illuminate\Support\Facades\Request;
@@ -22,20 +23,23 @@ class HomeController extends Controller {
 		}
 
 		$places = $places->sortByDesc('rating')->values();
-		
-		foreach ($places as $key => $place) {
-			$place->long = explode(" ", $place->coordinates)[0]; 
-			$place->lat = explode(" ", $place->coordinates)[1];
-		}
+		$stars = array();
 
-		if (count($actives)>0) {
-			$livestatus = true;
-			$videourl = Youtubeapi::getVideoURLById($actives[0]->id);
-		} else {
-			$livestatus = false;
-			$videourl = "#";
+		foreach ($places as $key => $place) {
+			$place->long = explode(" ", $place->coordinates)[0];
+			$place->lat = explode(" ", $place->coordinates)[1];
+			if (Auth::user()) {
+				$user = Auth::user();
+				$userrating = $user->ratings()->where("place_id",$place->id)->first();
+				if ($userrating) {
+					$stars[$place->id] = [Rating::getStarsCount($place), str_replace("-", ".", Rating::getStarsCount($place)), $key+1];
+				} else {
+					$stars[$place->id] = [Rating::getStarsCount($place), 0, $key+1];
+				}
+			}
 		}
-		return view("homepage", ["places"=>$places, "livestatus"=>$livestatus, "videourl"=>$videourl]);
+		return view("homepage", ["places"=>$places, "stars"=>json_encode($stars)]);
+		
 	}
 
 }
