@@ -1,8 +1,9 @@
 <?php namespace App\Http\Controllers;
 
 
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 use App\User;
+use Auth;
 
 class UserController extends Controller {
 
@@ -15,6 +16,21 @@ class UserController extends Controller {
 		} else {
 			return 'true';
 		}
+	}
+
+	public function getFavoritePlaces()
+	{
+		$user=Auth::user();
+		$places = $user->favoritePlaces()->get();
+		return view("myfavoriteplaces", ["places"=>$places]);
+	}
+
+	public function postFavoritePlaces(Request $request)
+	{
+		$data = $request->all();
+		array_shift($data);
+		$response = User::addToFavoritePlaces($data["placeid"]);
+		return $response;
 	}
 
 }

@@ -90,9 +90,16 @@
                                        <span class="sharetitle">Share</span>
                                       </a>
 
+                                      @if (Auth::user())
+                                        <a href="#" onclick="addToFavoritePlaces('{{$place->id}}');" target="" style="background-color: #333333" class="">
+                                          <i id="favorite_{{$place->id}}" style="color: {{$place->favorite}}" class="fas fa-heart"></i>
+                                          <span class="sharetitle">Save</span>
+                                        </a>
+                                      @endif
+
                                       <a id="livestreaminglink_{{$place->id}}" href="#" target="" style="background-color: #333333" class="">
                                         <i id="livestreamingicon_{{$place->id}}" style="color: red" class="fas fa-circle"></i>
-                                        <span id="livestreamingbutton_{{$place->id}}" class="sharetitle">CHANNEL OFFLINE</span>
+                                        <span id="livestreamingbutton_{{$place->id}}" class="sharetitle">OFFLINE</span>
                                       </a>
 
                                       @if (Auth::user())
@@ -137,6 +144,31 @@
     <script src="/js/livestreaming.js"></script>
     <script type="text/javascript">
       var token = '{{ csrf_token() }}' ;
+      function addToFavoritePlaces(place_id) {
+        jQuery.ajax({
+          type: "POST",
+          url: "/add-to-my-favorite-places",
+          data: {
+                  _token : token,
+                  placeid : place_id
+              },
+          success: function(response) {
+            if (response == "added") {
+              toastr["success"]("This place has been added to your favorite places.", "Place added !");
+              document.getElementById("favorite_"+place_id).style.color = "green";
+            } else if (response == "exists") {
+              toastr["warning"]("This place has already been added to your favorite places.", "Place already added !");
+              document.getElementById("favorite_"+place_id).style.color = "green";
+            } else {
+              toastr["error"]("", "Place does not exist !");
+            }
+          },
+          error: function(xhr, status, error) {
+            console.log(xhr.responseText);
+          }
+        });
+      }
+
       function ratePlace(place_id, value, index) {
         jQuery.ajax({
           type: "POST",

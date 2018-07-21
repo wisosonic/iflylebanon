@@ -23,7 +23,7 @@ setInterval(function() {
 			a.setAttribute("href", "#");
 			icon.setAttribute("class", "fas fa-circle");
 			icon.style.color = "red" ;
-			span.innerHTML="CHANNEL OFFLINE";
+			span.innerHTML="OFFLINE";
 		  }
 	    });
 	    if (count > 0) {

@@ -103,9 +103,10 @@
                                        <h3>Hi {{Auth::user()->name}} !</h3>
                                     @endif
                                     <ul>
-                                       <li class="page_item page-item-5 current_page_item"><a href="/">Our Lebanon</a></li>
+                                       <li class="page_item page-item-5 current_page_item"><a href="/">Home</a></li>
                                        <li class="page_item page-item-5 current_page_item"><a href="/all-live-streams">Live streams</a></li>
                                        @if(Auth::user())
+                                          <li class="page_item page-item-5 current_page_item"><a href="/my-favorite-places">My favorite places</a></li>
                                           <li class="page_item page-item-5 current_page_item"><a href="/add-new-place">Add new place</a></li>
                                           <form action="" method="POST" id="logout_form">
                                              {{ csrf_field() }}

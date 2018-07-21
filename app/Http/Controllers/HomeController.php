@@ -30,6 +30,12 @@ class HomeController extends Controller {
 			$place->lat = explode(" ", $place->coordinates)[1];
 			if (Auth::user()) {
 				$user = Auth::user();
+            	$favorite_places_ids = $user->favoriteplaces()->pluck("place_id")->toArray();
+				if (in_array($place->id, $favorite_places_ids)) {
+	                $place->favorite = "green";
+	            } else {
+	                $place->favorite = "red";
+	            }
 				$userrating = $user->ratings()->where("place_id",$place->id)->first();
 				if ($userrating) {
 					$stars[$place->id] = [Rating::getStarsCount($place), str_replace("-", ".", Rating::getStarsCount($place)), $key+1];

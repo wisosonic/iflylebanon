@@ -28,6 +28,8 @@ Route::get('/', "HomeController@homepage");
 Route::get('/location/{slug}', "PlaceController@getPlace");
 Route::post('/rate-place', "RatingController@ratePlace");
 Route::get('/all-live-streams', "StreamingController@allLiveStreams");
+Route::get('/my-favorite-places', "UserController@getFavoritePlaces");
+Route::post('/add-to-my-favorite-places', "UserController@postFavoritePlaces");
 Route::get('/add-new-place', "PlaceController@getAddNewPlace");
 Route::post('/add-new-place', "PlaceController@postAddNewPlace");
 
