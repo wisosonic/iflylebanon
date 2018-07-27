@@ -85,12 +85,19 @@ class User extends Authenticatable
         $suggests = array();
         foreach ($allplaces as $key => $place) {
             if (! in_array($place->id, $favoritePlacesIds)) {
-                $tags = $place->tags;
+                $tags = json_decode($place->tags,true);
                 foreach ($tags as $key2 => $tag) {
                     if (in_array($tag, $favoriteTags)) {
                         array_push($suggests, $place);
                         break 1;
                     }
+                }
+            }
+        }
+        if (count($suggests)==0) {
+            foreach ($allplaces as $key => $place) {
+                if (! in_array($place->id, $favoritePlacesIds)) {
+                    array_push($suggests, $place);
                 }
             }
         }
