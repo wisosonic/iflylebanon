@@ -1,6 +1,7 @@
 @extends("general")
 
 @section("content")
+        
          
         <div id="nb-menu-page" style="position: relative; z-index: 3;">
             <div id="sitecontainer">
@@ -277,6 +278,7 @@
                                  margin-left: 0;
                                  }
                               </style>
+                              
                               <div class="single-slideshow gallery-wrap info pager no-autoplay" style="background: none;">
                                  <div class="bx-wrapper" style="max-width: 100%;">
                                     <div class="bx-viewport" style="width: 100%; overflow: hidden; position: relative; height: 523px;">
@@ -302,32 +304,57 @@
                               <div class="clear"></div>
                            </div>
                            @if (count($related)>0)
-                              <div>
-                                 <h4>Related places</h4>
-                                 <div class="single-slideshow gallery-wrap info pager no-autoplay" style="background: none;">
-                                    <div class="bx-wrapper" style="max-width: 100%;">
-                                       <div class="bx-viewport" style="width: 100%; overflow: hidden; position: relative; height: 523px;">
-                                          <ul id="gallery-2" class="bxslider gallery galleryid-111 gallery-columns-3 gallery-size-fullslideshownc pager nocaption nolink slideshow contentslideshow " style="width: auto; position: absolute; opacity: 1;">
-                                             @foreach ($related as $key => $value)
-                                                <li class="gallery-icon linked" style="float: none; list-style: none; position: absolute; width: 730px; z-index: 50; display: block;"><a href="/location/{{$value->slug}}" class="lightbox-gallery no-ajaxy"><img src="{{$value->image}}" class="attachment-fullslideshownc size-fullslideshownc" alt="" title="chellel afka2_HDR2" srcset="https://parposa.com/iflylebanon/wp-content/uploads/2018/05/chellel-afka2_HDR2-1.jpg 800w, https://parposa.com/iflylebanon/wp-content/uploads/2018/05/chellel-afka2_HDR2-1-300x215.jpg 300w, https://parposa.com/iflylebanon/wp-content/uploads/2018/05/chellel-afka2_HDR2-1-768x550.jpg 768w, https://parposa.com/iflylebanon/wp-content/uploads/2018/05/chellel-afka2_HDR2-1-740x530.jpg 740w, https://parposa.com/iflylebanon/wp-content/uploads/2018/05/chellel-afka2_HDR2-1-540x387.jpg 540w" sizes="(max-width: 800px) 100vw, 800px"></a></li>
-                                             @endforeach
-                                          </ul>
-                                       </div>
-                                       <div class="bx-controls bx-has-controls-direction bx-has-pager" style="opacity: 1;">
-                                          <div class="bx-controls-direction">
-                                             <a class="bx-prev" href="https://parposa.com/iflylebanon/location/afqa-waterfall/">Prev</a>
-                                             <a class="bx-next" href="https://parposa.com/iflylebanon/location/afqa-waterfall/">Next</a>
-                                          </div>
-                                          <div class="bx-pager bx-default-pager">
-                                             <div class="bx-pager-item"><a href="https://parposa.com/iflylebanon/location/afqa-waterfall/" data-slide-index="0" class="bx-pager-link active">1</a></div>
-                                             <div class="bx-pager-item"><a href="https://parposa.com/iflylebanon/location/afqa-waterfall/" data-slide-index="1" class="bx-pager-link">2</a></div>
-                                             <div class="bx-pager-item"><a href="https://parposa.com/iflylebanon/location/afqa-waterfall/" data-slide-index="2" class="bx-pager-link">3</a></div>
-                                             <div class="bx-pager-item"><a href="https://parposa.com/iflylebanon/location/afqa-waterfall/" data-slide-index="3" class="bx-pager-link">4</a></div>
-                                          </div>
-                                       </div>
-                                    </div>
-                                    <div class="clear"></div>
-                                 </div>
+                              <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+                              <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+                              <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+                              <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+                              <style>
+                              /* Make the image fully responsive */
+                              .carousel-inner img {
+                                  width: 100%;
+                                  height: 100%;
+                              }
+                              </style>
+                              <div class="container mt-3">
+
+                                <h2>Carousel</h2>
+                                <div id="myCarousel" class="carousel slide" data-ride="carousel">
+
+                                  <!-- Indicators -->
+                                  <ul class="carousel-indicators">
+                                    @foreach ($related as $key => $relatedplace)
+                                      @if ($key == 0)
+                                        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                                      @else 
+                                        <li data-target="#myCarousel" data-slide-to="{{$key}}"></li>
+                                      @endif
+                                    @endforeach
+                                  </ul>
+                                  
+                                  <!-- The slideshow -->
+                                  <div class="carousel-inner">
+                                    @foreach ($related as $key => $relatedplace)
+                                      @if ($key == 0)
+                                        <div class="carousel-item active">
+                                          <img src="{{$relatedplace->image}}" alt="{{$relatedplace->title}}" width="1100" height="500">
+                                        </div>
+                                      @else 
+                                        <div class="carousel-item">
+                                        <img src="{{$relatedplace->image}}" alt="{{$relatedplace->title}}" width="1100" height="500">
+                                      </div>
+                                      @endif
+                                    @endforeach
+                                  </div>
+                                  
+                                  <!-- Left and right controls -->
+                                  <a class="carousel-control-prev" href="#myCarousel" data-slide="prev">
+                                    <span class="carousel-control-prev-icon"></span>
+                                  </a>
+                                  <a class="carousel-control-next" href="#myCarousel" data-slide="next">
+                                    <span class="carousel-control-next-icon"></span>
+                                  </a>
+                                </div>
+
                               </div>
                            @endif
                            <div class="sharing badges section-buttons v-item">
