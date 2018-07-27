@@ -75,9 +75,9 @@ class Place extends Model  {
 		$place_tags = json_decode($this->tags,true);
 		$allplaces = Place::all();
 		$related = array();
-		foreach ($places as $key => $place) {
+		foreach ($allplaces as $key => $place) {
 			if ($place->id != $this->id) {
-				$tags = $place->tags;
+				$tags = json_decode($place->tags,true);
 				foreach ($tags as $key2 => $tag) {
 					if (in_array($tag, $place_tags)) {
 						array_push($related, $place);
