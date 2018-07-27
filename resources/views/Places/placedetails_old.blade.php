@@ -380,7 +380,7 @@
                        </div>
                      </div>
                    
-                     <div class="item">
+                     <div class="item"> 
                        <img src="img_flower.jpg" alt="Flower" width="460" height="345">
                        <div class="carousel-caption">
                          <h3>Flowers</h3>
