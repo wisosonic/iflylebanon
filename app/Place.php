@@ -9,7 +9,7 @@ class Place extends Model  {
 	protected $fillable = [
 							"title",
 							"slug",
-							"youtubetag",
+							"tags",
 							"department",
 							"coordinates",
 							"description",
@@ -51,6 +51,7 @@ class Place extends Model  {
 			$place = new Place();
 			$place->title = $data["title"];
 			$place->slug = urlencode($data["title"]);
+			$place->tags = json_encode($data["tags"]);
 			$place->department = $data["department"];
 			$place->coordinates = $data["lat"] . " " . $data["long"] ;
 			$place->description = $data["description"];
@@ -67,6 +68,25 @@ class Place extends Model  {
 			return "placeerror";
 		}
 			
+	}
+
+	public function relatedPlaces()
+	{
+		$place_tags = json_decode($this->tags,true);
+		$allplaces = Place::all();
+		$related = array();
+		foreach ($places as $key => $place) {
+			if ($place->id != $this->id) {
+				$tags = $place->tags;
+				foreach ($tags as $key2 => $tag) {
+					if (in_array($tag, $place_tags)) {
+						array_push($related, $place);
+						break 1;
+					}
+				}
+			}
+		}
+		return $related;
 	}
 
 }

@@ -17,6 +17,7 @@ class CreatePlacesTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->string('slug');
+            $table->text('tags')->nullable();
             $table->string('department');
             $table->string('coordinates');
             $table->longtext('description');

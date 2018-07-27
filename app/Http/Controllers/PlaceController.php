@@ -29,7 +29,8 @@ class PlaceController extends Controller {
 			$place->long = explode(" ", $place->coordinates)[0]; 
 			$place->lat = explode(" ", $place->coordinates)[1];
 			$place->commentsurl = "http://iflylebanon.com/location/" . $place->slug ;
-			return view("Places/placedetails", ["place"=>$place]);
+			$related = $place->relatedPlaces();
+			return view("Places/placedetails", ["place"=>$place, "related"=>$related]);
 		}	
 	}
 
@@ -45,6 +46,7 @@ class PlaceController extends Controller {
 
 	public function postAddNewPlace(Request $request)
 	{
+		dd($request->all());
 		$message = Place::addNewPlace($request);
 		return redirect("/")->with(["message"=>$message]);
 	}

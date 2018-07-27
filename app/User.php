@@ -61,4 +61,39 @@ class User extends Authenticatable
     {
         return $this->hasMany("App\Rating");
     }
+
+    public function favoriteTags()
+    {
+        $places = $this->favoritePlaces()->get();
+        $tags = array();
+        foreach ($places as $key => $place) {
+            $place_tags = json_decode($place->tags,true);
+            foreach ($place_tags as $key2 => $tag) {
+                if (! in_array($tag, $tags)) {
+                    array_push($tags, $tag);
+                }
+            }
+        }
+        return $tags;
+    }
+
+    public function placeYouMayLike()
+    {
+        $favoriteTags = $this->favoriteTags();
+        $favoritePlacesIds = $this->favoritePlaces()->pluck("place_id")->toArray();
+        $allplaces = Place::all();
+        $suggests = array();
+        foreach ($allplaces as $key => $place) {
+            if (! in_array($place->id, $favoritePlacesIds)) {
+                $tags = $place->tags;
+                foreach ($tags as $key2 => $tag) {
+                    if (in_array($tag, $favoriteTags)) {
+                        array_push($suggests, $place);
+                        break 1;
+                    }
+                }
+            }
+        }
+        return $suggests;
+    }
 }

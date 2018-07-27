@@ -19,6 +19,19 @@
       #map {
         height: 400px;
       }
+
+      .select2-container--default.select2-container--focus .select2-selection--multiple  {
+            max-height: 42px;
+      }
+      .select2-container--default .select2-selection--multiple  {
+            max-height: 42px;
+      }
+      .select2-container--open .select2-dropdown--above {
+        display: none;
+      }
+      .select2-results__option {
+        display: none;
+      }
     </style>
 
   <div id="sitecontainer">
@@ -64,6 +77,10 @@
                 <label for="text">About this place * : </label>
                 <textarea rows="5" name="text" id="text" placeholder="About this place"></textarea>
               </div>
+              <div style="margin-bottom: 20px" class="col-md-12 full-width">
+                <label for="tags">Tags * : (select multiple tags separated with , or ; or space) </label>
+                <select id="tags" name="tags[]" class="form-control js-example-tokenizer" multiple="multiple"></select>
+              </div>
               <div class="col-md-12 full-width">
                 <label>Locate this place on the map * : </label>
                 <input type="hidden" name="long" id="long" value="">
@@ -88,8 +105,32 @@
   
   <script type='text/javascript' src='/js/places.js'></script>
   <script>
+    jQuery.noConflict();
+    
+    jQuery( document ).ready(function() {
+      jQuery(".js-example-tokenizer").select2({
+        tags: true,
+        tokenSeparators: [',', ' ', ';'],
+        placeholder: "Select tags (5 max)",
+        allowClear: true,
+        createTag: function (params) {
+          var count = jQuery('#tags').select2('data').length ;
+          // Don't offset to create a tag if there is no @ symbol
+          if (count<5) {
+            return {
+              id: params.term,
+              text: params.term
+            }
+          } else {
+            return null;
+          }
+        }
+      })
+    });
+
     var map;
     var mapMarkers = [];
+
     function placeMarker(location) {
       for (var i = 0; i < mapMarkers.length; i++ ) {
         mapMarkers[i].setMap(null);

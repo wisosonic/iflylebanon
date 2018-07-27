@@ -56,6 +56,8 @@
       <!-- CSS -->
       <link rel="stylesheet" href="/css/sweetalert2.css">
       <link rel="stylesheet" href="/css/toastr.css">
+      <link href="/css/select2.css" rel="stylesheet" type="text/css" />
+
       
      
       <script type='text/javascript' src='/js/jquery/jquery.js?ver=1.12.4'></script>
@@ -66,6 +68,7 @@
       <!-- JS -->
       <script src="/js/sweetalert2.js"></script>
       <script src="/js/toastr.js"></script>
+      <script src="/js/select2.js"></script>
 
       <style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>
       <style type="text/css" title="dynamic-css" class="options-output">.top-nav, .altnav .top-nav-inner{padding-top:20px;padding-bottom:20px;}#logo h1, #logo h2, .section h2, .section .title h1, .title-container h1, .minimal-content h2, #share-box h2{font-family:Lato;text-transform:none;line-height:1em;font-weight:300;font-style:normal;font-size:3.5em;}.intro h2{font-family:Lato;text-transform:none;line-height:1.3em;font-weight:300;font-style:normal;font-size:1.75em;}.sf-menu li > a{font-family:Montserrat;text-transform:uppercase;line-height:1em;letter-spacing:0.15em;font-weight:700;font-style:normal;font-size:0.75em;}#nb-popoutmenu a, .nb-back{font-family:Montserrat;text-transform:uppercase;line-height:1em;letter-spacing:0.15em;font-weight:700;font-style:normal;font-size:0.75em;}.tiny-details, .tiny-details p, .badges a, a.button, a.more-link, input[type="submit"], input[type="button"], label, .sidepostcontainer .date, cite, .tw-postshortcode a.more-link, a.tw-button, thead th{font-family:Montserrat;text-transform:uppercase;line-height:1.4em;letter-spacing:0.15em;font-weight:700;font-style:normal;font-size:0.75em;}h1{font-family:Lato;text-transform:none;line-height:1.4em;font-weight:400;font-style:normal;font-size:2.5em;}h2{font-family:Lato;text-transform:none;line-height:1.4em;font-weight:400;font-style:normal;font-size:2em;}h3, blockquote, blockquote p, .grid h2{font-family:Lato;text-transform:none;line-height:1.4em;font-weight:400;font-style:normal;font-size:1.5em;}h4{font-family:Lato;text-transform:none;line-height:1.4em;font-weight:400;font-style:normal;font-size:1.25em;}h5, .subtitle > h1, .subtitle > h2{font-family:Lato;text-transform:none;line-height:1.4em;font-weight:400;font-style:normal;font-size:1.15em;}h6{font-family:Lato;text-transform:none;line-height:1.4em;font-weight:400;font-style:normal;font-size:1.15em;}.articleinner, .tw-post-break .tw-column, .content, p, ul, ol, sf-menu li li a, input, textarea, .sidebar, dd, dt, table{font-family:"Open Sans";line-height:1.8em;font-weight:400;font-style:normal;font-size:1em;}aside{font-family:"Open Sans";line-height:1.8em;font-weight:normal;font-style:400italic;font-size:0.8em;}</style>
@@ -107,6 +110,7 @@
                                        <li class="page_item page-item-5 current_page_item"><a href="/all-live-streams">Live streams</a></li>
                                        @if(Auth::user())
                                           <li class="page_item page-item-5 current_page_item"><a href="/my-favorite-places">My favorite places</a></li>
+                                          <li class="page_item page-item-5 current_page_item"><a href="/places-you-may-like">Places you may like</a></li>
                                           <li class="page_item page-item-5 current_page_item"><a href="/add-new-place">Add new place</a></li>
                                           <form action="" method="POST" id="logout_form">
                                              {{ csrf_field() }}
@@ -169,11 +173,14 @@
          <script type='text/javascript' src='/js/jquery.slimscroll.min.js?ver=1.3.3'></script>
          <script type='text/javascript' src='/js/jquery.infinitescroll.min.js?ver=2.0b2.120519'></script>
          <script type='text/javascript' src='/js/jquery.fullPage.min.js?ver=2.2.5'></script>
+
+
          <script type='text/javascript'>
             var agAjax = {"ajaxurl":".","get_template_directory_uri":".","loading_class":"ball-triangle","nonce":"2f2f9606e4"};
          </script>
          <script type='text/javascript' src='/js/custom.js?ver=4.9.6'></script>
          <script type='text/javascript' src='/js/wp-embed.min.js?ver=4.9.6'></script>
+
          <script src="/loginpage/js/login.js"></script>
          <script src="/js/search.js"></script>
          <script type="text/javascript">
