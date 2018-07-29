@@ -2,6 +2,36 @@
 
 @section("content")
         
+        <style type="text/css">
+          .relatedplace {
+            min-height: 100px;
+            max-height: 100px;
+          }
+
+          .tooltip {
+              position: relative;
+              display: inline-block;
+          }
+
+          .tooltip .tooltiptext {
+              visibility: hidden;
+              width: 120px;
+              background-color: black;
+              color: #fff;
+              text-align: center;
+              border-radius: 6px;
+              padding: 5px 0;
+
+              /* Position the tooltip */
+              position: absolute;
+              z-index: 1;
+          }
+
+          .tooltip:hover .tooltiptext {
+              visibility: visible;
+          }
+
+        </style>
          
         <div id="nb-menu-page" style="position: relative; z-index: 3;">
             <div id="sitecontainer">
@@ -63,12 +93,28 @@
                   </div>
                   <div class="page-content">
                      <div class="container">
-                        <div class="col-md-8 col-md-offset-2 regular-width">
+                        <div style="margin-bottom: 30px" class="col-md-9 col-md-offset-2 regular-width">
                            <div class="intro">
-                              <h2>
+                              <h2 style="margin-bottom: 10px">
                                  {{$place->description}}
                               </h2>
+                              <div style="padding: 0px" class="col-md-12 full-width"">
+                                <form action="" method="POST" id="tagsearch_form">
+                                  {{ csrf_field() }}
+                                  <input type="hidden" id="tagsearch" name="tagsearch">
+                                </form>
+                                <div style="text-align:left; margin-bottom: 0px" class="sharing badges section-buttons v-item">
+                                  @foreach ($place->tags as $key => $tag)
+                                    <a onclick="tagSearch('{{$tag}}'); return false;" href="#"  class="location-actions popup-with-move-anim">
+                                      <span class="sharetitle">#{{$tag}}</span>
+                                    </a>
+                                  @endforeach
+                                </div>
+                              </div>
                            </div>
+                        </div>
+
+                        <div class="col-md-8 col-md-offset-2 regular-width">
                            <div class="content">
                               <aside class="aside-left">Find your way to: <strong>{{$place->title}}</strong></aside>
                               <div class="col-md-12 full-width">
@@ -303,60 +349,28 @@
                               </div>
                               <div class="clear"></div>
                            </div>
+                           <h3>Related places</h3>
                            @if (count($related)>0)
-                              <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
-                              <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-                              <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
-                              <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-                              <style>
-                              /* Make the image fully responsive */
-                              .carousel-inner img {
-                                  width: 100%;
-                                  height: 100%;
-                              }
-                              </style>
-                              <div class="container mt-3">
-
-                                <h2>Carousel</h2>
-                                <div id="myCarousel" class="carousel slide" data-ride="carousel">
-
-                                  <!-- Indicators -->
-                                  <ul class="carousel-indicators">
-                                    @foreach ($related as $key => $relatedplace)
-                                      @if ($key == 0)
-                                        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                                      @else 
-                                        <li data-target="#myCarousel" data-slide-to="{{$key}}"></li>
-                                      @endif
-                                    @endforeach
-                                  </ul>
-                                  
-                                  <!-- The slideshow -->
-                                  <div class="carousel-inner">
-                                    @foreach ($related as $key => $relatedplace)
-                                      @if ($key == 0)
-                                        <div class="carousel-item active">
-                                          <img src="{{$relatedplace->image}}" alt="{{$relatedplace->title}}" width="1100" height="500">
-                                        </div>
-                                      @else 
-                                        <div class="carousel-item">
-                                        <img src="{{$relatedplace->image}}" alt="{{$relatedplace->title}}" width="1100" height="500">
-                                      </div>
-                                      @endif
-                                    @endforeach
-                                  </div>
-                                  
-                                  <!-- Left and right controls -->
-                                  <a class="carousel-control-prev" href="#myCarousel" data-slide="prev">
-                                    <span class="carousel-control-prev-icon"></span>
-                                  </a>
-                                  <a class="carousel-control-next" href="#myCarousel" data-slide="next">
-                                    <span class="carousel-control-next-icon"></span>
-                                  </a>
+                              <div class="content">
+                                <div class="col-md-12 full-width">
+                                  @foreach ($related as $key2 => $relatedplace)
+                                    <div style="margin-bottom: 20px" class="col-md-3 full-width tooltip">
+                                      <a href="/location/{{$relatedplace->slug}}">
+                                        <img class="relatedplace" src="{{$relatedplace->image}}" >
+                                        <span class="tooltiptext">{{$relatedplace->title}}</span>
+                                      </a>
+                                    </div>
+                                  @endforeach
                                 </div>
-
+                              </div>
+                           @else
+                              <div class="content">
+                                <p>
+                                  No related places found.
+                                </p>
                               </div>
                            @endif
+                             
                            <div class="sharing badges section-buttons v-item">
                               <a href="https://parposa.com/iflylebanon/location/afqa-waterfall/#share-box" onclick="updateShareBoxLinks(this);" data-title="Afqa Waterfall" data-link="https://parposa.com/iflylebanon/location/afqa-waterfall/" class="location-actions open-popup-link post-share share popup-with-move-anim">
                               <i class="fa fa-share"></i>

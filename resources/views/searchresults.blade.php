@@ -2,6 +2,7 @@
 
 @section("content")
 
+
 <div id="sitecontainer">
   	<div class="no-sections has-image no-tags page-content-wrapper title-white dark-section post-111 location type-location status-publish has-post-thumbnail hentry">
       <div class="image-title-bg loading" style="padding-top: 90px;">
@@ -24,6 +25,25 @@
       </div>
       <div class="page-content">
          <div class="container">
+            <form action="" method="POST" id="searchcategory_form">
+               {{  csrf_field() }}
+               <input type="hidden" name="searchcategory_input" id="searchcategory_input">
+            </form>
+            <ul style="margin-bottom: 20px" class="nav nav-tabs">
+               @if ($type=="place")
+                  <li class="active"><a onclick="changeCategory('place','{{$search}}')" href="#">By place</a></li>
+                  <li><a onclick="changeCategory('tag','{{$search}}')" href="#">By tag</a></li>
+                  <li><a onclick="changeCategory('tour','{{$search}}')" href="#">By tour</a></li>
+               @elseif ($type=="tag")
+                  <li><a onclick="changeCategory('place','{{$search}}')" href="#">By place</a></li>
+                  <li class="active"><a onclick="changeCategory('tag','{{$search}}')" href="#">By tag</a></li>
+                  <li><a onclick="changeCategory('tour','{{$search}}')" href="#">By tour</a></li>
+               @elseif ($type=="tour")
+                  <li><a onclick="changeCategory('place','{{$search}}')" href="#">By place</a></li>
+                  <li><a onclick="changeCategory('tag','{{$search}}')" href="#">By tag</a></li>
+                  <li class="active"><a onclick="changeCategory('tour','{{$search}}')" href="#">By tour</a></li>
+               @endif
+            </ul>
          	@if (count($places) > 0)
          		@foreach ($places as $key => $place)
 		            <div style="border-bottom: 1px solid; margin-bottom: 30px" class="col-md-12 full-width">
@@ -39,8 +59,8 @@
 		    @else 
 		    	<div class="col-md-3 full-width"></div>
 		    	<div class="col-md-6 full-width">
-		            Your search - <b>{{$search}}</b> - did not match any places.
-		            <br><br>
+	            Your search : <b>{{$search}}</b> - did not match any {{$type}}s.
+	            <br><br>
 					Suggestions:
 					<br><br>
 					Make sure that all words are spelled correctly.<br>
@@ -53,4 +73,25 @@
       </div>
    	</div>
  </div>
+
+ <script type="text/javascript">
+    function changeCategory(type,search) {
+      input = document.getElementById("searchcategory_input") ;
+      form = document.getElementById("searchcategory_form");
+      
+      input.value = search;
+
+      if (type == "place") {
+         input.name = "search";
+         form.action = "/search";
+      } else if (type=="tag") {
+         input.name = "tagsearch";
+         form.action = "/search-tag" ;
+      } else if (type=="tour") {
+         input.name = "toursearch";
+         form.action = "/search-tour" ;
+      }
+      form.submit();
+    }
+ </script>
 @endsection

@@ -33,6 +33,19 @@
 		            			{{$place->description}}
 		            		</p>
 		            	</a>
+                     <div style="padding: 0px" class="col-md-12 full-width"">
+                       <form action="" method="POST" id="tagsearch_form">
+                         {{ csrf_field() }}
+                         <input type="hidden" id="tagsearch" name="tagsearch">
+                       </form>
+                       <div style="text-align:left; margin-bottom: 0px" class="sharing badges section-buttons v-item">
+                         @foreach ($place->tags as $key => $tag)
+                           <a onclick="tagSearch('{{$tag}}'); return false;" href="#"  class="location-actions popup-with-move-anim">
+                             <span class="sharetitle">#{{$tag}}</span>
+                           </a>
+                         @endforeach
+                       </div>
+                     </div>
 		            	<a href="/location/{{$place->slug}}/">More details...</a>
 		            </div>
 		        @endforeach

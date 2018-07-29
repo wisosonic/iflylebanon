@@ -9,3 +9,14 @@ function Search(e) {
        	}
     }
 }
+
+function tagSearch(tag) {
+	var search = document.getElementById("tagsearch");
+	search.value = tag;
+	var form = document.getElementById("tagsearch_form");
+	form.action = "/search-tag" ;
+	form.submit();
+	
+}
+
+

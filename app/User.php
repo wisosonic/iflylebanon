@@ -101,6 +101,6 @@ class User extends Authenticatable
                 }
             }
         }
-        return $suggests;
+        return [$suggests,$favoriteTags];
     }
 }

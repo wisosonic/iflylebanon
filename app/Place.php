@@ -51,6 +51,9 @@ class Place extends Model  {
 			$place = new Place();
 			$place->title = $data["title"];
 			$place->slug = urlencode($data["title"]);
+			if ($data["tags"] == "") {
+				$data["tags"] = array();
+			}
 			$place->tags = json_encode($data["tags"]);
 			$place->department = $data["department"];
 			$place->coordinates = $data["lat"] . " " . $data["long"] ;

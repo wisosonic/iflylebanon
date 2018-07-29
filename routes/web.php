@@ -11,6 +11,19 @@
 |
 */
 
+
+Route::domain('{subdomain}.iflylebanon.test')->group(function () {
+	
+		Route::get('/test-subdomain', function($subdomain) {
+	        if ($subdomain == "agency") {
+	        	dd($subdomain);
+	        }
+	    });
+    
+});
+    
+
+
 Route::get("/test1", function() {
 	return view("test");
 });
@@ -29,6 +42,7 @@ Route::get('/location/{slug}', "PlaceController@getPlace");
 Route::post('/rate-place', "RatingController@ratePlace");
 Route::get('/all-live-streams', "StreamingController@allLiveStreams");
 Route::get('/my-favorite-places', "UserController@getFavoritePlaces");
+Route::get('/places-you-may-like', "UserController@getPlacesYouMayLike");
 Route::post('/add-to-my-favorite-places', "UserController@postFavoritePlaces");
 Route::get('/add-new-place', "PlaceController@getAddNewPlace");
 Route::post('/add-new-place', "PlaceController@postAddNewPlace");
@@ -36,6 +50,12 @@ Route::post('/add-new-place', "PlaceController@postAddNewPlace");
 Route::post('/checkemailavailability', "UserController@checkemailavailability");
 Route::post('/check-live-streaming', "StreamingController@checkLiveStreaming");
 Route::post('/search', "SearchController@search");
+Route::post('/search-tag', "SearchController@searchTag");
+Route::post('/search-tour', "SearchController@searchTour");
 
 Auth::routes();
 
+Route::any('{all}', function($uri)
+{
+    return redirect("/");
+})->where('all', '.*');
