@@ -6,6 +6,7 @@ use App\Place;
 use Auth;
 
 class Rating extends Model  {
+	
 	protected $table = "ratings";
 	protected $fillable = [
 							"user_id",

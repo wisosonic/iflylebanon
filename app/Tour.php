@@ -5,7 +5,7 @@ use App\User;
 
 class Tour extends Model  {
 
-	protected $guard = 'tours';
+	protected $table = 'tours';
 	protected $fillable = [
 					        'title', 
 					        'description', 
@@ -21,6 +21,11 @@ class Tour extends Model  {
     public function agency()
     {
     	return $this->belongsTo("App\Agency");
+    }
+
+    public function bookings()
+    {
+    	return $this->hasMany("App\Booking");
     }
 
 }

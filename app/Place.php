@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\User;
 
 class Place extends Model  {
+	
 	protected $table = "places";
 	protected $fillable = [
 							"title",

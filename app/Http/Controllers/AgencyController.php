@@ -10,4 +10,13 @@ class AgencyController extends Controller {
         return view('admin');
     }
 
+    public function getMyTours()
+    {
+    	$user = Auth::user();
+    	$agency = $user->agency()->first();
+    	$tours = $agency->tours()->get();
+
+    	return view("", ["tours"=>$tours]);
+    }
+
 }

@@ -23,6 +23,8 @@ Route::get("/test3", function(){
 	dd($videos);
 });
 
+Route::get("/test4", "UserController@getBookings");
+
 Route::get('/', "HomeController@homepage");
 Route::get('/location/{slug}', "PlaceController@getPlace");
 Route::post('/rate-place', "RatingController@ratePlace");

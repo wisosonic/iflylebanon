@@ -52,4 +52,13 @@ class UserController extends Controller {
 		return $response;
 	}
 
+	public function getBookings()
+	{
+		$user = Auth::user();
+		$bookings = $user->bookings()->get();
+		dd($bookings);
+
+		return view("", ["bookings"=>$bookings]);
+	}
+
 }

@@ -44,6 +44,11 @@ class User extends Authenticatable
         return $this->hasOne("App\Agency");
     }
 
+    public function bookings()
+    {
+        return $this->hasMany("App\Booking");
+    }
+
     public static function checkEmailAvailability($email)
     {
         return User::where('email', '=', $email)->exists();
