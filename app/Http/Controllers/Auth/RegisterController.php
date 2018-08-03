@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\Agency;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -64,6 +65,7 @@ class RegisterController extends Controller
     public function register(Request $request)
     {
         $data = $request->all();
+
         $this->validator($data)->validate();
         $data["name"] = $data["fname"] . " " . $data["lname"];
         array_shift($data);
@@ -75,8 +77,18 @@ class RegisterController extends Controller
         $user = new User();
         $user->email = $data["email"];
         $user->name = $data["name"];
+        $user->phone = $data["phone"];
         $user->password = $data["password"];
         $user->save();;
+
+        if (isset($data["pro"])) {
+            $agency = new Agency();
+            $agency->name = $data["agency"] ;
+            $agency->phone = $data["agencyphone"] ;
+            $agency->address = $data["address"] ;
+            $agency->activated = false ;
+            $user->agency()->save($agency);
+        }
 
         $this->guard()->login($user);
 

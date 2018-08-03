@@ -70,7 +70,6 @@ class Place extends Model  {
 		} catch (Exception $e) {
 			return "placeerror";
 		}
-			
 	}
 
 	public function relatedPlaces()

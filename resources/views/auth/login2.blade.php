@@ -30,6 +30,10 @@
 		input[type=email]:focus {
 			padding-left: 5px;
 		}
+		.wrap-login100 {
+			width: 50%;
+			background-size: cover;
+		}
 	</style>
 	<div class="limiter">
 		<div class="container-login100" style="background-image: url('/loginpage/images/bg-02.jpg');">

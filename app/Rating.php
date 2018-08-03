@@ -36,7 +36,6 @@ class Rating extends Model  {
 				$rating->rating = $data["value"];
 				$rating->save();
 				$place->updateRating();
-
 				return ["updated",$place->rating, $place->ratings()->count(), $oldrating, $newrating];
 			} else {
 				$rating = new Rating();
@@ -67,7 +66,7 @@ class Rating extends Model  {
 			$stars ="2-5";
 		} else if ($rating > 2.5 && $rating <= 3) {
 			$stars ="3";
-		} else if ($rating > 3 && $rating <= 2.5) {
+		} else if ($rating > 3 && $rating <= 3.5) {
 			$stars ="3-5";
 		} else if ($rating > 3.5 && $rating <= 4) {
 			$stars ="4";

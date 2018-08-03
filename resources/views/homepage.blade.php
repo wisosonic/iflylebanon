@@ -68,7 +68,7 @@
                                       <fieldset>
                                   </div>
                                   <br>
-                                <!--   <div class="section-buttons v-item social-media-links hidden-xs">
+                                  <!-- <div class="section-buttons v-item social-media-links hidden-xs">
                                      <a target="_blank" href="#" class="social-link" title="Facebook">
                                      <i class="fab fa-facebook-f"></i></a> <a target="_blank" href="#" class="social-link" title="Twitter">
                                      <i class="fab fa-twitter"></i></a> <a target="_blank" href="#" class="social-link" title="Instagram">
@@ -76,7 +76,7 @@
                                      <i class="fab fa-google-plus-g"></i></a> <a target="_blank" href="#" class="social-link" title="Pinterest">
                                      <i class="fab fa-pinterest-p"></i></a> 
                                   </div> -->
-                                 <!--  <hr class="v-item title-divider" data-width="100px" /> -->
+                                  <!-- <hr class="v-item title-divider" data-width="100px" /> -->
                                   <div class="v-item content " style="color:#333333 !important; font-weight:700">
                                        {{$place->description}}
                                   </div>
@@ -104,8 +104,8 @@
 
                                       @if (Auth::user())
                                         <div style="margin-top: 20px" class="sharing badges section-buttons v-item">
-                                          <h3 style="float:left; color:#333333 ; font-weight: 600">Rate this place : </h3>
-                                          <fieldset style="margin-top: 6px" class="rating">
+                                          <h3 style="border:2px solid white; border-right-style: none; border-top-left-radius: 100px; border-bottom-left-radius: 100px; padding:5px 10px; float:left; color:white ; font-weight: 600; background-color: #333333;">Rate this place : </h3>
+                                          <fieldset style="border:2px solid white; border-top-right-radius: 100px; border-bottom-right-radius: 100px; background-color: #333333; padding: 8.5px 10px;" class="rating">
                                             <input type="radio" id="{{$place->id}}_5" name="rating_{{$place->id}}" value="5" /><label id="label_{{$place->id}}_5" onclick="ratePlace('{{$place->id}}','5', '{{$key+1}}');" class = "full" for="{{$place->id}}_5" title="Awesome - 5 stars"></label>
                                             <input type="radio" id="{{$place->id}}_4-5" name="rating_{{$place->id}}" value="4.5" /><label id="label_{{$place->id}}_4-5" onclick="ratePlace('{{$place->id}}','4.5', '{{$key+1}}');" class="half" for="{{$place->id}}_4-5" title="Pretty good - 4.5 stars"></label>
                                             <input type="radio" id="{{$place->id}}_4" name="rating_{{$place->id}}" value="4" /><label id="label_{{$place->id}}_4" onclick="ratePlace('{{$place->id}}','4', '{{$key+1}}');" class = "full" for="{{$place->id}}_4" title="Pretty good - 4 stars"></label>
@@ -209,9 +209,11 @@
       jQuery( document ).ready(function() {
         var stars = {!! $stars !!} ;
         Object.keys(stars).forEach(function(id) {
-          document.getElementById("label_"+id+"_"+stars[id][0]).removeAttribute("onclick");
-          document.getElementById("label_"+id+"_"+stars[id][0]).click();
-          document.getElementById("label_"+id+"_"+stars[id][0]).setAttribute("onclick", "ratePlace('"+id+"','"+stars[id][1]+"', '"+stars[id][2]+"');");
+          if (stars[id][1] > 0) {
+            document.getElementById("label_"+id+"_"+stars[id][0]).removeAttribute("onclick");
+            document.getElementById("label_"+id+"_"+stars[id][0]).click();
+            document.getElementById("label_"+id+"_"+stars[id][0]).setAttribute("onclick", "ratePlace('"+id+"','"+stars[id][1]+"', '"+stars[id][2]+"');");
+          }
         });
       });
 

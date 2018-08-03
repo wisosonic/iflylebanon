@@ -58,6 +58,37 @@ function validateForm() {
 	var password_confirmation = document.getElementById("password_confirmation");
 	var fname =  document.getElementById("fname");
 	var lname =  document.getElementById("lname");
+
+	var pro = $('#pro');
+	if (pro.is(':checked')) {
+		var agencyname = document.getElementById("agency");
+		var agencyaddress = document.getElementById("address");
+		var agencyphone = document.getElementById("agencyphone");
+
+		if (agencyname.value == "") {
+			agencyname.style.border = "1px solid red";
+			errors = errors + 1 ;
+		} else {
+			agencyname.style.border = "none";
+		}
+
+		if (agencyaddress.value == "") {
+			agencyaddress.style.border = "1px solid red";
+			errors = errors + 1 ;
+		} else {
+			agencyaddress.style.border = "none";
+		}
+
+		if (agencyphone.value == "") {
+			agencyphone.style.border = "1px solid red";
+			errors = errors + 1 ;
+		} else {
+			agencyphone.style.border = "none";
+		}
+	}
+
+	
+
 	if (email.value == "") {
 		email.style.border = "1px solid red";
 		errors = errors + 1 ;
@@ -105,6 +136,24 @@ function sendForm() {
 	}
 }
 
+function checkAgency() {
+	if ($('[name=pro]').is(':checked')) {
+		document.getElementById("agencydiv").style.display = "block" ;
+		document.getElementById("agency").setAttribute("name","agency") ;
+		document.getElementById("addressdiv").style.display = "block" ;
+		document.getElementById("address").setAttribute("name","address") ;
+		document.getElementById("agencyphonediv").style.display = "block" ;
+		document.getElementById("agencyphone").setAttribute("name","agencyphone") ;
+	} else {
+		document.getElementById("agencydiv").style.display = "none" ;
+		document.getElementById("agency").removeAttribute("name") ;
+		document.getElementById("addressdiv").style.display = "none" ;
+		document.getElementById("address").removeAttribute("name") ;
+		document.getElementById("agencyphonediv").style.display = "none" ;
+		document.getElementById("agencyphone").removeAttribute("name") ;
+	}
+}
+
 
 $("#email").change(function(){
     var re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
@@ -118,7 +167,6 @@ $("#email").change(function(){
             type: "POST",
             url: "/checkemailavailability",
             data: {
-                    _token : token ,
                     email : email
                   },
             success: function(availability){
@@ -127,7 +175,7 @@ $("#email").change(function(){
                     $("#availability").css('color', '#3F917E');
                     valid = true ;
                 } else {
-                    $("#availability").html("This email address has been already registered !");
+                    $("#availability").html("This email address has already been registered !");
                     $("#availability").css('color', 'red');
                     valid = false ;
                 }

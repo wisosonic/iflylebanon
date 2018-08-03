@@ -21,10 +21,8 @@ class HomeController extends Controller {
 				$place->stremingstatus = false;
 			}
 		}
-
 		$places = $places->sortByDesc('rating')->values();
 		$stars = array();
-
 		foreach ($places as $key => $place) {
 			$place->long = explode(" ", $place->coordinates)[0];
 			$place->lat = explode(" ", $place->coordinates)[1];
@@ -45,7 +43,6 @@ class HomeController extends Controller {
 			}
 		}
 		return view("homepage", ["places"=>$places, "stars"=>json_encode($stars)]);
-		
 	}
 
 }

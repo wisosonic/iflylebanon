@@ -45,6 +45,12 @@
              border-radius: 2% !important;
              height: 33px !important;
          }
+         .NormanlButton {
+            color: #333333 !important; 
+            background-color: white !important;
+            border: 1px solid #333333 !important;
+            margin-right: 10px !important;
+         }
       </style>
       <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -92,21 +98,19 @@
                         </h2>
                      </div>
                      <div class="td verticalmiddle">
-
                         <div class="navcontainer">
                            <form style="display: none" action="" method="POST" id="search_form">
                               {{ csrf_field() }}
                               <input type="text" name="search" placeholder="search">
                            </form>
-                           <input onkeypress="return Search(event)" class="search" type="text" id="search" placeholder="search">
+                           <button onclick="agency(); return false;" class="button NormanlButton">Agency</button>
+                           <input style="width: 200px !important;" onkeypress="return Search(event)" class="search" type="text" id="search" placeholder="search">
                            <a href="#" class="tw-menu-icon nb-menu-link" id="nb-menu-link">
-                           <span>
-                           Menu </span>
+                              <span> Menu </span>
                            </a>
                            <div class="tw-slide-panel dark">
                               <div class="above-nav"></div>
                               <nav id="slide-menu">
-                                 
                                  <ul class="nb-menu-items-container">
                                     @if(Auth::user())
                                        <h3>Hi {{Auth::user()->name}} !</h3>
@@ -188,6 +192,7 @@
          <script type='text/javascript' src='/js/wp-embed.min.js?ver=4.9.6'></script>
 
          <script src="/loginpage/js/login.js"></script>
+         <script src="/loginpage/js/register.js"></script>
          <script src="/js/search.js"></script>
          <script type="text/javascript">
             @if (Session::has('message'))
@@ -215,6 +220,14 @@
                         confirmButtonColor: "#3f927e",   
                         confirmButtonText: "Ok"
                      });
+               @elseif (Session::get('message')=="unauthorized") 
+                  swal({   
+                        title: "",   
+                        text: "You are not authorized to access this page or your account has not been verified yet! Please contact our costumer support at xxxx@iflylebanon.com", 
+                        type: "error",   
+                        confirmButtonColor: "#3f927e",   
+                        confirmButtonText: "Ok"
+                     });
                @endif
             @elseif (Session::has('accountcreated'))
                @if (Session::get('accountcreated')=="accountcreated") 
@@ -227,6 +240,11 @@
                      });
                @endif
             @endif
+
+            function agency() {
+               window.location.href = "/agency";
+            }
+
          </script>
             
       </div>

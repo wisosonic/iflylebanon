@@ -39,6 +39,16 @@ class User extends Authenticatable
         return $this->belongsToMany("App\Place");
     }
 
+    public function agency()
+    {
+        return $this->hasOne("App\Agency");
+    }
+
+    public static function checkEmailAvailability($email)
+    {
+        return User::where('email', '=', $email)->exists();
+    }
+
     public static function addToFavoritePlaces($id)
     {
         $place = Place::find($id);
