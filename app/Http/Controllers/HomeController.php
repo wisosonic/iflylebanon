@@ -26,7 +26,7 @@ class HomeController extends Controller {
 		foreach ($places as $key => $place) {
 			$place->long = explode(" ", $place->coordinates)[0];
 			$place->lat = explode(" ", $place->coordinates)[1];
-			if (Auth::user()) {
+			if (Auth::user()&& ! Auth::user()->blacklist()->first()) {
 				$user = Auth::user();
             	$favorite_places_ids = $user->favoriteplaces()->pluck("place_id")->toArray();
 				if (in_array($place->id, $favorite_places_ids)) {

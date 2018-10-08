@@ -45,3 +45,133 @@
 .location-info-container .social-link i{
     margin-right:15px!important
 }
+
+.row {
+	width: 100%;
+	position: relative;
+	overflow: hidden;
+	clear: both;
+	margin-right:1%;
+	margin-left:0px;
+	
+}
+.un {
+	width: 6.3333%;
+	display: inline-block;
+	vertical-align: top;
+	margin-right:1%;
+}
+.deux {
+	width: 14.66666%;
+	display: inline-block;
+	vertical-align: top;
+	margin-right:1%;
+}
+.trois {
+	width: 22.99999%;
+	display: inline-block;
+	vertical-align: top;
+	margin-right:1%;
+}
+.quatre {
+	width: 31.33333%;
+	display: inline-block;
+	vertical-align: top;
+	margin-right:1%;
+}
+.cinq {
+	width: 39.66666%;
+	display: inline-block;
+	vertical-align: top;
+	margin-right:1%;
+}
+.six {
+	width: 47.99999%;
+	display: inline-block;
+	vertical-align: top;
+	margin-right:1%;
+}
+.sept {
+	width: 56.33333%;
+	display: inline-block;
+	vertical-align: top;
+	margin-right:1%;
+}
+.huit {
+	width: 64.66666%;
+	display: inline-block;
+	vertical-align: top;
+	margin-right:1%;
+}
+.neuf {
+	width: 72.99999%;
+	display: inline-block;
+	vertical-align: top;
+	margin-right:1%;
+}
+.dix {
+	width: 81.33333%;
+	display: inline-block;
+	vertical-align: top;
+	margin-right:1%;
+}
+.onze {
+	width: 89.666666%;
+	display: inline-block;
+	vertical-align: top;
+	margin-right:1%;
+}
+.douze {
+	width: 97.999999%;
+	display: inline-block;
+	vertical-align: top;
+	margin-right:1%;
+}
+
+.subMenu {
+  padding: 0px !important;
+  background-color: #333333;
+  margin-bottom:0px;
+}
+.subMenu li {
+  margin-bottom: 0px;
+}
+.subMenu li a {
+  padding: 15px 20px;
+  border-bottom: 1px solid rgba(250, 250, 250, 0.1);
+  display: block;
+  color: #FFF !important;
+}
+.subMenu li a:hover {
+  text-decoration: none !important;
+}
+.subMenu li a:hover {
+  background-color: #00a498;
+}
+.subMenu li a.actif {
+  background-color: #00a498;
+}
+.datatab table {
+  font-size: 13px;
+  line-height: 15px;
+  width:100%
+}
+.datatab table th {
+  background-color: #3c3b3a;
+  color: #FFF;
+  border-right: 2px solid #f5f5f5;
+  padding: 7px 10px;
+}
+.datatab table td {
+  background-color: #FFF;
+  border: 1px solid #f5f5f5;
+  padding: 7px 10px;
+}
+.datatab table td {
+  background-color: #FFF;
+  border: 1px solid #f5f5f5;
+  padding: 7px 10px;
+}
+.datatab table tr td:first-child {
+  font-weight: 900;
+}

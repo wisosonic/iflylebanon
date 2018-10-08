@@ -1,8 +1,7 @@
-
 setInterval(function() {
 	swal({   
-		title: "Votre session a expiré",   
-		text: "",    
+		title: "",   
+		text: "Your session has expired !",   
 		type: "warning",   
 		showCancelButton: false,   
 		confirmButtonColor: "#ff803c",   

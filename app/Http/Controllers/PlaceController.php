@@ -7,6 +7,16 @@ use App\Place;
 
 class PlaceController extends Controller {
 
+	public function __construct()
+	{
+	    $this->middleware('blacklist', ['only' => [	'getAddNewPlace', 
+	    											'postAddNewPlace', 
+	    											'postAddComment', 
+	    											'deleteComment'
+	    											]
+	    								]);
+	}
+
 	public function getPlace($slug)
 	{
 		$place = Place::where("slug",$slug)->first();
@@ -14,6 +24,7 @@ class PlaceController extends Controller {
 			$place->long = explode(" ", $place->coordinates)[0]; 
 			$place->lat = explode(" ", $place->coordinates)[1];
 			$place->commentsurl = "http://iflylebanon.com/location/" . $place->slug ;
+			$place->comments = $place->comments()->get();
 			$related = $place->relatedPlaces();
 			$place->tags =  json_decode($place->tags,true);
 			return view("Places/placedetails", ["place"=>$place, "related"=>$related]);
@@ -34,6 +45,23 @@ class PlaceController extends Controller {
 	{
 		$message = Place::addNewPlace($request);
 		return redirect("/")->with(["message"=>$message]);
+	}
+
+	public function postAddComment(Request $request)
+	{
+		$res = Place::addNewComment($request);
+		$slug = $res["slug"];
+		$message = $res["message"];
+		$profanity = $res["profanity"];
+		return redirect("/location/".$slug)->with(["message"=>$message, "jumpto"=>"commentsdiv", "profanity"=>$profanity]);
+	}
+
+	public function deleteComment($comment_id)
+	{
+		$res = Place::deleteComment($comment_id);
+		$slug = $res["slug"];
+		$message = $res["message"];
+		return redirect("/location/".$slug)->with(["message"=>$message, "jumpto"=>"commentsdiv"]);
 	}
 
 }

@@ -103,21 +103,27 @@
                                       </a>
 
                                       @if (Auth::user())
-                                        <div style="margin-top: 20px" class="sharing badges section-buttons v-item">
-                                          <h3 style="border:2px solid white; border-right-style: none; border-top-left-radius: 100px; border-bottom-left-radius: 100px; padding:5px 10px; float:left; color:white ; font-weight: 600; background-color: #333333;">Rate this place : </h3>
-                                          <fieldset style="border:2px solid white; border-top-right-radius: 100px; border-bottom-right-radius: 100px; background-color: #333333; padding: 8.5px 10px;" class="rating">
-                                            <input type="radio" id="{{$place->id}}_5" name="rating_{{$place->id}}" value="5" /><label id="label_{{$place->id}}_5" onclick="ratePlace('{{$place->id}}','5', '{{$key+1}}');" class = "full" for="{{$place->id}}_5" title="Awesome - 5 stars"></label>
-                                            <input type="radio" id="{{$place->id}}_4-5" name="rating_{{$place->id}}" value="4.5" /><label id="label_{{$place->id}}_4-5" onclick="ratePlace('{{$place->id}}','4.5', '{{$key+1}}');" class="half" for="{{$place->id}}_4-5" title="Pretty good - 4.5 stars"></label>
-                                            <input type="radio" id="{{$place->id}}_4" name="rating_{{$place->id}}" value="4" /><label id="label_{{$place->id}}_4" onclick="ratePlace('{{$place->id}}','4', '{{$key+1}}');" class = "full" for="{{$place->id}}_4" title="Pretty good - 4 stars"></label>
-                                            <input type="radio" id="{{$place->id}}_3-5" name="rating_{{$place->id}}" value="3.5" /><label id="label_{{$place->id}}_3-5" onclick="ratePlace('{{$place->id}}','3.5', '{{$key+1}}');" class="half" for="{{$place->id}}_3-5" title="Meh - 3.5 stars"></label>
-                                            <input type="radio" id="{{$place->id}}_3" name="rating_{{$place->id}}" value="3" /><label id="label_{{$place->id}}_3" onclick="ratePlace('{{$place->id}}','3', '{{$key+1}}');" class = "full" for="{{$place->id}}_3" title="Meh - 3 stars"></label>
-                                            <input type="radio" id="{{$place->id}}_2-5" name="rating_{{$place->id}}" value="2.5" /><label id="label_{{$place->id}}_2-5" onclick="ratePlace('{{$place->id}}','2.5', '{{$key+1}}');" class="half" for="{{$place->id}}_2-5" title="Kinda bad - 2.5 stars"></label>
-                                            <input type="radio" id="{{$place->id}}_2" name="rating_{{$place->id}}" value="2" /><label id="label_{{$place->id}}_2" onclick="ratePlace('{{$place->id}}','2', '{{$key+1}}');" class = "full" for="{{$place->id}}_2" title="Kinda bad - 2 stars"></label>
-                                            <input type="radio" id="{{$place->id}}_1-5" name="rating_{{$place->id}}" value="1.5" /><label id="label_{{$place->id}}_1-5" onclick="ratePlace('{{$place->id}}','1.5', '{{$key+1}}');" class="half" for="{{$place->id}}_1-5" title="Meh - 1.5 stars"></label>
-                                            <input type="radio" id="{{$place->id}}_1" name="rating_{{$place->id}}" value="1" /><label id="label_{{$place->id}}_1" onclick="ratePlace('{{$place->id}}','1', '{{$key+1}}');" class = "full" for="{{$place->id}}_1" title="Sucks big time - 1 star"></label>
-                                            <input type="radio" id="{{$place->id}}_0-5" name="rating_{{$place->id}}" value="0.5" /><label id="label_{{$place->id}}_0-5" onclick="ratePlace('{{$place->id}}','0.5', '{{$key+1}}');" class="half" for="{{$place->id}}_0-5" title="Sucks big time - 0.5 stars"></label>
-                                          </fieldset>
-                                        </div>
+                                        @if (Auth::user()->blacklist()->first())
+                                          <div style="margin-top: 20px" class="sharing badges section-buttons v-item">
+                                            <h3 style="float:left; color:#333333 ; font-weight: 600">(You are not allowed to rate this place)</h3>
+                                          </div>
+                                        @else
+                                          <div style="margin-top: 20px" class="sharing badges section-buttons v-item">
+                                            <h3 style="border:2px solid white; border-right-style: none; border-top-left-radius: 100px; border-bottom-left-radius: 100px; padding:5px 10px; float:left; color:white ; font-weight: 600; background-color: #333333;">Rate this place : </h3>
+                                            <fieldset style="border:2px solid white; border-top-right-radius: 100px; border-bottom-right-radius: 100px; background-color: #333333; padding: 8.5px 10px;" class="rating">
+                                              <input type="radio" id="{{$place->id}}_5" name="rating_{{$place->id}}" value="5" /><label id="label_{{$place->id}}_5" onclick="ratePlace('{{$place->id}}','5', '{{$key+1}}');" class = "full" for="{{$place->id}}_5" title="Awesome - 5 stars"></label>
+                                              <input type="radio" id="{{$place->id}}_4-5" name="rating_{{$place->id}}" value="4.5" /><label id="label_{{$place->id}}_4-5" onclick="ratePlace('{{$place->id}}','4.5', '{{$key+1}}');" class="half" for="{{$place->id}}_4-5" title="Pretty good - 4.5 stars"></label>
+                                              <input type="radio" id="{{$place->id}}_4" name="rating_{{$place->id}}" value="4" /><label id="label_{{$place->id}}_4" onclick="ratePlace('{{$place->id}}','4', '{{$key+1}}');" class = "full" for="{{$place->id}}_4" title="Pretty good - 4 stars"></label>
+                                              <input type="radio" id="{{$place->id}}_3-5" name="rating_{{$place->id}}" value="3.5" /><label id="label_{{$place->id}}_3-5" onclick="ratePlace('{{$place->id}}','3.5', '{{$key+1}}');" class="half" for="{{$place->id}}_3-5" title="Meh - 3.5 stars"></label>
+                                              <input type="radio" id="{{$place->id}}_3" name="rating_{{$place->id}}" value="3" /><label id="label_{{$place->id}}_3" onclick="ratePlace('{{$place->id}}','3', '{{$key+1}}');" class = "full" for="{{$place->id}}_3" title="Meh - 3 stars"></label>
+                                              <input type="radio" id="{{$place->id}}_2-5" name="rating_{{$place->id}}" value="2.5" /><label id="label_{{$place->id}}_2-5" onclick="ratePlace('{{$place->id}}','2.5', '{{$key+1}}');" class="half" for="{{$place->id}}_2-5" title="Kinda bad - 2.5 stars"></label>
+                                              <input type="radio" id="{{$place->id}}_2" name="rating_{{$place->id}}" value="2" /><label id="label_{{$place->id}}_2" onclick="ratePlace('{{$place->id}}','2', '{{$key+1}}');" class = "full" for="{{$place->id}}_2" title="Kinda bad - 2 stars"></label>
+                                              <input type="radio" id="{{$place->id}}_1-5" name="rating_{{$place->id}}" value="1.5" /><label id="label_{{$place->id}}_1-5" onclick="ratePlace('{{$place->id}}','1.5', '{{$key+1}}');" class="half" for="{{$place->id}}_1-5" title="Meh - 1.5 stars"></label>
+                                              <input type="radio" id="{{$place->id}}_1" name="rating_{{$place->id}}" value="1" /><label id="label_{{$place->id}}_1" onclick="ratePlace('{{$place->id}}','1', '{{$key+1}}');" class = "full" for="{{$place->id}}_1" title="Sucks big time - 1 star"></label>
+                                              <input type="radio" id="{{$place->id}}_0-5" name="rating_{{$place->id}}" value="0.5" /><label id="label_{{$place->id}}_0-5" onclick="ratePlace('{{$place->id}}','0.5', '{{$key+1}}');" class="half" for="{{$place->id}}_0-5" title="Sucks big time - 0.5 stars"></label>
+                                            </fieldset>
+                                          </div>
+                                        @endif
                                       @else
                                         <div style="margin-top: 20px" class="sharing badges section-buttons v-item">
                                           <h3 style="float:left; color:#333333 ; font-weight: 600">(Log in to rate this place)</h3>

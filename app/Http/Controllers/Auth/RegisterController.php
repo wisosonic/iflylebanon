@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\Agency;
+use App\Whitelist;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -79,7 +80,9 @@ class RegisterController extends Controller
         $user->name = $data["name"];
         $user->phone = $data["phone"];
         $user->password = $data["password"];
-        $user->save();;
+        $user->save();
+
+        Whitelist::addWhitelist(["user_id"=>$user->id]);
 
         if (isset($data["pro"])) {
             $agency = new Agency();

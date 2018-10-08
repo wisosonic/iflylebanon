@@ -2,6 +2,20 @@
 
 @section("content")
 
+<style type="text/css">
+   p {
+      margin: 0px;
+      color: #333333;
+   }
+   hr {
+      border-color: #333333 !important;
+      margin: 10px 0px !important
+   }
+   h1, h2, h3, h4 {
+      color: #333333;
+      margin-bottom: 0px;
+   }
+</style>
 
 <div id="sitecontainer">
   	<div class="no-sections has-image no-tags page-content-wrapper title-white dark-section post-111 location type-location status-publish has-post-thumbnail hentry">
@@ -17,7 +31,7 @@
                </div>
                <div class="title">
                   <h1>
-                     Search results : ({{count($places)}}) matches
+                     Search results : ({{count($results)}}) matches
                   </h1>
                </div>
             </div>
@@ -44,8 +58,10 @@
                   <li class="active"><a onclick="changeCategory('tour','{{$search}}')" href="#">By tour</a></li>
                @endif
             </ul>
-         	@if (count($places) > 0)
-         		@foreach ($places as $key => $place)
+
+
+         	@if ( ($type=="place" || $type=="tag" ) && count($results) > 0)
+         		@foreach ($results as $key => $place)
 		            <div style="border-bottom: 1px solid; margin-bottom: 30px" class="col-md-12 full-width">
 		            	<a href="/location/{{$place->slug}}/">
 		            		<h2>{{$place->title}}</h2>
@@ -55,20 +71,45 @@
 		            	</a>
 		            	<a href="/location/{{$place->slug}}/">More details...</a>
 		            </div>
-		        @endforeach
-		    @else 
-		    	<div class="col-md-3 full-width"></div>
-		    	<div class="col-md-6 full-width">
-	            Your search : <b>{{$search}}</b> - did not match any {{$type}}s.
-	            <br><br>
-					Suggestions:
-					<br><br>
-					Make sure that all words are spelled correctly.<br>
-					Try different keywords.<br>
-					Try more general keywords.<br>
-		        </div>
-		        <div class="col-md-3 full-width"></div>
-		    @endif
+		         @endforeach
+		      @elseif ($type=="tour" && count($results) > 0 )
+               @foreach ($results as $key => $tour)
+                  <div class="row">
+                     <div class="six">
+                       <h3><a href="/tour/{{$tour->id}}">{{$tour->title}}</a></h3>
+                       <p>
+                         Date & time : {{$tour->date}} <br>
+                         Duration : {{$tour->duration}} <br>
+                         Agency & contact : <b> {{$tour->agency()->first()->name}} </b> - {{$tour->agency()->first()->phone}}
+                       </p>
+                     </div>
+                     <div class="deux">
+                       <b> {{$tour->price}} $ / place </b>
+                     </div>
+                     <div class="deux">
+                       <a href="/tour/{{$tour->id}}">Details</a>
+                     </div>
+                     <div class="deux">
+                       <button onclick="bookTour('{{$tour->id}}'); return false;" >Book now !</button>
+                     </div>
+                   </div>
+                   <hr>
+               @endforeach
+            @else 
+   		    	<div class="col-md-3 full-width"></div>
+   		    	<div class="col-md-6 full-width">
+   	            Your search : <b>{{$search}}</b> - did not match any {{$type}}s.
+   	            <br><br>
+   					Suggestions:
+   					<br><br>
+   					Make sure that all words are spelled correctly.<br>
+   					Try different keywords.<br>
+   					Try more general keywords.<br>
+   		        </div>
+   		        <div class="col-md-3 full-width"></div>
+   		    @endif
+
+
          </div>
       </div>
    	</div>

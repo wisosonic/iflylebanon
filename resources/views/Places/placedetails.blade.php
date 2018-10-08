@@ -3,6 +3,19 @@
 @section("content")
         
         <style type="text/css">
+
+          .fa-trash-alt:hover {
+            opacity:1 !important;
+            cursor: pointer;
+          }
+
+          .commentinput {
+            width: 100% !important; 
+            padding: 12px 8px !important; 
+            border: 1px solid #bdc7d8 !important; 
+            background-color: transparent !important;
+          }
+
           .relatedplace {
             min-height: 100px;
             max-height: 100px;
@@ -32,7 +45,11 @@
           }
 
         </style>
-         
+
+        <script src="/js/comment.js"></script>
+        
+        
+
         <div id="nb-menu-page" style="position: relative; z-index: 3;">
             <div id="sitecontainer">
                <script>
@@ -354,10 +371,16 @@
                               <div class="content">
                                 <div class="col-md-12 full-width">
                                   @foreach ($related as $key2 => $relatedplace)
-                                    <div style="margin-bottom: 20px" class="col-md-3 full-width tooltip">
+                                    <div style="margin-bottom: 20px" class="col-md-3 full-width ">
                                       <a href="/location/{{$relatedplace->slug}}">
                                         <img class="relatedplace" src="{{$relatedplace->image}}" >
-                                        <span class="tooltiptext">{{$relatedplace->title}}</span>
+                                        <span title="{{$relatedplace->title}}" class="tooltiptext">
+                                          @if (strlen($relatedplace->title) >= 15)
+                                            {{ substr($relatedplace->title, 0, 15) }}...
+                                          @else
+                                            {{ $relatedplace->title }}
+                                          @endif
+                                        </span>
                                       </a>
                                     </div>
                                   @endforeach
@@ -380,18 +403,67 @@
                               <i class="fa fa-heart"></i>
                               <span class="sharetitle">Like</span></a>
                            </div>
-                           <div>
-                                <div width=730 class="fb-comments" data-href="{{$place->commentsurl}}" data-numposts="5"></div>
-                                <div id="fb-root"></div>
-                                <script>(function(d, s, id) {
-                                  var js, fjs = d.getElementsByTagName(s)[0];
-                                    if (d.getElementById(id)) return;
-                                    js = d.createElement(s); js.id = id;
-                                    js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0';
-                                    fjs.parentNode.insertBefore(js, fjs);
-                                  }(document, 'script', 'facebook-jssdk'));
-                                </script>
+                           <div class="row">
+                            <div class="row">
+                              <p style="margin-bottom: 0px;">
+                                {{count($place->comments)}} Comments
+                              </p>
+                            </div>
+                            <hr style="border-color: lightgrey !important">
+                            @if (Auth::user())
+                              <div class="row">
+                                <div class="un">
+                                  <i style="font-size: 2.5em" class="fas fa-comments"></i>
+                                </div>
+                                <div class="onze">
+                                  <form style="display: none" action="" method="POST" id="comment_form">
+                                    {{ csrf_field() }}
+                                    <input type="text" name="comment">
+                                    <input type="text" name="place_id" value="{{$place->id}}">
+                                  </form>
+                                  <input class="commentinput" autocomplete="off" onkeypress="return Comment(event)" type="text" id="comment" placeholder="Add a comment...">
+                                </div>
+                              </div>
+                            @endif
+                            <div id="commentsdiv" class="row">
+                              @foreach ($place->comments as $key => $comment)
+                                <div class="row">
+                                  <div style="text-align: right" class="un">
+                                    <i style="font-size: 1.5em" class="fas fa-user-circle"></i>
+                                  </div>
+                                   <div style="background-color: #e8e8e8; border-radius: 15px; padding: 10px; margin-bottom: 10px" class="onze">
+                                    <div style="font-weight: bold" class="row">
+                                      {{$comment->user()->name}} - {{$comment->created_at}} 
+                                      @if (Auth::user()->id == $comment->user()->id)
+                                        <a href="/comment/delete/{{$comment->id}}">
+                                          <i style="float: right; opacity: 0.5; margin-right: 10px" class="fas fa-trash-alt"></i>
+                                        </a>
+                                      @else
+                                        <a href="/comment/report/{{$comment->id}}">
+                                          report
+                                        </a>
+                                      @endif
+                                    </div>
+                                    
+                                   @if ( (Auth::user()->id == $comment->user()->id) && $comment->blocked )
+                                      <div class="row">
+                                        {{$comment->filteredcomment}}
+                                      </div>
+                                      <div class="row">
+                                       <i>This comment contains unauthorized words and it will not be visible to other users.</i>
+                                      </div>
+                                   @elseif (!$comment->blocked)
+                                      <div class="row">
+                                        {{$comment->comment}}
+                                      </div>
+                                   @endif
+                                 </div>
+                                </div>
+                              @endforeach
+                            </div>
+                            <hr style="border-color: lightgrey !important">
                            </div>
+                           
                         </div>
                      </div>
                   </div>

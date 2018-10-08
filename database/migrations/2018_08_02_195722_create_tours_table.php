@@ -17,12 +17,14 @@ class CreateToursTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->text('description');
-            $table->date('date');
+            $table->dateTime('date');
             $table->string('duration');
+            $table->text('placestovisit');
+            $table->string('maxplaces');
             $table->string('availableplaces');
             $table->string('price');
             $table->string('meetingpoint');
-            $table->text('details');
+            $table->text('details')->nullable();
             $table->integer('agency_id')->unsigned()->index()->nullable();
             $table->foreign('agency_id')->references('id')->on('agencies')->onDelete('cascade');
             $table->timestamps();

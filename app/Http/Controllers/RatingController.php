@@ -6,6 +6,11 @@ use App\Rating;
 
 class RatingController extends Controller {
 
+	public function __construct()
+	{
+	    $this->middleware('blacklist', ['only' => [	'ratePlace' ] ]);
+	}
+
 	public function ratePlace(Request $request)
 	{
 		$data = $request->all();

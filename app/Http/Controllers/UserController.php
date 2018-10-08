@@ -36,11 +36,9 @@ class UserController extends Controller {
 		$allplaces = $user->placeYouMayLike();
 		$places = $allplaces[0];
 		$tags = $allplaces[1];
-
         foreach ($places as $key => $place) {
             $place->tags =  json_decode($place->tags,true);
         }
-
 		return view("placesuggestions", ["places"=>$places, "tags"=>$tags]);
 	}
 
@@ -55,10 +53,16 @@ class UserController extends Controller {
 	public function getBookings()
 	{
 		$user = Auth::user();
-		$bookings = $user->bookings()->get();
-		dd($bookings);
+		$bookings = $user->bookings()
+					->join('tours', 'tours.id', '=', 'tour_id')
+					->orderBy('tours.date', 'asc')
+					->get();
 
-		return view("", ["bookings"=>$bookings]);
+		foreach ($bookings as $key => $booking) {
+			$booking->tour = $booking->tour()->first();
+		}
+
+		return view("mybookings", ["bookings"=>$bookings]);
 	}
 
 }

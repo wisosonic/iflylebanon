@@ -70,6 +70,22 @@ class Youtubeapi extends Model  {
 			return null;
 		}
 	}
+	public static function getBroadcastById($id)
+	{
+		$youtube = self::getYoutubeObject();
+		try {
+		    $broadcastsResponse = $youtube->liveBroadcasts->listLiveBroadcasts(
+		        'id,snippet',
+		        array(
+		            'id' => $id
+		        ));
+		    return ($broadcastsResponse['items']);
+		} catch (Google_Service_Exception $e) {
+			return null;
+		} catch (Google_Exception $e) {
+			return null;
+		}
+	}
 
 	public static function getVideoURLById($id)
 	{

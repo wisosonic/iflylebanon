@@ -1,7 +1,55 @@
 @extends("general")
 
 @section("content")
-         
+        
+        <style type="text/css">
+
+          .fa-trash-alt:hover {
+            opacity:1 !important;
+            cursor: pointer;
+          }
+
+          .commentinput {
+            width: 100% !important; 
+            padding: 12px 8px !important; 
+            border: 1px solid #bdc7d8 !important; 
+            background-color: transparent !important;
+          }
+
+          .relatedplace {
+            min-height: 100px;
+            max-height: 100px;
+          }
+
+          .tooltip {
+              position: relative;
+              display: inline-block;
+          }
+
+          .tooltip .tooltiptext {
+              visibility: hidden;
+              width: 120px;
+              background-color: black;
+              color: #fff;
+              text-align: center;
+              border-radius: 6px;
+              padding: 5px 0;
+
+              /* Position the tooltip */
+              position: absolute;
+              z-index: 1;
+          }
+
+          .tooltip:hover .tooltiptext {
+              visibility: visible;
+          }
+
+        </style>
+
+        <script src="/js/comment.js"></script>
+        
+        
+
         <div id="nb-menu-page" style="position: relative; z-index: 3;">
             <div id="sitecontainer">
                <script>
@@ -62,12 +110,28 @@
                   </div>
                   <div class="page-content">
                      <div class="container">
-                        <div class="col-md-8 col-md-offset-2 regular-width">
+                        <div style="margin-bottom: 30px" class="col-md-9 col-md-offset-2 regular-width">
                            <div class="intro">
-                              <h2>
+                              <h2 style="margin-bottom: 10px">
                                  {{$place->description}}
                               </h2>
+                              <div style="padding: 0px" class="col-md-12 full-width"">
+                                <form action="" method="POST" id="tagsearch_form">
+                                  {{ csrf_field() }}
+                                  <input type="hidden" id="tagsearch" name="tagsearch">
+                                </form>
+                                <div style="text-align:left; margin-bottom: 0px" class="sharing badges section-buttons v-item">
+                                  @foreach ($place->tags as $key => $tag)
+                                    <a onclick="tagSearch('{{$tag}}'); return false;" href="#"  class="location-actions popup-with-move-anim">
+                                      <span class="sharetitle">#{{$tag}}</span>
+                                    </a>
+                                  @endforeach
+                                </div>
+                              </div>
                            </div>
+                        </div>
+
+                        <div class="col-md-8 col-md-offset-2 regular-width">
                            <div class="content">
                               <aside class="aside-left">Find your way to: <strong>{{$place->title}}</strong></aside>
                               <div class="col-md-12 full-width">
@@ -277,6 +341,7 @@
                                  margin-left: 0;
                                  }
                               </style>
+                              
                               <div class="single-slideshow gallery-wrap info pager no-autoplay" style="background: none;">
                                  <div class="bx-wrapper" style="max-width: 100%;">
                                     <div class="bx-viewport" style="width: 100%; overflow: hidden; position: relative; height: 523px;">
@@ -301,9 +366,28 @@
                               </div>
                               <div class="clear"></div>
                            </div>
+                           <h3>Related places</h3>
                            @if (count($related)>0)
-                              
+                              <div class="content">
+                                <div class="col-md-12 full-width">
+                                  @foreach ($related as $key2 => $relatedplace)
+                                    <div style="margin-bottom: 20px" class="col-md-3 full-width ">
+                                      <a href="/location/{{$relatedplace->slug}}">
+                                        <img class="relatedplace" src="{{$relatedplace->image}}" >
+                                        <span class="tooltiptext">{{$relatedplace->title}}</span>
+                                      </a>
+                                    </div>
+                                  @endforeach
+                                </div>
+                              </div>
+                           @else
+                              <div class="content">
+                                <p>
+                                  No related places found.
+                                </p>
+                              </div>
                            @endif
+                             
                            <div class="sharing badges section-buttons v-item">
                               <a href="https://parposa.com/iflylebanon/location/afqa-waterfall/#share-box" onclick="updateShareBoxLinks(this);" data-title="Afqa Waterfall" data-link="https://parposa.com/iflylebanon/location/afqa-waterfall/" class="location-actions open-popup-link post-share share popup-with-move-anim">
                               <i class="fa fa-share"></i>
@@ -313,18 +397,68 @@
                               <i class="fa fa-heart"></i>
                               <span class="sharetitle">Like</span></a>
                            </div>
-                           <div id="disqus_thread">
-                              <div width=730 class="fb-comments" data-href="{{$place->commentsurl}}" data-numposts="5"></div>
-                              <div id="fb-root"></div>
-                                 <script>(function(d, s, id) {
-                                    var js, fjs = d.getElementsByTagName(s)[0];
-                                      if (d.getElementById(id)) return;
-                                      js = d.createElement(s); js.id = id;
-                                      js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0';
-                                      fjs.parentNode.insertBefore(js, fjs);
-                                    }(document, 'script', 'facebook-jssdk'));
-                                 </script>
+                           <div class="row">
+                            <div class="row">
+                              <p style="margin-bottom: 0px;">
+                                {{count($place->comments)}} Comments
+                              </p>
+                            </div>
+                            <hr style="border-color: lightgrey !important">
+                            @if (Auth::user())
+                              <div class="row">
+                                <div class="un">
+                                  <i style="font-size: 2.5em" class="fas fa-comments"></i>
+                                </div>
+                                <div class="onze">
+                                  <form style="display: none" action="" method="POST" id="comment_form">
+                                    {{ csrf_field() }}
+                                    <input type="text" name="comment">
+                                    <input type="text" name="place_id" value="{{$place->id}}">
+                                  </form>
+                                  <input class="commentinput" autocomplete="off" onkeypress="return Comment(event)" type="text" id="comment" placeholder="Add a comment...">
+                                </div>
+                              </div>
+                            @endif
+                            <div id="commentsdiv" class="row">
+                              @foreach ($place->comments as $key => $comment)
+                                <div class="row">
+                                  <div style="text-align: right" class="un">
+                                    <i style="font-size: 1.5em" class="fas fa-user-circle"></i>
+                                  </div>
+                                   <div style="background-color: #e8e8e8; border-radius: 15px; padding: 10px; margin-bottom: 10px" class="onze">
+                                    <div style="font-weight: bold" class="row">
+                                      {{$comment->user()->name}} - {{$comment->created_at}} 
+                                      @if (Auth::user()->id == $comment->user()->id)
+                                        <a href="/comment/delete/{{$comment->id}}">
+                                          <i style="float: right; opacity: 0.5; margin-right: 10px" class="fas fa-trash-alt"></i>
+                                        </a>
+                                      @else
+                                        <a href="/comment/report/{{$comment->id}}">
+                                          report
+                                        </a>
+                                      @endif
+                                    </div>
+                                    <div class="row">
+                                      {{$comment->comment}}
+                                    </div>
+                                   </div>
+                                </div>
+                              @endforeach
+                            </div>
+                            <hr style="border-color: lightgrey !important">
                            </div>
+                           <!-- <div>
+                                <div width=730 class="fb-comments" data-href="{{$place->commentsurl}}" data-numposts="5"></div>
+                                <div id="fb-root"></div>
+                                <script>(function(d, s, id) {
+                                  var js, fjs = d.getElementsByTagName(s)[0];
+                                    if (d.getElementById(id)) return;
+                                    js = d.createElement(s); js.id = id;
+                                    js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0';
+                                    fjs.parentNode.insertBefore(js, fjs);
+                                  }(document, 'script', 'facebook-jssdk'));
+                                </script>
+                           </div> -->
                         </div>
                      </div>
                   </div>

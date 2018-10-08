@@ -3,6 +3,8 @@
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use App\User;
+use App\Place;
+use Auth;
 
 class Place extends Model  {
 	
@@ -31,6 +33,11 @@ class Place extends Model  {
 		return $this->hasMany("App\Rating");
 	}
 
+	public function comments()
+	{
+		return $this->hasMany("App\Comment");
+	}
+
 	public function updateRating()
 	{
 		$average = 0;
@@ -43,6 +50,48 @@ class Place extends Model  {
 		}
 		$this->rating = number_format($average,1);
 		$this->save();
+	}
+
+	public static function addNewComment($request)
+	{
+		try {
+			$data = $request->all();
+			$place = Place::find($data["place_id"]);
+			$user = Auth::user();
+			$res = Purify::checkProfanity($data["comment"]);
+			$comment = new Comment();
+			$comment->comment  = $data["comment"];
+			if ($res["found"] > 0) {
+				$comment->blocked = true;
+				$comment->filteredcomment = $res["text"];
+				$profanity = "blocked";
+				$user->addwarning();
+			} else {
+				$comment->blocked = false;
+				$profanity = "clear";
+			}
+			$comment->place_id = $place->id;
+			$comment->user_id  = Auth::user()->id;
+			$comment->save();
+			return ["message"=>"commentadded", "slug"=>$place->slug, "profanity"=>$profanity];
+		} catch (Exception $e) {
+			return ["message"=>"commenterror", "slug"=>$place->slug, "profanity"=>$profanity];
+		}
+	}
+
+	public static function deleteComment($comment_id)
+	{
+		try {
+			$comment = Comment::find($comment_id);
+			if (Auth::user() == $comment->user()) {
+				$comment->delete();
+				return ["message"=>"commentdeleted", "slug"=>$comment->place()->slug];
+			} else {
+				return ["message"=>"commentdeletunauthorised", "slug"=>$comment->place()->slug];
+			}
+		} catch (Exception $e) {
+			return ["message"=>"commentdeleteerror", "slug"=>$comment->place()->slug];
+		}
 	}
 
 	public static function addNewPlace($request)

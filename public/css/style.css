@@ -4325,6 +4325,7 @@ body.dark-section #fp-nav span{
 }
 .page-content-wrapper .page-content{
     padding-top:60px;
+    padding-bottom:60px;
     text-align:left
 }
 body.dark-section .nb-menu-page{

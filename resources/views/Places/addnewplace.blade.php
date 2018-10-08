@@ -32,6 +32,13 @@
       .select2-results__option {
         display: none;
       }
+      .sharing a {
+        color: #fff!important;
+        opacity: 1!important;
+        border-color: #fff!important;
+        font-size: 1.3em !important;
+        padding: 20px !important;
+      }
     </style>
 
   <div id="sitecontainer">
@@ -92,9 +99,13 @@
                 {{ Form::file('coverphoto', array('class' => 'image', 'id' => 'coverphoto', 'accept' => 'image/*')) }}
                 <!-- <input type="file" name="coverphoto" id="coverphoto" accept="image/*"> -->
               </div>
-              <a href="#" onclick="sendNewPlaceForm(); return false" style="background-color: #333333" class="">
-                <span class="sharetitle">Add place</span>
-              </a>
+
+              <div style="margin-top: 20px" class="sharing badges section-buttons v-item">
+                <a onclick="sendNewPlaceForm(); return false;" href="#" target="" style="background-color: #333333" class="">
+                  <span class="sharetitle">Add place</span>
+                </a>
+              </div>
+
             {{ Form::close() }}
             <!-- </form> -->
          </div>

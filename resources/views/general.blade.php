@@ -51,14 +51,21 @@
             border: 1px solid #333333 !important;
             margin-right: 10px !important;
          }
+         hr {
+            border-color: white !important;
+            margin: 10px 0px !important
+         }
       </style>
+
+
+      <link rel='stylesheet'  href='/css/bootstrap.min.css?ver=3.2.0' type='text/css' media='all' />
+
       <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
 
-      <link rel='stylesheet'  href='/css/bootstrap.min.css?ver=3.2.0' type='text/css' media='all' />
       <link rel='stylesheet'  href='/css/font-awesome/css/font-awesome.min.css?ver=4.3.0' type='text/css' media='all' />
       <link rel='stylesheet'  href='/css/animsition.min.css?ver=4.0.2' type='text/css' media='all' />
       <link rel='stylesheet'  href='/css/style2.css' type='text/css' media='all' />
@@ -90,6 +97,17 @@
          <div class="top-nav nb-fixed">
             <div class="container top-nav-inner">
                <div class="table">
+                  
+                  @if (Auth::user() && Auth::user()->blacklist()->first())
+                     <div style="background-color: red; color:white" class="tr">
+                        <div class="td"></div>
+                        <div class="td verticalmiddle">
+                           Your account is blacklisted and you wont be able to comment/add/rate places
+                           or book tours.
+                        </div>
+                     </div>
+                  @endif
+                  
                   <div class="tr">
                      <div class="td verticalmiddle" id="logo">
                         <h2>
@@ -103,8 +121,11 @@
                               {{ csrf_field() }}
                               <input type="text" name="search" placeholder="search">
                            </form>
+                           @if (Auth::user() && Auth::user()->admin()->first())
+                           <button onclick="admin(); return false;" class="button NormanlButton">Admin</button>
+                           @endif
                            <button onclick="agency(); return false;" class="button NormanlButton">Agency</button>
-                           <input style="width: 200px !important;" onkeypress="return Search(event)" class="search" type="text" id="search" placeholder="search">
+                           <input style="width: 200px !important;" autocomplete="off" onkeypress="return Search(event)" class="search" type="text" id="search" placeholder="search">
                            <a href="#" class="tw-menu-icon nb-menu-link" id="nb-menu-link">
                               <span> Menu </span>
                            </a>
@@ -119,14 +140,23 @@
                                        <li class="page_item page-item-5 current_page_item"><a href="/">Home</a></li>
                                        <li class="page_item page-item-5 current_page_item"><a href="/all-live-streams">Live streams</a></li>
                                        @if(Auth::user())
+                                          <hr>
+                                          <li class="page_item page-item-5 current_page_item"><a href="/all-tours">Browse all tours</a></li>
+                                          <li class="page_item page-item-5 current_page_item"><a href="/my-bookings">My bookings</a></li>
+                                          <hr>
                                           <li class="page_item page-item-5 current_page_item"><a href="/my-favorite-places">My favorite places</a></li>
                                           <li class="page_item page-item-5 current_page_item"><a href="/places-you-may-like">Places you may like</a></li>
-                                          <li class="page_item page-item-5 current_page_item"><a href="/add-new-place">Add new place</a></li>
+                                          @if(!Auth::user()->blacklist()->first())
+                                             <li class="page_item page-item-5 current_page_item"><a href="/add-new-place">Add new place</a></li>
+                                          @endif
                                           <form action="" method="POST" id="logout_form">
                                              {{ csrf_field() }}
                                           </form>
+                                          <hr>
                                           <li class="page_item page-item-72 logout"><a onclick="logout(); return false;" href="#">Logout</a></li>
                                        @else
+                                          <li class="page_item page-item-5 current_page_item"><a href="/all-tours">Browse all tours</a></li>
+                                          <hr>
                                           <li class="page_item page-item-72"><a href="/login">Login / Register</a></li>
                                        @endif
                                     </ul>
@@ -156,6 +186,9 @@
 
          <div id="tw-mobile-indicator"></div>
          <link rel='stylesheet' id='fontawesome-style-css' href='https://use.fontawesome.com/releases/v5.0.10/css/all.css?ver=4.9.6' type='text/css' media='all' />
+         <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous"> -->
+         <!-- <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js" integrity="sha384-kW+oWsYx3YpxvjtZjFXqazFpA7UP/MbiY4jvs+RWZo2+N94PFZ36T6TFkc9O3qoB" crossorigin="anonymous"></script> -->
+
          <script type='text/javascript'>
             /* <![CDATA[ */
             var countVars = {"disqusShortname":"iflylebanon"};
@@ -191,12 +224,32 @@
          <script type='text/javascript' src='/js/custom.js?ver=4.9.6'></script>
          <script type='text/javascript' src='/js/wp-embed.min.js?ver=4.9.6'></script>
 
+         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
          <script src="/loginpage/js/login.js"></script>
          <script src="/loginpage/js/register.js"></script>
          <script src="/js/search.js"></script>
          <script type="text/javascript">
+            
+            @if (Session::has('profanity'))
+               @if (Session::get('profanity')=="blocked") 
+                  toastr["warning"]("Warning n°{{Auth::user()->warnings}}", "Your comment contains unauthorized words and it have been removed!");
+               @endif
+            @endif
+
             @if (Session::has('message'))
-               @if (Session::get('message')=="logged") 
+               @if (Session::get('message')=="blacklisted") 
+                  swal({   
+                        title: "",   
+                        text: "Your account is blacklisted for using " +
+                              "offensive words in comments repeatedly. " +
+                              "Please contact Costumer Support if you have any questions.", 
+                        type: "error",   
+                        confirmButtonColor: "#3f927e",   
+                        confirmButtonText: "Ok"
+                     });
+
+               @elseif (Session::get('message')=="logged") 
                   swal({   
                         title: "",   
                         text: "Hello {{Auth::user()->name}}", 
@@ -204,11 +257,23 @@
                         confirmButtonColor: "#3f927e",   
                         confirmButtonText: "Ok"
                      });
+
+               @elseif (Session::get('message')=="commentadded") 
+                  toastr["success"]("", "Comment has been added !");
+               @elseif (Session::get('message')=="commenterror") 
+                  toastr["error"]("", "Comment has not been added !");
+               @elseif (Session::get('message')=="commentdeleted") 
+                  toastr["success"]("", "Comment has been deleted !");
+               @elseif (Session::get('message')=="commentdeletunauthorised") 
+                  toastr["error"]("", "You dont have the permission to delete this comment !");
+               @elseif (Session::get('message')=="commentdeleteerror") 
+                  toastr["error"]("", "Comment has not been deleted !");
+
                @elseif (Session::get('message')=="placeadded") 
                   swal({   
                         title: "",   
                         text: "Place has been added !", 
-                        type: "success",   
+                        type: "success",
                         confirmButtonColor: "#3f927e",   
                         confirmButtonText: "Ok"
                      });
@@ -223,7 +288,39 @@
                @elseif (Session::get('message')=="unauthorized") 
                   swal({   
                         title: "",   
-                        text: "You are not authorized to access this page or your account has not been verified yet! Please contact our costumer support at xxxx@iflylebanon.com", 
+                        text: "You are not authorized to access this page or your account has not been verified yet! Please contact our costumer support at support@iflylebanon.com", 
+                        type: "error",   
+                        confirmButtonColor: "#3f927e",   
+                        confirmButtonText: "Ok"
+                     });
+               @elseif (Session::get('message')=="notadmin") 
+                  swal({   
+                        title: "",   
+                        text: "You are not authorized to access the Administration page ! Please contact our costumer support at support@iflylebanon.com", 
+                        type: "error",   
+                        confirmButtonColor: "#3f927e",   
+                        confirmButtonText: "Ok"
+                     });
+               @elseif (Session::get('message')=="booked") 
+                  swal({   
+                        title: "",   
+                        text: "Your booking has been accepted !", 
+                        type: "success",   
+                        confirmButtonColor: "#3f927e",   
+                        confirmButtonText: "Ok"
+                     });
+               @elseif (Session::get('message')=="noavailableplaces") 
+                  swal({   
+                        title: "Your booking has not been registered",   
+                        text: "There is no available places for this tour !", 
+                        type: "warning",   
+                        confirmButtonColor: "#3f927e",   
+                        confirmButtonText: "Ok"
+                     });
+               @elseif (Session::get('message')=="notbooked") 
+                  swal({   
+                        title: "Something went wrong !",   
+                        text: "Your booking has not been registered !", 
                         type: "error",   
                         confirmButtonColor: "#3f927e",   
                         confirmButtonText: "Ok"
@@ -244,9 +341,20 @@
             function agency() {
                window.location.href = "/agency";
             }
+            function admin() {
+               window.location.href = "/admin";
+            }
 
          </script>
-            
+         @if (Session('jumpto'))
+          <script>
+              $(document).ready(function(){
+                  var height = screen.height / 5 ;
+                  var topPosition = $('#{{Session("jumpto")}}').offset().top - height;
+                  $('html, body').animate({scrollTop:topPosition}, 'slow');
+              });
+          </script>
+        @endif   
       </div>
    </body>
 </html>

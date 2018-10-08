@@ -6,6 +6,8 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 use Auth;
+use App\Blacklist;
+use App\Whitelist;
 
 class User extends Authenticatable
 {
@@ -17,7 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'warnings'
     ];
 
     /**
@@ -28,6 +30,11 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function admin()
+    {
+        return $this->hasOne("App\Admin");
+    }
 
     public function places()
     {
@@ -47,6 +54,29 @@ class User extends Authenticatable
     public function bookings()
     {
         return $this->hasMany("App\Booking");
+    }
+
+    public function blacklist()
+    {
+        return $this->hasOne("App\Blacklist");
+    }
+    public function whitelist()
+    {
+        return $this->hasOne("App\Whitelist");
+    }
+
+    public function addwarning()
+    {
+        $this->warnings = $this->warnings + 1 ;
+        $this->save();
+        if ($this->warnings >= 1) {
+            Blacklist::addBlacklist([
+                "user_id"=>$this->id,
+                "reason"=>"profanity",
+                "details"=>"",
+            ]);
+            Whitelist::deleteWhitelist($this->id);
+        }
     }
 
     public static function checkEmailAvailability($email)
