@@ -72,24 +72,27 @@ class Youtubeapi extends Model  {
 	}
 	public static function getBroadcastById($id)
 	{
-		$youtube = self::getYoutubeObject();
-		try {
-		    $broadcastsResponse = $youtube->liveBroadcasts->listLiveBroadcasts(
-		        'id,snippet',
-		        array(
-		            'id' => $id
-		        ));
-		    return ($broadcastsResponse['items']);
-		} catch (Google_Service_Exception $e) {
-			return null;
-		} catch (Google_Exception $e) {
-			return null;
-		}
+		$request = 	'https://www.googleapis.com/youtube/v3/videos?part=id%2C+snippet&id=' .
+					$id . 
+					'&key=AIzaSyAZMuhMd1c1awtDuM0rhwkdbzOLyomRlgc';
+		$res = file_get_contents($request);
+		$res = json_decode($res, true);
+		dd($res);
 	}
 
 	public static function getVideoURLById($id)
 	{
 		return "https://www.youtube.com/watch?v=".$id;
+	}
+
+	public static function getVideoId($url)
+	{
+		try {
+			$id = explode("&", explode("v=", $url)[1])[0];
+			return $id;
+		} catch (Exception $e) {
+			return 'urlerror';
+		}
 	}
 
 

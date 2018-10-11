@@ -41,6 +41,10 @@ Route::get("/test2",function(){
 	$res = App\Youtubeapi::getBroadcastById("rcy2Jo7enxI");
 	dd($res);
 });
+Route::get("/test3",function(){
+	$res = App\Youtubeapi::getVideoId("https://www.youtube.com/watch?v=VCt2jC7hZ1o");
+	dd($res);
+});
 
 // Live streaming
 Route::get('/all-live-streams', "StreamingController@allLiveStreams");

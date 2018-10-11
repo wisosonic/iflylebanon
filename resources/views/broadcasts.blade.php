@@ -40,11 +40,11 @@
 		            		height="172" 
 		            		src="https://www.youtube.com/embed/{{$broadcast->id}}?controls=1&fs=1" 
 		            		allowfullscreen="allowfullscreen"
-					        mozallowfullscreen="mozallowfullscreen" 
-					        msallowfullscreen="msallowfullscreen" 
-					        oallowfullscreen="oallowfullscreen" 
-					        webkitallowfullscreen="webkitallowfullscreen">
-					    </iframe>
+  					        mozallowfullscreen="mozallowfullscreen" 
+  					        msallowfullscreen="msallowfullscreen" 
+  					        oallowfullscreen="oallowfullscreen" 
+  					        webkitallowfullscreen="webkitallowfullscreen">
+    					    </iframe>
 	            	</div>
 	            	<div class="col-md-6 full-width">
 	            		<div class="intro">

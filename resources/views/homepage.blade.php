@@ -4,6 +4,7 @@
   <!-- Font Awesome Icon Library -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="/css/rating.css">
+  <link rel="stylesheet" href="/css/modal.css">
   <style>
     .checked {
         color: orange;
@@ -85,10 +86,10 @@
                                         <i class="fas fa-info"></i>
                                         <span class="sharetitle">More</span>
                                       </a>
-                                      <a  href="#share-box" onclick="updateShareBoxLinks(this);" data-title="{{$place->title}}" data-link="./location/{{$place->slag}}/" style="background-color: #333333" class="location-actions open-popup-link post-share share popup-with-move-anim">
+                                      <!-- <a  href="#share-box" onclick="updateShareBoxLinks(this);" data-title="{{$place->title}}" data-link="./location/{{$place->slag}}/" style="background-color: #333333" class="location-actions open-popup-link post-share share popup-with-move-anim">
                                        <i class="fa fa-share"></i>
                                        <span class="sharetitle">Share</span>
-                                      </a>
+                                      </a> -->
 
                                       @if (Auth::user())
                                         <a href="#" onclick="addToFavoritePlaces('{{$place->id}}');" target="" style="background-color: #333333" class="">
@@ -97,7 +98,11 @@
                                         </a>
                                       @endif
 
-                                      <a id="livestreaminglink_{{$place->id}}" href="#" target="" style="background-color: #333333" class="">
+                                      <a id="golive_{{$place->id}}" onclick="openModal('{{$place->id}}');" href="#" style="float: right; color: #333333 !important; border-color: #333333 !important">
+                                        <i class="fas fa-video"></i>Go live
+                                      </a>
+
+                                      <a id="livestreaminglink_{{$place->id}}" href="#" target="" style="background-color: #333333; float: right" class="">
                                         <i id="livestreamingicon_{{$place->id}}" style="color: red" class="fas fa-circle"></i>
                                         <span id="livestreamingbutton_{{$place->id}}" class="sharetitle">OFFLINE</span>
                                       </a>
@@ -147,7 +152,47 @@
            </div>
         </div>
   </div>
+
+  <!-- Trigger/Open The Modal -->
+  <button id="myBtn">Open Modal</button>
+
+  <div id="myModal" class="modal">
+    <input type="hidden" id="youtubeplaceid" name="youtubeplaceid">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h3>Your Youtube live streaming url</h3>
+      <div class="row">
+        <div class="onze">
+          <input style="width: 100%" type="text" id="youtubeurl" name="youtubeurl" placeholder="Your live streaming url">
+        </div>
+        <div class="un badges">
+          <a onclick="setIframeSource();" href="#">Search</a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="six">
+          <iframe 
+            id="youtubeiframe"
+            width="210" 
+            height="176" 
+            src="https://www.youtube.com/embed/VCt2jC7hZ1o?controls=1&fs=1" 
+            allowfullscreen="allowfullscreen"
+            mozallowfullscreen="mozallowfullscreen" 
+            msallowfullscreen="msallowfullscreen" 
+            oallowfullscreen="oallowfullscreen" 
+            webkitallowfullscreen="webkitallowfullscreen">
+          </iframe>
+        </div>
+        <div class="six badges">
+          <a href="#" style="background-color: #333333; opacity: 1; color: white">Publish</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
     <script src="/js/livestreaming.js"></script>
+    <script src="/js/modal.js"></script>
     <script type="text/javascript">
       var token = '{{ csrf_token() }}' ;
       function addToFavoritePlaces(place_id) {
