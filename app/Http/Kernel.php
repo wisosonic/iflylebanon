@@ -62,5 +62,6 @@ class Kernel extends HttpKernel
         'agency' => \App\Http\Middleware\CheckAgency::class,
         'admin' => \App\Http\Middleware\CheckAdmin::class,
         'blacklist' => \App\Http\Middleware\CheckBlacklisted::class,
+        'updateblacklist' => \App\Http\Middleware\UpdateBlacklist::class,
     ];
 }

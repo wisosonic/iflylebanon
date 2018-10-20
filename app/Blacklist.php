@@ -30,6 +30,13 @@ class Blacklist extends Model  {
 				$blacklist = Blacklist::create($data);
 				$user->blacklist()->save($blacklist);
 				$blacklist->save();
+				if ($user->status == "test") {
+	                $user->status = "pblock";
+	                $user->save();
+	            } else if ($user->status == "active") {
+	            	$user->status = "block";
+	                $user->save();
+	            }
 				return "blacklistadded";
 			}
 		} else {

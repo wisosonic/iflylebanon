@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Place;
 use App\User;
 use App\Purify;
+use App\Keyword;
 
 class Comment extends Model  {
 	
@@ -25,6 +26,17 @@ class Comment extends Model  {
 	public function place()
 	{
 		return $this->belongsTo("App\Place")->first();
+	}
+
+	public function checkNegative()
+	{
+		$keywords = Keyword::all()->pluck("word");
+		foreach ($keywords as $key => $keyword) {
+			if (strpos($this->comment, $keyword) !== false) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 }

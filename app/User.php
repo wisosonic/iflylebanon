@@ -22,6 +22,7 @@ class User extends Authenticatable
         'name', 'email', 'password', 'warnings'
     ];
 
+    protected $maxWarnings = 3;
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -68,8 +69,7 @@ class User extends Authenticatable
     public function addwarning()
     {
         $this->warnings = $this->warnings + 1 ;
-        $this->save();
-        if ($this->warnings >= 1) {
+        if ($this->warnings >= $this->maxWarnings) {
             Blacklist::addBlacklist([
                 "user_id"=>$this->id,
                 "reason"=>"profanity",
@@ -77,6 +77,7 @@ class User extends Authenticatable
             ]);
             Whitelist::deleteWhitelist($this->id);
         }
+        $this->save();
     }
 
     public static function checkEmailAvailability($email)

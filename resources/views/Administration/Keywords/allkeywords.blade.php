@@ -50,7 +50,7 @@
                   <div class="clear"></div>
                </div>
                <div class="title">
-                  <h1>Blacklists</h1>
+                  <h1>Keywords</h1>
                </div>
             </div>
          </div>
@@ -80,28 +80,17 @@
           </div>
           <div class="neuf">
             <div class="row">
-              <h3>Blacklisted users ({{$blacklists->count()}})</h3>
+              <h3>Existing keywords ({{$keywords->count()}})</h3>
               <hr>
-              @if ($blacklists->count() > 0)
-                @foreach ($blacklists as $key => $blacklist)
+              @if ($keywords->count() > 0)
+                @foreach ($keywords as $key => $keyword)
                   <div class="row">
                     <div class="dix">
-                      <b> <i style="font-size: 1.5em" class="fas fa-user-circle"></i> {{$blacklist->name}} - {{$blacklist->email}}</b>
-                      @if ($blacklist->phone)
-                        <br>
-                        <i>{{$blacklist->phone}}</i>
-                      @endif
-                      <br>
-                      Reason: {{$blacklist->blacklist()->first()->reason}}
-                      <br>
-                      Details: {{$blacklist->blacklist()->first()->details}}
+                      {{$keyword->word}}
                     </div>
                     <div class="deux">
-                      <a href="/admin/delete-blacklist/{{$blacklist->id}}">
+                      <a href="/admin/delete-keyword/{{$keyword->id}}">
                         <i style="float: right; opacity: 0.5; margin-right: 10px" class="fas fa-trash-alt"></i>
-                      </a>
-                      <a href="/admin/edit-blacklist/{{$blacklist->id}}">
-                        <i style="float: right; opacity: 0.5; margin-right: 10px" class="fas fa-edit"></i>
                       </a>
                     </div>
                   </div>
@@ -109,7 +98,7 @@
                 @endforeach
               @else 
                 <p>
-                  There are no blacklisted users !
+                  There are no keywords !
                 </p>
               @endif
             </div>
@@ -122,35 +111,27 @@
  <script src="/js/admin.js"></script>
  <script type="text/javascript">
     @if (Session::has('message'))
-     @if (Session::get('message')=="blacklistdeleted") 
+     @if (Session::get('message')=="admindeleted") 
         swal({   
               title: "",   
-              text: "User has been removed from blacklist !", 
+              text: "Admin has been deleted !", 
               type: "success",   
               confirmButtonColor: "#3f927e",   
               confirmButtonText: "Ok"
            });
-      @elseif (Session::get('message')=="blacklistnotfound") 
+      @elseif (Session::get('message')=="adminnotfound") 
           swal({   
                 title: "Something went wrong !",   
-                text: "This user is not on the blacklist !", 
+                text: "This user has no 'admin' roles !", 
                 type: "error",   
                 confirmButtonColor: "#3f927e",   
                 confirmButtonText: "Ok"
              });
       @elseif (Session::get('message')=="usernotfound") 
           swal({   
-                title: "Something went wrong !",   
-                text: "user not found !", 
-                type: "error",   
-                confirmButtonColor: "#3f927e",   
-                confirmButtonText: "Ok"
-             });
-      @elseif (Session::get('message')=="blacklistedited") 
-          swal({   
                 title: "",   
-                text: "User blacklist details have been edited !", 
-                type: "success",   
+                text: "User not found !", 
+                type: "error",   
                 confirmButtonColor: "#3f927e",   
                 confirmButtonText: "Ok"
              });

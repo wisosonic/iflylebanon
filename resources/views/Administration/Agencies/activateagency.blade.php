@@ -53,27 +53,28 @@
       </div>
       <div class="page-content">
         <div class="container">
-          <div class="trois">
-            <ul style="margin-bottom: 5px" class="subMenu">
-               <li class="page_item page-item-5 current_page_item"><a href="/admin/">Dashboard</a></li>
-            </ul>
-            <ul style="margin-bottom: 5px" class="subMenu">
-               <li class="page_item page-item-5 current_page_item"><a href="/admin/all-admins">Browse all admins</a></li>
-               <li class="page_item page-item-5 current_page_item"><a href="/admin/add-admin">Add admin</a></li>
-            </ul>
-            <ul style="margin-bottom: 5px" class="subMenu">
-               <li class="page_item page-item-5 current_page_item"><a href="/admin/all-agencies">Browse all agencies</a></li>
-               <li class="page_item page-item-5 current_page_item"><a href="/admin/activate-agency">Activate agency</a></li>
-            </ul>
-            <ul style="margin-bottom: 5px" class="subMenu">
-               <li class="page_item page-item-5 current_page_item"><a href="/admin/all-blacklists">User blacklist</a></li>
-               <li class="page_item page-item-5 current_page_item"><a href="/admin/add-to-blacklist">Add to blacklist</a></li>
-            </ul>
-            <ul style="margin-bottom: 5px" class="subMenu">
-               <li class="page_item page-item-5 current_page_item"><a href="/admin/all-whitelists">User whitelist</a></li>
-               <li class="page_item page-item-5 current_page_item"><a href="/admin/add-to-whitelist">Add to whitelist</a></li>
-            </ul>
-          </div>
+          <div style="margin-bottom: 20px" class="row">
+            <div class="trois">
+              <ul style="margin-bottom: 5px" class="subMenu">
+                 <li class="page_item page-item-5 current_page_item"><a href="/admin/">Dashboard</a></li>
+              </ul>
+              <ul style="margin-bottom: 5px" class="subMenu">
+                 <li class="page_item page-item-5 current_page_item"><a href="/admin/all-admins">Browse all admins</a></li>
+                 <li class="page_item page-item-5 current_page_item"><a href="/admin/add-admin">Add admin</a></li>
+              </ul>
+              <ul style="margin-bottom: 5px" class="subMenu">
+                 <li class="page_item page-item-5 current_page_item"><a href="/admin/all-agencies">Browse all agencies</a></li>
+                 <li class="page_item page-item-5 current_page_item"><a href="/admin/activate-agency">Activate agency</a></li>
+              </ul>
+              <ul style="margin-bottom: 5px" class="subMenu">
+                 <li class="page_item page-item-5 current_page_item"><a href="/admin/all-blacklists">User blacklist</a></li>
+                 <li class="page_item page-item-5 current_page_item"><a href="/admin/add-to-blacklist">Add to blacklist</a></li>
+              </ul>
+              <ul style="margin-bottom: 5px" class="subMenu">
+                 <li class="page_item page-item-5 current_page_item"><a href="/admin/all-keywords">Browse all keywords</a></li>
+                 <li class="page_item page-item-5 current_page_item"><a href="/admin/add-keyword">Add keyword</a></li>
+              </ul>
+            </div>
           <div class="neuf">
             <div class="row">
               <div class="six">

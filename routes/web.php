@@ -16,9 +16,13 @@ Route::group(['prefix' => 'admin',  'middleware' => 'admin'], function() {
 	Route::post('/edit-blacklist/', "AdminController@postEditeBlacklist");
 	Route::get('/add-to-blacklist', "AdminController@getAddBlacklist");
 	Route::post('/add-to-blacklist', "AdminController@postAddBlacklist");
-	Route::get('/all-whitelists', "AdminController@getAllWhitelists");
-	Route::get('/add-to-whitelist', "AdminController@getAddWhitelist");
-	Route::post('/add-to-whitelist', "AdminController@postAddWhitelist");
+	// Route::get('/all-whitelists', "AdminController@getAllWhitelists");
+	// Route::get('/add-to-whitelist', "AdminController@getAddWhitelist");
+	// Route::post('/add-to-whitelist', "AdminController@postAddWhitelist");
+	Route::get('/all-keywords', "AdminController@getAllKeywords");
+	Route::get('/delete-keyword/{id}', "AdminController@deleteKeyword");
+	Route::get('/add-keyword', "AdminController@getAddKeyword");
+	Route::post('/add-keyword', "AdminController@postAddKeyword");
 });
 
 // Agency
@@ -46,37 +50,39 @@ Route::get("/test3",function(){
 	dd($res);
 });
 
-// Live streaming
-Route::get('/all-live-streams', "StreamingController@allLiveStreams");
-Route::post('/check-live-streaming', "StreamingController@checkLiveStreaming");
+Route::group(['middleware' => 'updateblacklist'], function() {
+	// Live streaming
+	Route::get('/all-live-streams', "StreamingController@allLiveStreams");
+	Route::post('/check-live-streaming', "StreamingController@checkLiveStreaming");
 
-// Tours
-Route::get('/all-tours', "TourController@getAllTours");
-Route::get('/my-bookings', "UserController@getBookings");
-Route::get('/all-tours', "TourController@getAllTours");
-Route::get('/tour/{id}', "TourController@getTourById");
-Route::get('/book-tour/{id}', "TourController@getBookTour");
-Route::post('/book-tour', "TourController@postBookTour");
+	// Tours
+	Route::get('/all-tours', "TourController@getAllTours");
+	Route::get('/my-bookings', "UserController@getBookings");
+	Route::get('/all-tours', "TourController@getAllTours");
+	Route::get('/tour/{id}', "TourController@getTourById");
+	Route::get('/book-tour/{id}', "TourController@getBookTour");
+	Route::post('/book-tour', "TourController@postBookTour");
 
-// Places
-Route::get('/location/{slug}', "PlaceController@getPlace");
-Route::post('/rate-place', "RatingController@ratePlace");
-Route::get('/my-favorite-places', "UserController@getFavoritePlaces");
-Route::get('/places-you-may-like', "UserController@getPlacesYouMayLike");
-Route::post('/add-to-my-favorite-places', "UserController@postFavoritePlaces");
-Route::get('/add-new-place', "PlaceController@getAddNewPlace");
-Route::post('/add-new-place', "PlaceController@postAddNewPlace");
-Route::post('/comment', "PlaceController@postAddComment");
-Route::get('/comment/delete/{id}', "PlaceController@deleteComment");
+	// Places
+	Route::get('/location/{slug}', "PlaceController@getPlace");
+	Route::post('/rate-place', "RatingController@ratePlace");
+	Route::get('/my-favorite-places', "UserController@getFavoritePlaces");
+	Route::get('/places-you-may-like', "UserController@getPlacesYouMayLike");
+	Route::post('/add-to-my-favorite-places', "UserController@postFavoritePlaces");
+	Route::get('/add-new-place', "PlaceController@getAddNewPlace");
+	Route::post('/add-new-place', "PlaceController@postAddNewPlace");
+	Route::post('/comment', "PlaceController@postAddComment");
+	Route::get('/comment/delete/{id}', "PlaceController@deleteComment");
 
-// Search
-Route::post('/search', "SearchController@search");
-Route::post('/search-tag', "SearchController@searchTag");
-Route::post('/search-tour', "SearchController@searchTour");
+	// Search
+	Route::post('/search', "SearchController@search");
+	Route::post('/search-tag', "SearchController@searchTag");
+	Route::post('/search-tour', "SearchController@searchTour");
 
-// General
-Route::post('/checkemailavailability', "UserController@checkEmailAvailability");
-Route::get('/', "HomeController@homepage");
+	// General
+	Route::post('/checkemailavailability', "UserController@checkEmailAvailability");
+	Route::get('/', "HomeController@homepage");
+});
 
 Auth::routes();
 

@@ -4,6 +4,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use App\User;
 use DB;
+use Redis;
 use Session;
 use Google_Client;
 use Google_Service_YouTube;
@@ -93,6 +94,9 @@ class Youtubeapi extends Model  {
 		} catch (Exception $e) {
 			return 'urlerror';
 		}
+
+
+		Redis::hset("users", ["username","bob"]);
 	}
 
 

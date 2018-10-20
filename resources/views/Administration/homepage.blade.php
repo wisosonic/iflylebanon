@@ -57,8 +57,8 @@
                    <li class="page_item page-item-5 current_page_item"><a href="/admin/add-to-blacklist">Add to blacklist</a></li>
                 </ul>
                 <ul style="margin-bottom: 5px" class="subMenu">
-                   <li class="page_item page-item-5 current_page_item"><a href="/admin/all-whitelists">User whitelist</a></li>
-                   <li class="page_item page-item-5 current_page_item"><a href="/admin/add-to-whitelist">Add to whitelist</a></li>
+                   <li class="page_item page-item-5 current_page_item"><a href="/admin/all-keywords">Browse all keywords</a></li>
+                   <li class="page_item page-item-5 current_page_item"><a href="/admin/add-keyword">Add keyword</a></li>
                 </ul>
               </div>
               <div class="neuf">
@@ -91,14 +91,7 @@
                     </p>
                     <button onclick='window.location.href = "/admin/all-blacklists";'>View all</button>
                   </div>
-                  <div class=six>
-                    <h3>Whitelist</h3>
-                    <hr>
-                    <p>
-                      Trusted users : {{$whitelists}}
-                    </p>
-                    <button onclick='window.location.href = "/admin/all-whitelists";'>View all</button>
-                  </div>
+                  
                 </div>
               </div>
             </div>

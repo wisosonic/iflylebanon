@@ -24,6 +24,8 @@ class CreatePlacesTable extends Migration
             $table->longtext('text');
             $table->string('image');
             $table->float('rating');
+            $table->integer('negative')->default(0);
+            $table->string('status')->default("valid");
             $table->integer('user_id')->unsigned()->index()->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();

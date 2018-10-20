@@ -8,6 +8,7 @@ use App\Admin;
 use App\User;
 use App\Blacklist;
 use App\Whitelist;
+use App\Keyword;
 
 class AdminController extends Controller {
 
@@ -24,7 +25,7 @@ class AdminController extends Controller {
     	$array["tours"] = Tour::count();
     	$array["bookings"] = Booking::count();
     	$array["blacklists"] = Blacklist::count();
-    	$array["whitelists"] = Whitelist::count();
+    	// $array["whitelists"] = Whitelist::count();
     	return view('Administration/homepage', $array);
     }
 
@@ -99,14 +100,14 @@ class AdminController extends Controller {
 		$data = $request->all();
 		array_shift($data);
 		$message = Blacklist::addBlacklist($data);
-		Whitelist::deleteWhitelist($data["user_id"]);
+		// Whitelist::deleteWhitelist($data["user_id"]);
 		return redirect("/admin/add-to-blacklist")->with(["message"=>$message]);
 	}
 
 	public function deleteBlacklist($id)
     {
     	$message = Blacklist::deleteBlacklist($id);
-    	Whitelist::addWhitelist(["user_id"=>$id]);
+    	// Whitelist::addWhitelist(["user_id"=>$id]);
     	return redirect("/admin/all-blacklists")->with(["message"=>$message]);
     }
 
@@ -126,26 +127,51 @@ class AdminController extends Controller {
 
     //-------------- Whitelists ------------------//
 
-    public function getAllWhitelists()
-	{
-		$whitelists = User::has("whitelist")->get();
-    	return view("Administration/Whitelists/allwhitelists", ["whitelists"=>$whitelists]);
-	}
+ //    public function getAllWhitelists()
+	// {
+	// 	$whitelists = User::has("whitelist")->get();
+ //    	return view("Administration/Whitelists/allwhitelists", ["whitelists"=>$whitelists]);
+	// }
 
-	public function getAddWhitelist()
-	{
-		$users = User::doesntHave("whitelist")->get();
-		$whitelists = User::has("whitelist")->get();
-		return view('Administration/Whitelists/addwhitelist', ["users"=>$users, "whitelists"=>$whitelists]);
-	}
+	// public function getAddWhitelist()
+	// {
+	// 	$users = User::doesntHave("whitelist")->get();
+	// 	$whitelists = User::has("whitelist")->get();
+	// 	return view('Administration/Whitelists/addwhitelist', ["users"=>$users, "whitelists"=>$whitelists]);
+	// }
 
-	public function postAddWhitelist(Request $request)
+	// public function postAddWhitelist(Request $request)
+	// {
+	// 	$data = $request->all();
+	// 	array_shift($data);
+	// 	// $message = Whitelist::addWhitelist($data);
+	// 	$message = Blacklist::deleteBlacklist($data["user_id"]);
+	// 	return redirect("/admin/add-to-whitelist")->with(["message"=>$message]);
+	// }
+
+	//-------------- keywords ------------------//
+
+    public function getAllKeywords()
+    {
+    	$keywords = Keyword::all();
+		return view('Administration/Keywords/allkeywords', ["keywords"=>$keywords]);
+    }
+    public function deleteKeyword($id)
+    {
+    	$message = Keyword::deleteKeyword($id);
+    	return redirect("/admin/all-keywords")->with(["message"=>$message]);
+    }
+
+    public function getAddKeyword()
+	{
+		return view('Administration/Keywords/addkeyword');
+	}
+    public function postAddKeyword(Request $request)
 	{
 		$data = $request->all();
 		array_shift($data);
-		$message = Whitelist::addWhitelist($data);
-		Blacklist::deleteBlacklist($data["user_id"]);
-		return redirect("/admin/add-to-whitelist")->with(["message"=>$message]);
+		$message = Keyword::addKeyword($data);
+    	return redirect("/admin/add-keyword")->with(["message"=>$message]);
 	}
 
 }

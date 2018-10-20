@@ -27,7 +27,11 @@ class PlaceController extends Controller {
 			$place->comments = $place->comments()->get();
 			$related = $place->relatedPlaces();
 			$place->tags =  json_decode($place->tags,true);
-			return view("Places/placedetails", ["place"=>$place, "related"=>$related]);
+			if ($place->status != "invalid") {
+				return view("Places/placedetails", ["place"=>$place, "related"=>$related, "status"=>"valid"]);
+			} else {
+				return view("Places/placedetails", ["place"=>$place, "related"=>array(), "status"=>"invalid"]);
+			}
 		}	
 	}
 

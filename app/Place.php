@@ -4,6 +4,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use App\User;
 use App\Place;
+use App\Blacklist;
+use App\Whitelist;
 use Auth;
 
 class Place extends Model  {
@@ -57,6 +59,21 @@ class Place extends Model  {
 		$this->save();
 	}
 
+	public function updateStatus()
+	{
+		$commentCount = $this->comments()->count();
+		if ($commentCount >= 2 && $this->negative >= $commentCount/4) {
+			$this->status = "invalid";
+			$this->save();
+			$user = $this->user();
+			Blacklist::addBlacklist([
+                "user_id"=>$user->id,
+                "reason"=>"bad place",
+                "details"=>"",
+            ]);
+		}
+	}
+
 	public static function addNewComment($request)
 	{
 		try {
@@ -74,6 +91,12 @@ class Place extends Model  {
 			} else {
 				$comment->blocked = false;
 				$profanity = "clear";
+				$res2 = $comment->checkNegative();
+				if (!$res2) {
+					$place->negative = $place->negative + 1;
+					$place->save();
+					$place->updateStatus();
+				} 
 			}
 			$comment->place_id = $place->id;
 			$comment->user_id  = Auth::user()->id;

@@ -46,7 +46,7 @@
                   <div class="clear"></div>
                </div>
                <div class="title">
-                  <h1>Add admin</h1>
+                  <h1>Add keywords</h1>
                </div>
             </div>
          </div>
@@ -77,43 +77,15 @@
             </div>
           <div class="neuf">
             <div class="row">
-              <div class="six">
-                <h3>Add an admin</h3>
-                <hr>
-                <form action="" method="POST" id="addadmin_form">
-                  {{ csrf_field() }}
-                  @if (count($users) > 0)
-                    <select name="user_id" id="user_id">
-                      <option value="">Select a user</option>
-                      @foreach ($users as $key => $user)
-                        <option value="{{$user->id}}">{{$user->name}} - {{$user->email}}</option>
-                      @endforeach
-                    </select>
-                    <button onclick="sendAddAdminForm(); return false;">Add admin</button>
-                  @else 
-                    There are no users to add !
-                  @endif
-                </form>
-              </div>
-              <div class="six">
-                <h3>Existing admins ({{$admins->count()}})</h3>
-                <hr>
-                @if ($admins->count() > 0)
-                  @foreach ($admins as $key => $admin)
-                    <div class="row">
-                      {{$admin->name}} - {{$admin->email}}
-                    </div>
-                    <div style="text-align: right" class="row">
-                      <i>{{$admin->phone}}</i>
-                    </div>
-                    <hr>
-                  @endforeach
-                @else 
-                  <p>
-                    There are no admins !
-                  </p>
-                @endif
-              </div>
+              <h3>Add a keyword</h3>
+              <hr>
+              <form action="" method="POST" id="addkeyword_form">
+                {{ csrf_field() }}
+                <input type="text" name="word" placeholder="Add a keyword" id="word">
+              </form>
+            </div>
+            <div class="row">
+              <button onclick="sendAddKkeywordForm(); return false;">Add keyword</button>
             </div>
           </div>
         </div>

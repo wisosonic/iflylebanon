@@ -83,6 +83,19 @@ function validateAddWhitelistForm() {
 
 	return errors;
 }
+function validateAddkeywordForm() {
+	var errors = 0;
+	var word = document.getElementsByName("word")[0];
+
+	if (word.value == "") {
+		word.style.border = "2px dashed #ff803c";
+		errors = errors + 1 ;
+	} else {
+		word.style.border = "none";
+	}
+
+	return errors;
+}
 
 function sendActivateAgencyForm() {
 	errors = validateActivateAgencyForm() ;
@@ -133,4 +146,18 @@ function sendEditBlacklistForm() {
 	form.action = "/admin/edit-blacklist/";
 	form.submit();
 }
+
+function sendAddKkeywordForm() {
+	errors = validateAddkeywordForm() ;
+	if (errors == 0) {
+		form=document.getElementById("addkeyword_form");
+		form.action = "/admin/add-keyword/";
+		form.submit();
+	} else {
+		toastr["error"]("Please fill in all the required fields", "Attention !");	
+	}
+	
+}
+
+
 

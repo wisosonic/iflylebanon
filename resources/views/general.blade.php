@@ -102,8 +102,13 @@
                      <div style="background-color: red; color:white" class="tr">
                         <div class="td"></div>
                         <div class="td verticalmiddle">
-                           Your account is blacklisted and you wont be able to comment/add/rate places
-                           or book tours.
+                           @if (Auth::user()->status == "block")
+                              Your account is banned for 1 week and you wont be able to 
+                              comment/add/rate places or book tours.
+                           @else
+                              Your account is permanently banned and you wont be able to 
+                              comment/add/rate places or book tours.
+                           @endif
                         </div>
                      </div>
                   @endif
@@ -233,21 +238,32 @@
             
             @if (Session::has('profanity'))
                @if (Session::get('profanity')=="blocked") 
-                  toastr["warning"]("Warning n°{{Auth::user()->warnings}}", "Your comment contains unauthorized words and it have been removed!");
+                  toastr["warning"]("Warning n°{{Auth::user()->warnings}}/{{Auth::user()->maxWarnings}}", "Your comment contains unauthorized words and it have been removed!");
                @endif
             @endif
 
             @if (Session::has('message'))
-               @if (Session::get('message')=="blacklisted") 
-                  swal({   
-                        title: "",   
-                        text: "Your account is blacklisted for using " +
-                              "offensive words in comments repeatedly. " +
-                              "Please contact Costumer Support if you have any questions.", 
-                        type: "error",   
-                        confirmButtonColor: "#3f927e",   
-                        confirmButtonText: "Ok"
-                     });
+               @if (Session::get('message')=="blacklisted")
+                  @if (Authh::user()->status == "block")
+                     swal({   
+                           title: "You account is banned for 7 days",   
+                           text: "Your account is blacklisted for using " +
+                                 "offensive words in comments repeatedly. " +
+                                 "Please contact Costumer Support if you have any questions.", 
+                           type: "error",   
+                           confirmButtonColor: "#3f927e",   
+                           confirmButtonText: "Ok"
+                        });
+                  @else
+                     swal({   
+                           title: "You account has been banned permanently",   
+                           text: "Please contact Costumer Support if you have any questions.", 
+                           type: "error",   
+                           confirmButtonColor: "#3f927e",   
+                           confirmButtonText: "Ok"
+                        });
+                  @endif
+                     
 
                @elseif (Session::get('message')=="logged") 
                   swal({   
