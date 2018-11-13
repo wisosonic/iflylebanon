@@ -122,6 +122,7 @@
                      </div>
                      <div class="td verticalmiddle">
                         <div class="navcontainer">
+                           <span style="color: green; background: white; border-radius: 5px; padding: 5px; display: none" id="livestreamcount"></span>
                            <form style="display: none" action="" method="POST" id="search_form">
                               {{ csrf_field() }}
                               <input type="text" name="search" placeholder="search">

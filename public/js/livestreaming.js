@@ -8,16 +8,19 @@ setInterval(function() {
               },
           success: function(array) {
             var array = JSON.parse(array);
+	    var counts = array["counts"];
+	    array = array["places"];
 	    var count = 0;
 	    Object.keys(array).forEach(function(id) {
 		  var a = document.getElementById("livestreaminglink_"+id);
 	    	  var icon = document.getElementById("livestreamingicon_"+id);
 	    	  var span = document.getElementById("livestreamingbutton_"+id);
 		  if (array[id]) {
-		  	a.setAttribute("href", array[id]);
+		  	a.setAttribute("href", "#");
+			a.setAttribute("onclick", "openModal2('"+id+"');");
 			icon.setAttribute("class", "fas fa-wifi");
 			icon.style.color = "green";
-			span.innerHTML="Live now";
+			span.innerHTML= counts[id] + " streams(s)";
 			count = count + 1;
 		  } else {
 			a.setAttribute("href", "#");
@@ -27,19 +30,35 @@ setInterval(function() {
 		  }
 	    });
 	    if (count > 0) {
+		document.getElementById("livestreamcount").style.display = "inline";
 		if (count == 1) {
-			toastr["success"]("There is 1 live streaming video available", "Live streams are live now !");	
+			document.getElementById("livestreamcount").innerHTML = "1 live place";
+			if (! notified || count != lastLiveCount) {
+				toastr["success"]("There is 1 live place available", "Live streams are live now !");
+				lastLiveCount = count ;
+				notified = true;
+			}
+			
 		} else {
-			toastr["success"]("There are " + count + " live streaming videos available", "Live streams are live now !");	
+			document.getElementById("livestreamcount").innerHTML = count +  " live places";
+			if (! notified || count != lastLiveCount) {
+				toastr["success"]("There are " + count + " live places available", "Live streams are live now !");
+				lastLiveCount = count ;
+				notified = true;
+			}
 		}
 	    	
+	    } else {
+		document.getElementById("livestreamcount").style.display = "none";
+		lastLiveCount = 0;
+		notified = false;
 	    }
           },
           error: function(xhr, status, error) {
             console.log(xhr.responseText);
           }
         });
-}, 10000);
+}, 5000);
 
 toastr.options = {
       "closeButton": true,
@@ -58,3 +77,7 @@ toastr.options = {
       "showMethod": "fadeIn",
       "hideMethod": "fadeOut"
 };
+
+
+
+

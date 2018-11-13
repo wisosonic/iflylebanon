@@ -402,6 +402,9 @@
                               <a href="https://parposa.com/iflylebanon/location/afqa-waterfall/" class="location-actions post-like love">
                               <i class="fa fa-heart"></i>
                               <span class="sharetitle">Like</span></a>
+                              <a href="https://parposa.com/iflylebanon/location/afqa-waterfall/" class="location-actions post-like love">
+                              <i class="fa fa-heart"></i>
+                              <span class="sharetitle">Report place</span></a>
                            </div>
                            <div class="row">
                             <div class="row">
@@ -434,7 +437,7 @@
                                    <div style="background-color: #e8e8e8; border-radius: 15px; padding: 10px; margin-bottom: 10px" class="onze">
                                     <div style="font-weight: bold" class="row">
                                       {{$comment->user()->name}} - {{$comment->created_at}} 
-                                      @if (Auth::user()->id == $comment->user()->id)
+                                      @if (Auth::user() && Auth::user()->id == $comment->user()->id)
                                         <a href="/comment/delete/{{$comment->id}}">
                                           <i style="float: right; opacity: 0.5; margin-right: 10px" class="fas fa-trash-alt"></i>
                                         </a>
@@ -445,7 +448,7 @@
                                       @endif
                                     </div>
                                     
-                                   @if ( (Auth::user()->id == $comment->user()->id) && $comment->blocked )
+                                   @if ( (Auth::user()) && (Auth::user()->id == $comment->user()->id) && ($comment->blocked) )
                                       <div class="row">
                                         {{$comment->filteredcomment}}
                                       </div>

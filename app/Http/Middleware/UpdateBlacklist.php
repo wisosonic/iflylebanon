@@ -13,15 +13,17 @@ class UpdateBlacklist
     public function handle($request, Closure $next)
     {
         $user = Auth::user();
-        $blacklist = $user->blacklist()->first() ;
-        if ($user && 
-            $blacklist && 
-            $user->status == "block" && 
-            $blacklist->created_at->addWeeks(1) < Carbon::now() )  {
+        if ($user) {
+            $blacklist = $user->blacklist()->first() ;
+            if ($blacklist && 
+                $user->status == "block" && 
+                $blacklist->created_at->addWeeks(1) < Carbon::now() )  {
 
-                $user->status = "test";
-                $user->save();
-                Blacklist::deleteBlacklist($user->id);
+                    $user->status = "test";
+                    $user->save();
+                    Blacklist::deleteBlacklist($user->id);
+            }
+                
         }
         return $next($request);
     }

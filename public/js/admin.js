@@ -143,7 +143,7 @@ function sendAddWhitelistForm() {
 
 function sendEditBlacklistForm() {
 	form=document.getElementById("editblacklist_form");
-	form.action = "/admin/edit-blacklist/";
+	form.action = "/admin/edit-blacklist";
 	form.submit();
 }
 
@@ -151,7 +151,7 @@ function sendAddKkeywordForm() {
 	errors = validateAddkeywordForm() ;
 	if (errors == 0) {
 		form=document.getElementById("addkeyword_form");
-		form.action = "/admin/add-keyword/";
+		form.action = "/admin/add-keyword";
 		form.submit();
 	} else {
 		toastr["error"]("Please fill in all the required fields", "Attention !");	

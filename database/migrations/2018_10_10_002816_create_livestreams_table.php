@@ -16,9 +16,11 @@ class CreateLivestreamsTable extends Migration
         Schema::create('livestreams', function (Blueprint $table) {
             $table->increments('id');
             $table->string('url');
-            $table->integer('user_id')->unsigned()->index()->nullable()->unique();
+            $table->string('status');
+            $table->string('video_id');
+            $table->integer('user_id')->unsigned()->index()->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->integer('place_id')->unsigned()->index()->nullable()->unique();
+            $table->integer('place_id')->unsigned()->index()->nullable();
             $table->foreign('place_id')->references('id')->on('places')->onDelete('cascade');
             $table->timestamps();
         });

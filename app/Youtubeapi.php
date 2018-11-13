@@ -4,7 +4,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use App\User;
 use DB;
-use Redis;
 use Session;
 use Google_Client;
 use Google_Service_YouTube;
@@ -78,7 +77,7 @@ class Youtubeapi extends Model  {
 					'&key=AIzaSyAZMuhMd1c1awtDuM0rhwkdbzOLyomRlgc';
 		$res = file_get_contents($request);
 		$res = json_decode($res, true);
-		dd($res);
+		return $res;
 	}
 
 	public static function getVideoURLById($id)
@@ -94,9 +93,6 @@ class Youtubeapi extends Model  {
 		} catch (Exception $e) {
 			return 'urlerror';
 		}
-
-
-		Redis::hset("users", ["username","bob"]);
 	}
 
 

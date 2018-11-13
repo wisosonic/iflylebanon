@@ -9,6 +9,10 @@
     .checked {
         color: orange;
     }
+    .hr {
+        margin: 20px 0px !important;
+        border-color: #dcdcdc !important;
+    }
   </style>
 
 	<div id="sitecontainer">
@@ -98,9 +102,11 @@
                                         </a>
                                       @endif
 
-                                      <a id="golive_{{$place->id}}" onclick="openModal('{{$place->id}}');" href="#" style="float: right; color: #333333 !important; border-color: #333333 !important">
-                                        <i class="fas fa-video"></i>Go live
-                                      </a>
+                                      @if (Auth::user())
+                                        <a id="golive_{{$place->id}}" onclick="openModal('{{$place->id}}');" href="#" style="float: right; color: #333333 !important; border-color: #333333 !important">
+                                          <i class="fas fa-video"></i>Go live
+                                        </a>
+                                      @endif
 
                                       <a id="livestreaminglink_{{$place->id}}" href="#" target="" style="background-color: #333333; float: right" class="">
                                         <i id="livestreamingicon_{{$place->id}}" style="color: red" class="fas fa-circle"></i>
@@ -157,25 +163,30 @@
   <button id="myBtn">Open Modal</button>
 
   <div id="myModal" class="modal">
-    <input type="hidden" id="youtubeplaceid" name="youtubeplaceid">
     <div class="modal-content">
       <span class="close">&times;</span>
       <h3>Your Youtube live streaming url</h3>
       <div class="row">
-        <div class="onze">
-          <input style="width: 100%" type="text" id="youtubeurl" name="youtubeurl" placeholder="Your live streaming url">
-        </div>
-        <div class="un badges">
+        <div class="dix">
+          <form action="" method="POST" id="livestream_form">
+            {{csrf_field()}}
+            <input type="hidden" id="place_id" name="place_id" value="">
+            <input type="hidden" id="video_id" name="video_id" value="">
+            <input style="width: 100%" type="text" id="youtubeurl" name="youtubeurl" placeholder="Your live streaming url">
+          </form>
+          </div>
+        <div class="deux badges">
           <a onclick="setIframeSource();" href="#">Search</a>
         </div>
       </div>
       <div class="row">
         <div class="six">
           <iframe 
+            style="display:none"
             id="youtubeiframe"
             width="210" 
             height="176" 
-            src="https://www.youtube.com/embed/VCt2jC7hZ1o?controls=1&fs=1" 
+            src="" 
             allowfullscreen="allowfullscreen"
             mozallowfullscreen="mozallowfullscreen" 
             msallowfullscreen="msallowfullscreen" 
@@ -183,8 +194,41 @@
             webkitallowfullscreen="webkitallowfullscreen">
           </iframe>
         </div>
-        <div class="six badges">
-          <a href="#" style="background-color: #333333; opacity: 1; color: white">Publish</a>
+        <div id="publishdiv" class="six badges">
+          <span id="publishspan" ></span>
+          <span id="publishspanstatus" ></span>
+          <a id="publishbutton" href="#" style="background-color: #333333; opacity: 1; color: white; display:none" onclick="publishLiveStream();">Publish</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="myModal2" class="modal">
+    <div style="width: 80%" class="modal-content">
+      <span class="close">&times;</span>
+      <div class="row">
+        <h3 id="livestream_title"></h3>
+        <div class="six">
+          <iframe 
+            style="display:none"
+            id="youtubeiframe2"
+            width="596.6" 
+            height="500" 
+            src="" 
+            allowfullscreen="allowfullscreen"
+            mozallowfullscreen="mozallowfullscreen" 
+            msallowfullscreen="msallowfullscreen" 
+            oallowfullscreen="oallowfullscreen" 
+            webkitallowfullscreen="webkitallowfullscreen">
+          </iframe>
+          <br>
+          <a id="iframe_report" href="#">Report this video</a>
+        </div>
+        <div class="six">
+          <h3>List of available live streams</h3>
+          <div style="overflow: auto; height: 500px;" class="row" id="livestream_sidebar" >
+            
+          </div>
         </div>
       </div>
     </div>
@@ -195,6 +239,90 @@
     <script src="/js/modal.js"></script>
     <script type="text/javascript">
       var token = '{{ csrf_token() }}' ;
+      var notified = false;
+      var lastLiveCount = 0;
+
+      function publishLiveStream() {
+        var form = document.getElementById("livestream_form");
+        form.action = "/publish-live-streaming";
+        form.submit();
+      }
+      function updateLiveStream() {
+        var form = document.getElementById("livestream_form");
+        form.action = "/update-live-streaming";
+        form.submit();
+      }
+
+      function setIframeSource() {
+        var youtubeurl = document.getElementById("youtubeurl").value;
+        if (youtubeurl != "") {
+          jQuery.ajax({
+            type: "POST",
+            url: "/search-live-streaming",
+            data: {
+                    _token : token,
+                    youtubeurl : youtubeurl
+                },
+            success: function(response) {
+              response = JSON.parse(response);
+              message = response["message"];
+              console.log(message);
+              response = response["res"];
+              if (response.length > 0) {
+                response = response[0];
+                videoid = response["id"];
+                snippet = response["snippet"];
+                
+                document.getElementById("youtubeiframe").setAttribute("src", "https://www.youtube.com/embed/"+videoid+"?controls=1&fs=1");
+                document.getElementById("video_id").value = videoid;
+                document.getElementById("publishspanstatus").style.display = "none";
+                
+                if(snippet["liveBroadcastContent"]=="live") {
+                  document.getElementById("publishdiv").style.display = "inline-block" ;
+                  document.getElementById("publishspan").innerHTML = "Your live stream is live now !" ;
+                  document.getElementById("youtubeiframe").style.display = "inline-block";
+                  // document.getElementById("publishbutton").style.display = "inline-block";
+                } else {
+                  document.getElementById("publishdiv").style.display = "inline-block" ;
+                  document.getElementById("publishspan").innerHTML = "Your live stream is offline !" ;
+                  document.getElementById("youtubeiframe").style.display = "inline-block";
+                  // document.getElementById("publishbutton").style.display = "none";
+                }
+
+              } else {
+                document.getElementById("video_id").value = "" ;
+                document.getElementById("publishdiv").style.display = "inline-block" ;
+                document.getElementById("publishspan").innerHTML = "Your live stream was not found !" ;
+                document.getElementById("youtubeiframe").style.display = "none";
+                // document.getElementById("publishbutton").style.display = "none";
+              }
+
+              if (message == "addedLive") {
+                document.getElementById("publishspanstatus").style.display = "inline-block";
+                document.getElementById("publishspanstatus").innerHTML = "Your video is already added. Do you want to assign it to this place ?";
+                document.getElementById("publishbutton").style.display = "inline-block";
+                document.getElementById("publishbutton").innerHTML = "UPDATE";
+                document.getElementById("publishbutton").setAttribute("onclick", "updateLiveStream();") ;
+              } else if (message == "addedOffline") {
+                document.getElementById("publishspanstatus").style.display = "inline-block";
+                document.getElementById("publishspanstatus").innerHTML = "Your video is already added. When it becomes live, it will be automatically updated.";
+                document.getElementById("youtubeiframe").style.display = "none";
+              } else if (message == "notAdded") {
+                if(snippet["liveBroadcastContent"]=="live") {
+                  document.getElementById("publishbutton").style.display = "inline-block";
+                } else {
+                  document.getElementById("publishbutton").style.display = "none";
+                }
+              }
+
+            },
+            error: function(xhr, status, error) {
+              console.log(xhr.responseText);
+            }
+          });
+        }
+      }
+
       function addToFavoritePlaces(place_id) {
         jQuery.ajax({
           type: "POST",

@@ -4,6 +4,7 @@ use Auth;
 use App\Place;
 use App\Rating;
 use App\Youtubeapi;
+use App\Livestream;
 
 use Illuminate\Support\Facades\Request;
 
@@ -11,16 +12,20 @@ class HomeController extends Controller {
 
 	public function homepage()
 	{
-		$actives = Youtubeapi::getActiveBroadcasts();
+		Livestream::updateLiveStreamingStatus();
 		$places = Place::all();
-		foreach ($actives as $key => $active) {
-			$place = $places->where("title", "=",$active->snippet->title)->first();
-			if ($place) {
-				$place->stremingstatus = true;
-			} else {
-				$place->stremingstatus = false;
-			}
-		}
+
+		// $actives = Youtubeapi::getActiveBroadcasts();
+		// foreach ($actives as $key => $active) {
+		// 	$place = $places->where("title", "=",$active->snippet->title)->first();
+		// 	if ($place) {
+		// 		$place->stremingstatus = true;
+		// 	} else {
+		// 		$place->stremingstatus = false;
+		// 	}
+		// }
+
+
 		$places = $places->sortByDesc('rating')->values();
 		$stars = array();
 		foreach ($places as $key => $place) {
@@ -40,6 +45,13 @@ class HomeController extends Controller {
 				} else {
 					$stars[$place->id] = [Rating::getStarsCount($place), 0, $key+1];
 				}
+			}
+			if ($place->livestreams()->count()>0) {
+				$place->stremingstatus = true;
+				$place->stream_count = $place->livestreams()->count();
+			} else {
+				$place->stremingstatus = false;
+				$place->stream_count = 0;
 			}
 		}
 		return view("homepage", ["places"=>$places, "stars"=>json_encode($stars)]);
