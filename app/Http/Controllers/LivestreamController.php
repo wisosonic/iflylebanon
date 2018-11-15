@@ -51,7 +51,6 @@ class LivestreamController extends Controller {
 			$streams = $place->livestreams()->get();
 			foreach ($streams as $key => $stream) {
 				$object = Youtubeapi::getBroadcastById($stream->video_id)["items"][0];
-				\Log::info($stream);
 				$object["user"] = $stream->user()->first();
 				$object["video_id"] = $stream->video_id;
 				$object["stream_id"] = $stream->id;
@@ -59,11 +58,6 @@ class LivestreamController extends Controller {
 			}
 		}
 		return json_encode(["videos"=>$livestreams, "place"=>$place]);
-	}
-
-	public function reportLiveStreaming ($video_id)
-	{
-		dd($video_id);
 	}
 
 }

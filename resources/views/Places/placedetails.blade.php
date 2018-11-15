@@ -402,9 +402,13 @@
                               <a href="https://parposa.com/iflylebanon/location/afqa-waterfall/" class="location-actions post-like love">
                               <i class="fa fa-heart"></i>
                               <span class="sharetitle">Like</span></a>
-                              <a href="https://parposa.com/iflylebanon/location/afqa-waterfall/" class="location-actions post-like love">
-                              <i class="fa fa-heart"></i>
-                              <span class="sharetitle">Report place</span></a>
+                              @if (Auth::user() && Auth::user()->reports()->where("place_id",$place->id)->first())
+                                <a href="#" class="">
+                                <span class="sharetitle">Already reported !</span></a>
+                              @elseif (Auth::user())
+                                <a href="/report-place/{{$place->id}}" class="">
+                                <span class="sharetitle">Report place</span></a>
+                              @endif
                            </div>
                            <div class="row">
                             <div class="row">

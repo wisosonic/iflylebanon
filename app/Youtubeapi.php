@@ -88,7 +88,12 @@ class Youtubeapi extends Model  {
 	public static function getVideoId($url)
 	{
 		try {
-			$id = explode("&", explode("v=", $url)[1])[0];
+			if (strpos($url, 'youtu.be') !== false) {
+			    $id = explode("/", $url)[3];
+			} else {
+				$id = explode("&", explode("v=", $url)[1])[0];
+			}
+			
 			return $id;
 		} catch (Exception $e) {
 			return 'urlerror';

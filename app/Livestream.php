@@ -4,7 +4,7 @@ use Illuminate\Database\Eloquent\Model;
 use Auth;
 use App\User;
 use App\Place;
-use App\Youtuebapi;
+use App\Youtubeapi;
 
 class Livestream extends Model  {
 
@@ -25,10 +25,10 @@ class Livestream extends Model  {
 
 	public static function updateLiveStreamingStatus()
 	{
-		$livestreams = Livestream::where("status","live");
+		$livestreams = Livestream::where("status","live")->get();
 		foreach ($livestreams as $key => $livestream) {
-			$live = Youtuebapi::getBroadcastById($livestream->video_id);
-			if ($live["items"][0]["snippet"]["liveBroadcastContent"]!="live") {
+			$live = Youtubeapi::getBroadcastById($livestream->video_id);
+			if (count($live["items"])==0 || $live["items"][0]["snippet"]["liveBroadcastContent"]!="live") {
 				$livestream->status = "offline";
 				$livestream->save();
 			}

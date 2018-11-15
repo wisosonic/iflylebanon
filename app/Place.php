@@ -45,6 +45,11 @@ class Place extends Model  {
 		return $this->hasMany("App\Livestream");
 	}
 
+	public function reports()
+    {
+        return $this->hasMany("App\Report");
+    }
+
 	public function updateRating()
 	{
 		$average = 0;

@@ -13,7 +13,7 @@ class HomeController extends Controller {
 	public function homepage()
 	{
 		Livestream::updateLiveStreamingStatus();
-		$places = Place::all();
+		$places = Place::where("status","valid")->get();
 
 		// $actives = Youtubeapi::getActiveBroadcasts();
 		// foreach ($actives as $key => $active) {

@@ -163,7 +163,7 @@
   <button id="myBtn">Open Modal</button>
 
   <div id="myModal" class="modal">
-    <div class="modal-content">
+    <div style="width: 60%"  class="modal-content">
       <span class="close">&times;</span>
       <h3>Your Youtube live streaming url</h3>
       <div class="row">
@@ -180,7 +180,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="six">
+        <div id="youtubeiframediv" class="six">
           <iframe 
             style="display:none"
             id="youtubeiframe"
@@ -208,7 +208,7 @@
       <span class="close">&times;</span>
       <div class="row">
         <h3 id="livestream_title"></h3>
-        <div class="six">
+        <div id="youtubeiframe2div" class="six">
           <iframe 
             style="display:none"
             id="youtubeiframe2"
@@ -236,7 +236,7 @@
 
 
     <script src="/js/livestreaming.js"></script>
-    <script src="/js/modal.js"></script>
+    <script src="/js/modal1.js"></script>
     <script type="text/javascript">
       var token = '{{ csrf_token() }}' ;
       var notified = false;
@@ -266,7 +266,7 @@
             success: function(response) {
               response = JSON.parse(response);
               message = response["message"];
-              console.log(message);
+
               response = response["res"];
               if (response.length > 0) {
                 response = response[0];
@@ -281,11 +281,15 @@
                   document.getElementById("publishdiv").style.display = "inline-block" ;
                   document.getElementById("publishspan").innerHTML = "Your live stream is live now !" ;
                   document.getElementById("youtubeiframe").style.display = "inline-block";
+                  document.getElementById("youtubeiframe").setAttribute("width", 0.9*document.getElementById("youtubeiframediv").offsetWidth);
+                  document.getElementById("youtubeiframe").setAttribute("height", 0.754*document.getElementById("youtubeiframediv").offsetWidth);
                   // document.getElementById("publishbutton").style.display = "inline-block";
                 } else {
                   document.getElementById("publishdiv").style.display = "inline-block" ;
                   document.getElementById("publishspan").innerHTML = "Your live stream is offline !" ;
                   document.getElementById("youtubeiframe").style.display = "inline-block";
+                  document.getElementById("youtubeiframe").setAttribute("width", 0.9*document.getElementById("youtubeiframediv").offsetWidth);
+                  document.getElementById("youtubeiframe").setAttribute("height", 0.754*document.getElementById("youtubeiframediv").offsetWidth);
                   // document.getElementById("publishbutton").style.display = "none";
                 }
 

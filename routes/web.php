@@ -42,7 +42,7 @@ Route::get("/test1",function(){
 	dd($res);
 });
 Route::get("/test2",function(){
-	$res = App\Youtubeapi::getBroadcastById("_7cSIDJD4f8");
+	$res = App\Youtubeapi::getBroadcastById("Qy9s1H-iFXY");
 	dd($res);
 });
 Route::get("/test3",function(){
@@ -59,7 +59,7 @@ Route::group(['middleware' => 'updateblacklist'], function() {
 	Route::post('/publish-live-streaming', "LivestreamController@publishLiveStreaming");
 	Route::post('/update-live-streaming', "LivestreamController@updateLiveStreaming");
 	Route::post('/get-live-streaming', "LivestreamController@getLiveStreaming");
-	Route::get('/report-live-streaming/{video_id}', "LivestreamController@reportLiveStreaming");
+	Route::get('/report-live-streaming/{video_id}', "ReportController@reportLiveStreaming");
 
 	// Tours
 	Route::get('/all-tours', "TourController@getAllTours");
@@ -79,6 +79,7 @@ Route::group(['middleware' => 'updateblacklist'], function() {
 	Route::post('/add-new-place', "PlaceController@postAddNewPlace");
 	Route::post('/comment', "PlaceController@postAddComment");
 	Route::get('/comment/delete/{id}', "PlaceController@deleteComment");
+	Route::get('/report-place/{place_id}', "ReportController@reportPlace");
 
 	// Search
 	Route::post('/search', "SearchController@search");

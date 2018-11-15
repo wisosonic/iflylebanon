@@ -65,6 +65,10 @@ class User extends Authenticatable
     {
         return $this->hasOne("App\Whitelist");
     }
+    public function reports()
+    {
+        return $this->hasMany("App\Report","reporter_id");
+    }
 
     public function addwarning()
     {
