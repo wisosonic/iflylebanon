@@ -15,6 +15,9 @@
     color: #333333;
     margin-bottom: 0px;
   }
+  .page-content {
+    padding-top: 0px !important;
+  }
 </style>
 
 <div id="sitecontainer">
@@ -39,6 +42,13 @@
       </div>
       <div class="page-content">
          <div class="container">
+            <div style="margin: 10px 0px" class="row">
+              @if ($place_reports_to_review > 0)
+                <button style="float: right; background-color: orange !important" onclick="window.location.href = '/admin/all-place-reports';" class="button NormanlButton">Place reports ({{$place_reports->count()}})</button>
+              @else 
+                <button style="float: right" onclick="window.location.href = '/admin/all-place-reports';" class="button NormanlButton">Place reports ({{$place_reports->count()}})</button>
+              @endif
+            </div>
    		    	<div style="margin-bottom: 20px" class="row">
               <div class="trois">
                 <ul style="margin-bottom: 5px" class="subMenu">

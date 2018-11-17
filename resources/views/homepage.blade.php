@@ -103,9 +103,11 @@
                                       @endif
 
                                       @if (Auth::user())
-                                        <a id="golive_{{$place->id}}" onclick="openModal('{{$place->id}}');" href="#" style="float: right; color: #333333 !important; border-color: #333333 !important">
-                                          <i class="fas fa-video"></i>Go live
-                                        </a>
+                                        @if (! Auth::user()->blacklist()->first())
+                                          <a id="golive_{{$place->id}}" onclick="openModal('{{$place->id}}');" href="#" style="float: right; color: #333333 !important; border-color: #333333 !important">
+                                            <i class="fas fa-video"></i>Go live
+                                          </a>
+                                        @endif
                                       @endif
 
                                       <a id="livestreaminglink_{{$place->id}}" href="#" target="" style="background-color: #333333; float: right" class="">

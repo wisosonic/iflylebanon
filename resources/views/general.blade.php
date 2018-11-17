@@ -116,13 +116,12 @@
                   <div class="tr">
                      <div class="td verticalmiddle" id="logo">
                         <h2>
-                           <a href="/">
-                           I Fly Lebanon </a>
+                           <a href="/"> I Fly Lebanon </a>
                         </h2>
                      </div>
                      <div class="td verticalmiddle">
                         <div class="navcontainer">
-                           <span style="color: green; background: white; border-radius: 5px; padding: 5px; display: none" id="livestreamcount"></span>
+                           <span style="color: green; background: white; border-radius: 5px; padding: 5px; margin-right: 15px; display: none" id="livestreamcount"></span>
                            <form style="display: none" action="" method="POST" id="search_form">
                               {{ csrf_field() }}
                               <input type="text" name="search" placeholder="search">

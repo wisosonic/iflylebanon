@@ -25,6 +25,8 @@ class CreateReportsTable extends Migration
             $table->foreign('livestream_id')->references('id')->on('livestreams')->onDelete('cascade');
             $table->integer('reporter_id')->unsigned()->index()->nullable();
             $table->foreign('reporter_id')->references('id')->on('users')->onDelete('cascade');
+            $table->boolean('reviewed')->default(false);
+            $table->string('decision')->nullable();
             $table->timestamps();
         });
     }

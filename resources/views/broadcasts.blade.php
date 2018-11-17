@@ -38,7 +38,7 @@
 	            		<iframe 
 		            		width="210" 
 		            		height="172" 
-		            		src="https://www.youtube.com/embed/{{$broadcast->id}}?controls=1&fs=1" 
+		            		src="https://www.youtube.com/embed/{{$broadcast['id']}}?controls=1&fs=1" 
 		            		allowfullscreen="allowfullscreen"
   					        mozallowfullscreen="mozallowfullscreen" 
   					        msallowfullscreen="msallowfullscreen" 
@@ -48,14 +48,11 @@
 	            	</div>
 	            	<div class="col-md-6 full-width">
 	            		<div class="intro">
-		                  	<h2 style="margin-bottom: 0px">
-		                     	{{$broadcast->snippet->title}}
-		                  	</h2>
+		                  	<h3 style="margin-bottom: 0px">
+		                     	{{$broadcast['snippet']['title']}}
+		                  	</h3>
 		                  	<p>
-		                  		{{$broadcast->snippet->publishedAt}}
-		                  	</p>
-		                  	<p>
-		                  		{{$broadcast->snippet->description}}
+		                  		{{$broadcast['snippet']['publishedAt']}}
 		                  	</p>
 		               	</div>
 	            	</div>

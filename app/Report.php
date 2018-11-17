@@ -11,7 +11,8 @@ class Report extends Model  {
 
 	protected $table = 'reports';
 	protected $fillable = [
-        'reason', 'details', 'place_id', 'comment_id', 'livestrzam_id', 'reporter_id'
+        'reason', 'details', 'place_id', 'comment_id', 
+        'livestream_id', 'reporter_id', 'reviewed', 'decision'
     ];
 
     public function user()
@@ -34,6 +35,18 @@ class Report extends Model  {
     	return $this->belongsTo("App\Comment");
     }
 
+    public static function getAllReports()
+    {
+    	$array = array();
+    	$array["place_reports"] = Report::where("place_id",">",0)->get();
+    	$array["place_reports_to_review"] = Report::where("place_id",">",0)->where("reviewed",false)->count();
+    	$array["livestream_reports"] = Report::where("livestream_id",">",0)->get();
+    	$array["livestream_reports_to_review"] = Report::where("livestream_id",">",0)->where("reviewed",false)->count();
+    	$array["comment_reports"] = Report::where("comment_id",">",0)->get();
+    	$array["comment_reports_to_review"] = Report::where("comment_id",">",0)->where("reviewed",false)->count();
+    	return $array;
+    }
+
     public static function reportPlace ($place_id)
 	{
 		$user = Auth::user();
@@ -47,6 +60,7 @@ class Report extends Model  {
 				$report->details = "";
 				$report->place_id = $place->id;
 				$report->reporter_id = $user->id;
+				$report->reviewed = false ;
 				$report->save();
 				return "reported";
 			}

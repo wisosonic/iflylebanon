@@ -64,19 +64,35 @@ class Place extends Model  {
 		$this->save();
 	}
 
-	public function updateStatus()
+	public function updateStatus($flag)
 	{
-		$commentCount = $this->comments()->count();
-		if ($commentCount >= 2 && $this->negative >= $commentCount/4) {
-			$this->status = "invalid";
-			$this->save();
-			$user = $this->user();
-			Blacklist::addBlacklist([
-                "user_id"=>$user->id,
-                "reason"=>"bad place",
-                "details"=>"",
-            ]);
+		
+		if ($flag == "comments") {
+			$commentCount = $this->comments()->count();
+			if ($commentCount >= 2 && $this->negative >= $commentCount/4) {
+				$this->status = "invalid";
+				$this->save();
+				$user = $this->user();
+				Blacklist::addBlacklist([
+	                "user_id"=>$user->id,
+	                "reason"=>"bad place",
+	                "details"=>"",
+	            ]);
+			}
+		} else if ($flag == "reports") {
+			$reportCount = $this->reports()->count();
+			if ($reportCount >= 2) {
+				$this->status = "invalid";
+				$this->save();
+				$user = $this->user();
+				Blacklist::addBlacklist([
+	                "user_id"=>$user->id,
+	                "reason"=>"reported place",
+	                "details"=>"",
+	            ]);
+			}
 		}
+			
 	}
 
 	public static function addNewComment($request)
@@ -100,7 +116,7 @@ class Place extends Model  {
 				if (!$res2) {
 					$place->negative = $place->negative + 1;
 					$place->save();
-					$place->updateStatus();
+					$place->updateStatus("comments");
 				} 
 			}
 			$comment->place_id = $place->id;

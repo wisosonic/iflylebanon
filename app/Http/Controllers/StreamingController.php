@@ -11,8 +11,8 @@ class StreamingController extends Controller {
 
 	public function checkLiveStreaming()
 	{
-		$places = array_fill_keys(Place::all()->pluck("id")->toArray(), false);
-		$counts = array_fill_keys(Place::all()->pluck("id")->toArray(), 0);
+		$places = array_fill_keys(Place::where("status","valid")->pluck("id")->toArray(), false);
+		$counts = array_fill_keys(Place::where("status","valid")->pluck("id")->toArray(), 0);
 
 		$actives = Livestream::where("status","live")->get();
 
@@ -26,7 +26,12 @@ class StreamingController extends Controller {
 
 	public function allLiveStreams()
 	{
-		$broadcasts = Youtubeapi::getAllChannelBroadcasts();
+		//$broadcasts = Youtubeapi::getAllChannelBroadcasts();
+		$broadcasts = array();
+		$actives = Livestream::where("status","live")->get();
+		foreach ($actives as $key => $broadcast) {
+			array_push($broadcasts, Youtubeapi::getBroadcastById($broadcast->video_id)["items"][0]);
+		}
 		return view("broadcasts", ["broadcasts"=>$broadcasts]);
 	}
 

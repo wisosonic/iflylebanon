@@ -9,6 +9,8 @@ use App\User;
 use App\Blacklist;
 use App\Whitelist;
 use App\Keyword;
+use App\Report;
+use App\Place;
 
 class AdminController extends Controller {
 
@@ -19,7 +21,7 @@ class AdminController extends Controller {
 
     public function index()
     {
-    	$array = array();
+    	$array = Report::getAllReports();
     	$array["admins"] = Admin::count();
     	$array["agencies"] = Agency::count();
     	$array["tours"] = Tour::count();
@@ -33,15 +35,17 @@ class AdminController extends Controller {
 
     public function getAllAgencies()
     {
-    	$agencies = Agency::all();
-    	return view("Administration/Agencies/allagencies", ["agencies"=>$agencies]);
+    	$array = Report::getAllReports();
+    	$array["agencies"] = Agency::all();
+    	return view("Administration/Agencies/allagencies", $array);
     }
 
 	public function getActivateAgency ()
 	{
-		$agencies = Agency::where("activated", "=", 0)->get();
-		$activated = Agency::where("activated","=", 1)->get();
-		return view("Administration/Agencies/activateagency", ["agencies"=>$agencies, "activated"=>$activated]);
+		$array = Report::getAllReports();
+		$array["agencies"] = Agency::where("activated", "=", 0)->get();
+		$array["activated"] = Agency::where("activated","=", 1)->get();
+		return view("Administration/Agencies/activateagency", $array);
 	}
 	public function postActivateAgency (Request $request)
 	{
@@ -55,15 +59,17 @@ class AdminController extends Controller {
 
 	public function getAllAdmins()
     {
-    	$admins = User::has("admin")->get();
-    	return view("Administration/Admins/alladmins", ["admins"=>$admins]);
+    	$array = Report::getAllReports();
+    	$array["admins"] = User::has("admin")->get();
+    	return view("Administration/Admins/alladmins", $array);
     }
 
 	public function getAddAdmin()
 	{
-		$users = User::doesntHave("admin")->get();
-		$admins = User::has("admin")->get();
-		return view('Administration/Admins/addadmin', ["users"=>$users, "admins"=>$admins]);
+		$array = Report::getAllReports();
+		$array["users"] = User::doesntHave("admin")->get();
+		$array["admins"] = User::has("admin")->get();
+		return view('Administration/Admins/addadmin', $array);
 	}
 
 	public function postAddAdmin(Request $request)
@@ -84,15 +90,17 @@ class AdminController extends Controller {
 
 	public function getAllBlacklists()
 	{
-		$blacklists = User::has("blacklist")->get();
-    	return view("Administration/Blacklists/allblacklists", ["blacklists"=>$blacklists]);
+		$array = Report::getAllReports();
+		$array["blacklists"] = User::has("blacklist")->get();
+    	return view("Administration/Blacklists/allblacklists", $array);
 	}
 
 	public function getAddBlacklist()
 	{
-		$users = User::doesntHave("blacklist")->get();
-		$blacklists = User::has("blacklist")->get();
-		return view('Administration/Blacklists/addblacklist', ["users"=>$users, "blacklists"=>$blacklists]);
+		$array = Report::getAllReports();
+		$array["users"] = User::doesntHave("blacklist")->get();
+		$array["blacklists"] = User::has("blacklist")->get();
+		return view('Administration/Blacklists/addblacklist', $array);
 	}
 
 	public function postAddBlacklist(Request $request)
@@ -113,8 +121,9 @@ class AdminController extends Controller {
 
 	public function getEditeBlacklist($id)
     {
-    	$blacklist = User::find($id)->blacklist()->first();
-		return view('Administration/Blacklists/editblacklist', ["blacklist"=>$blacklist]);
+    	$array = Report::getAllReports();
+    	$array["blacklist"] = User::find($id)->blacklist()->first();
+		return view('Administration/Blacklists/editblacklist', $array);
     }
 
 	public function postEditeBlacklist(Request $request)
@@ -153,8 +162,9 @@ class AdminController extends Controller {
 
     public function getAllKeywords()
     {
-    	$keywords = Keyword::all();
-		return view('Administration/Keywords/allkeywords', ["keywords"=>$keywords]);
+    	$array = Report::getAllReports();
+    	$array["keywords"] = Keyword::all();
+		return view('Administration/Keywords/allkeywords', $array);
     }
     public function deleteKeyword($id)
     {
@@ -166,6 +176,7 @@ class AdminController extends Controller {
 	{
 		return view('Administration/Keywords/addkeyword');
 	}
+
     public function postAddKeyword(Request $request)
 	{
 		$data = $request->all();
@@ -173,6 +184,40 @@ class AdminController extends Controller {
 		$message = Keyword::addKeyword($data);
     	return redirect("/admin/add-keyword")->with(["message"=>$message]);
 	}
+
+	//-------------- Reports ------------------//
+
+    public function getAllPlaceReports()
+    {
+    	$array = Report::getAllReports();
+		return view('Administration/Reports/allreports', $array);
+    }
+
+    public function acceptPlaceReport($id)
+    {
+    	$report = Report::find($id);
+
+    	$place = $report->place()->first();
+    	$place->negative = $place->negative + 1;
+		$place->save();
+		$place->updateStatus("reports");
+
+		$report->reviewed = true;
+		$report->decision = "accepted";
+		$report->save();
+
+		return redirect("/admin/all-reports")->with(["message"=>"accepted"]);
+    }
+    
+    public function dismissPlaceReport($id)
+    {
+    	$report = Report::find($id);
+    	$report->reviewed = true;
+    	$report->decision = "dismissed";
+		$report->save();
+
+		return redirect("/admin/all-reports")->with(["message"=>"dismissed"]);
+    }
 
 }
 

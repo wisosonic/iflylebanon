@@ -23,6 +23,11 @@ Route::group(['prefix' => 'admin',  'middleware' => 'admin'], function() {
 	Route::get('/delete-keyword/{id}', "AdminController@deleteKeyword");
 	Route::get('/add-keyword', "AdminController@getAddKeyword");
 	Route::post('/add-keyword', "AdminController@postAddKeyword");
+
+	Route::get('/all-place-reports', "AdminController@getAllPlaceReports");
+	Route::get('/accept-place-report/{id}', "AdminController@acceptPlaceReport");
+	Route::get('/dismiss-place-report/{id}', "AdminController@dismissPlaceReport");
+
 });
 
 // Agency
