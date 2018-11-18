@@ -34,7 +34,7 @@
                </div>
                <div class="title">
                   <h1>
-                     Administation
+                    Administration
                   </h1>
                </div>
             </div>
