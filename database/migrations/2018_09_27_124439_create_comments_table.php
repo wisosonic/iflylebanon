@@ -16,6 +16,7 @@ class CreateCommentsTable extends Migration
         Schema::create('comments', function (Blueprint $table) {
             $table->increments('id');
             $table->text('comment');
+            $table->text('filteredcomment')->nullable();
             $table->boolean('blocked')->default(false);
             $table->integer('place_id')->unsigned()->index()->nullable();
             $table->foreign('place_id')->references('id')->on('places')->onDelete('cascade');
